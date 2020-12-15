@@ -1,22 +1,34 @@
 package com.example.programmingmeetups
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.test.runBlockingTest
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class ExampleInstrumentedTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Before
+    fun init() {
+        hiltRule.inject()
+    }
+
     @Test
-    fun useAppContext() {
+    fun useAppContext() = runBlockingTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.programmingmeetups", appContext.packageName)
