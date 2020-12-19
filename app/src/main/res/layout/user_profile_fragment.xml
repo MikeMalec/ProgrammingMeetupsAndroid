@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userProfileViewModel"
+            type="com.example.programmingmeetups.framework.presentation.profile.UserProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivUserImage"
+                setImage="@{userProfileViewModel.userProfile}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvUserFirstName"
+            setFirstName="@{userProfileViewModel.userProfile}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+        <TextView
+            android:id="@+id/tvUserLastName"
+            setLastName="@{userProfileViewModel.userProfile}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tvUserFirstName"
+            app:layout_constraintStart_toStartOf="@+id/tvUserFirstName"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserFirstName" />
+
+        <TextView
+            android:id="@+id/tvUserEmail"
+            setEmail="@{userProfileViewModel.userProfile}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tvUserLastName"
+            app:layout_constraintStart_toStartOf="@+id/tvUserLastName"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserLastName" />
+
+        <TextView
+            android:id="@+id/tvUserDescription"
+            setDescription="@{userProfileViewModel.userProfile}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tvUserEmail"
+            app:layout_constraintStart_toStartOf="@+id/tvUserEmail"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserEmail" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

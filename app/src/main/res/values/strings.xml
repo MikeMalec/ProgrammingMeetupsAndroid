@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Programming Meetups</string>
+    <string name="search_events">Search Events</string>
+    <string name="my_events">Events</string>
+    <string name="my_profile">Account</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
 </resources>

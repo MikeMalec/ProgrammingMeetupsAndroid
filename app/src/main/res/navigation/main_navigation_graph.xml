@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation_graph">
 
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.auth.AuthFragment"
+        android:label="Join us!" >
+        <action
+            android:id="@+id/action_authFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.map.MapFragment"
+        android:label="Events" />
+    <fragment
+        android:id="@+id/userEventsFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.UserEventsFragment"
+        android:label="My Events" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.profile.UserProfileFragment"
+        android:label="My Profile" />
 </navigation>
