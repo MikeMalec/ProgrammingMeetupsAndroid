@@ -15,13 +15,13 @@ class AuthRepositoryImpl(private val authService: AuthService) : AuthRepository 
         lastName: RequestBody,
         email: RequestBody,
         password: RequestBody
-    ): Response<AuthResponse> {
+    ): AuthResponse {
         return authService.register(image, firstName, lastName, email, password)
     }
 
     override suspend fun login(
         loginRequest: LoginRequest
-    ): Response<AuthResponse> {
+    ): AuthResponse {
         return authService.login(loginRequest)
     }
 }

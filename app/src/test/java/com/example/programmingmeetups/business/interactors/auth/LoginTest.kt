@@ -48,9 +48,9 @@ class LoginTest {
                                     firstName = "firstName",
                                     lastName = "lastName",
                                     email = "email",
-                                    password = "password",
                                     image = "image",
-                                    description = ""
+                                    description = "",
+                                    id = "id"
                                 )
                             )
                         )

@@ -1,0 +1,39 @@
+package com.example.programmingmeetups.business.data.network.event
+
+import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
+import com.example.programmingmeetups.framework.datasource.network.event.EventNetworkService
+import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Response
+
+class EventNetworkDataSourceImpl(private val eventNetworkService: EventNetworkService) :
+    EventNetworkDataSource {
+    override suspend fun createEvent(
+        token: String,
+        image: MultipartBody.Part,
+        icon: MultipartBody.Part,
+        latitude: RequestBody,
+        longitude: RequestBody,
+        address: RequestBody,
+        happensAt: RequestBody,
+        tags: RequestBody,
+        description: RequestBody
+    ): ProgrammingEvent {
+        return eventNetworkService.createEvent(
+            token,
+            image,
+            icon,
+            latitude,
+            longitude,
+            address,
+            happensAt,
+            tags,
+            description
+        )
+    }
+
+    override suspend fun fetchEvents(token: String): List<ProgrammingEvent> {
+        return eventNetworkService.fetchEvents(token)
+    }
+}

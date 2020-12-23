@@ -85,9 +85,9 @@ class AuthViewModelTest {
                         firstName = "firstName",
                         lastName = "lastName",
                         email = "email",
-                        password = "password",
                         image = "image",
-                        description = ""
+                        description = "",
+                        id = "id"
                     )
                 )
             )
@@ -107,7 +107,8 @@ class AuthViewModelTest {
                 "password"
             )
         )
-        val registerValidationMessage = authViewModel.registerValidationMessage.getOrAwaitValueTest()
+        val registerValidationMessage =
+            authViewModel.registerValidationMessage.getOrAwaitValueTest()
         assertThat(registerValidationMessage.getContent()).isEqualTo(
             FILL_IN_ALL_FIELDS
         )
@@ -146,9 +147,9 @@ class AuthViewModelTest {
                         firstName = "firstName",
                         lastName = "lastName",
                         email = "email",
-                        password = "password",
                         image = "image",
-                        description = ""
+                        description = "",
+                        id = "id"
                     )
                 )
             )

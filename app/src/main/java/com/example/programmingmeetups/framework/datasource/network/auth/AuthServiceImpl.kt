@@ -16,13 +16,13 @@ class AuthServiceImpl @Inject constructor(val authApi: AuthApi) : AuthService {
         lastName: RequestBody,
         email: RequestBody,
         password: RequestBody
-    ): Response<AuthResponse> {
+    ): AuthResponse {
         return authApi.register(image, firstName, lastName, email, password)
     }
 
     override suspend fun login(
         loginRequest: LoginRequest
-    ): Response<AuthResponse> {
+    ): AuthResponse {
         return authApi.login(loginRequest)
     }
 }

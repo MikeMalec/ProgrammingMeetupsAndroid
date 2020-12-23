@@ -3,9 +3,12 @@ package com.example.programmingmeetups.utils.extensions.view
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.MapView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 
 fun ImageView.clearBackground() {
@@ -28,8 +31,28 @@ fun BottomNavigationView.show() {
     }
 }
 
+fun MapView.hide() {
+    visibility = View.INVISIBLE
+}
+
+fun MapView.show() {
+    visibility = View.VISIBLE
+}
+
+fun TextView.show() {
+    visibility = View.VISIBLE
+}
+
+fun TextView.hide() {
+    visibility = View.INVISIBLE
+}
+
 fun AppCompatActivity.shortToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun BottomSheetDialogFragment.shortToast(message: String) {
+    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
 
 fun AppCompatActivity.longToast(message: String) {

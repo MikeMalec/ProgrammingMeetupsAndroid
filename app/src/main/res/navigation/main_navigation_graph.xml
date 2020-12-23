@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_navigation_graph">
+    android:id="@+id/main_navigation_graph"
+    android:label=""
+    app:startDestination="@id/createEventFragment">
 
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.programmingmeetups.framework.presentation.auth.AuthFragment"
-        android:label="Join us!" >
+        android:label="Join us!">
         <action
             android:id="@+id/action_authFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
@@ -14,13 +16,40 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.programmingmeetups.framework.presentation.map.MapFragment"
-        android:label="Events" />
+        android:label="Events">
+        <action
+            android:id="@+id/action_mapFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userEventsFragment"
-        android:name="com.example.programmingmeetups.framework.presentation.events.UserEventsFragment"
-        android:label="My Events" />
+        android:name="com.example.programmingmeetups.framework.presentation.events.userevents.UserEventsFragment"
+        android:label="My Events" >
+        <action
+            android:id="@+id/action_userEventsFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.programmingmeetups.framework.presentation.profile.UserProfileFragment"
         android:label="My Profile" />
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.createevent.CreateEventFragment"
+        android:label="Create Event">
+        <argument
+            android:name="coordinates"
+            app:argType="com.google.android.gms.maps.model.LatLng" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.showevent.EventFragment"
+        android:label="EventFragment" >
+        <argument
+            android:name="event"
+            app:argType="com.example.programmingmeetups.business.domain.model.ProgrammingEvent" />
+    </fragment>
 </navigation>

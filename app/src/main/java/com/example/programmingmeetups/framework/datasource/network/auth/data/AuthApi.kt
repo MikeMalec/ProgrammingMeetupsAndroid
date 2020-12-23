@@ -20,8 +20,8 @@ interface AuthApi {
         @Part("lastName") lastName: RequestBody,
         @Part("email") email: RequestBody,
         @Part("password") password: RequestBody
-    ): Response<AuthResponse>
+    ): AuthResponse
 
     @POST("auth/login")
-    suspend fun login(@Body request: LoginRequest): Response<AuthResponse>
+    suspend fun login(@Body request: LoginRequest): AuthResponse
 }

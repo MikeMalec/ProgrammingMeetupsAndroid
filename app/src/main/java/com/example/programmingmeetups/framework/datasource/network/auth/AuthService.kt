@@ -13,7 +13,7 @@ interface AuthService {
         lastName: RequestBody,
         email: RequestBody,
         password: RequestBody
-    ): Response<AuthResponse>
+    ): AuthResponse
 
-    suspend fun login(loginRequest: LoginRequest): Response<AuthResponse>
+    suspend fun login(loginRequest: LoginRequest): AuthResponse
 }

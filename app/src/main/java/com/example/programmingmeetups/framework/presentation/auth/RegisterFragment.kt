@@ -169,7 +169,7 @@ class RegisterFragment(
 
     private fun setUIController() {
         try {
-            uiController = context as UIController
+            uiController = activity as UIController
         } catch (e: Exception) {
             e.printStackTrace()
         }

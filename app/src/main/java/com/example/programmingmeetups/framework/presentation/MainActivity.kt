@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         when (destination.id) {
-            R.id.authFragment -> bottomNavigationView.hide()
+            R.id.authFragment, R.id.eventFragment, R.id.createEventFragment -> bottomNavigationView.hide()
             else -> bottomNavigationView.show()
         }
     }

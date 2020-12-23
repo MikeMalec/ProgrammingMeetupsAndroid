@@ -35,10 +35,10 @@ class PreferencesRepositoryImpl(private val dataStore: DataStore<Preferences>) :
 
     override suspend fun saveUserInfo(user: User) {
         dataStore.edit { preferences ->
+            preferences[PreferencesRepository.userId] = user.id
             preferences[PreferencesRepository.firstName] = user.firstName
             preferences[PreferencesRepository.lastName] = user.lastName
             preferences[PreferencesRepository.email] = user.email
-            preferences[PreferencesRepository.password] = user.password
             preferences[PreferencesRepository.description] = user.description
             preferences[PreferencesRepository.image] = user.image
         }
@@ -54,10 +54,10 @@ class PreferencesRepositoryImpl(private val dataStore: DataStore<Preferences>) :
                 }
             }.map { preferences ->
                 User(
+                    preferences[PreferencesRepository.userId]!!,
                     preferences[PreferencesRepository.firstName]!!,
                     preferences[PreferencesRepository.lastName]!!,
                     preferences[PreferencesRepository.email]!!,
-                    preferences[PreferencesRepository.password]!!,
                     preferences[PreferencesRepository.description]!!,
                     preferences[PreferencesRepository.image]!!
                 )

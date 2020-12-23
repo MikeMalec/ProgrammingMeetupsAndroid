@@ -11,22 +11,16 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import org.json.JSONObject
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
 suspend fun <T> safeApiCall(
     dispatcher: CoroutineDispatcher,
-    apiCall: suspend () -> Response<T>
+    apiCall: suspend () -> T?
 ): Resource<T?> {
     return withContext(dispatcher) {
         try {
             withTimeout(NETWORK_TIMEOUT) {
-                val retrofitResponse = apiCall.invoke()
-                if (retrofitResponse.isSuccessful) {
-                    Resource.Success(retrofitResponse.body())
-                } else {
-                    Resource.Error(convertErrorBody(retrofitResponse.errorBody()?.string()))
-                }
+                Resource.Success(apiCall())
             }
         } catch (throwable: Throwable) {
             throwable.printStackTrace()

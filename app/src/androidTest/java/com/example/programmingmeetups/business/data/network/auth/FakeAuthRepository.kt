@@ -21,7 +21,7 @@ class AndroidFakeAuthRepository : AuthRepository {
         lastName: RequestBody,
         email: RequestBody,
         password: RequestBody
-    ): Response<AuthResponse> {
+    ): AuthResponse {
         if (throwRegisterError) throw Exception()
         if (registerSuccessfully == true) {
             val firstNameValue = Buffer()
@@ -32,55 +32,41 @@ class AndroidFakeAuthRepository : AuthRepository {
             email.writeTo(emailValue)
             val passwordValue = Buffer()
             password.writeTo(passwordValue)
-            return Response.success(
-                AuthResponse(
-                    token = "token",
-                    user = User(
-                        firstName = firstNameValue.readUtf8(),
-                        lastName = lastNameValue.readUtf8(),
-                        email = emailValue.readUtf8(),
-                        password = passwordValue.readUtf8(),
-                        image = "image",
-                        description = ""
-                    )
+            return AuthResponse(
+                token = "token",
+                user = User(
+                    firstName = firstNameValue.readUtf8(),
+                    lastName = lastNameValue.readUtf8(),
+                    email = emailValue.readUtf8(),
+                    image = "image",
+                    description = "",
+                    id = "id"
                 )
             )
         } else {
-            return Response.error(
-                401,
-                ResponseBody.create(
-                    MediaType.parse("error"), "error"
-                )
-            )
+            throw Exception()
         }
     }
 
-    var throwLoginError = false
-    var loginSuccessfully = true
+        var throwLoginError = false
+        var loginSuccessfully = true
 
-    override suspend fun login(loginRequest: LoginRequest): Response<AuthResponse> {
-        if (throwLoginError) throw Exception()
-        if (loginSuccessfully) {
-            return Response.success(
-                AuthResponse(
+        override suspend fun login(loginRequest: LoginRequest): AuthResponse {
+            if (throwLoginError) throw Exception()
+            if (loginSuccessfully) {
+                return AuthResponse(
                     token = "token", user =
                     User(
                         firstName = "firstName",
                         lastName = "lastName",
                         email = loginRequest.email,
-                        password = loginRequest.password,
                         image = "image",
-                        description = ""
+                        description = "",
+                        id = "id"
                     )
                 )
-            )
-        } else {
-            return Response.error(
-                401,
-                ResponseBody.create(
-                    MediaType.parse("error"), "error"
-                )
-            )
+            } else {
+                throw Exception()
+            }
         }
     }
-}
