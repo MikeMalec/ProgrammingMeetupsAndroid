@@ -4,13 +4,17 @@ import android.util.Log
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.framework.datasource.cache.event.database.EventDao
 import com.example.programmingmeetups.framework.datasource.cache.event.mappers.EventCacheMapper
-import com.example.programmingmeetups.framework.datasource.cache.event.model.ProgrammingEventCacheEntity
-import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 
 class EventDaoServiceImpl(
     private val eventDao: EventDao,
     private val eventCacheMapper: EventCacheMapper
 ) : EventDaoService {
+    override suspend fun updateEvent(programmingEvent: ProgrammingEvent) {
+        val cachedEvent = eventDao.getEventById(programmingEvent.id!!)
+        cachedEvent.programmingEvent = programmingEvent
+        eventDao.updateProgrammingEvent(cachedEvent)
+    }
+
     override suspend fun saveProgrammingEvent(programmingEvent: ProgrammingEvent) {
         eventDao.insertProgrammingEvent(
             eventCacheMapper.mapToEntity(programmingEvent)
@@ -27,8 +31,10 @@ class EventDaoServiceImpl(
 
     override suspend fun getUserEvents(userId: String): List<ProgrammingEvent> {
         val events = eventCacheMapper.mapFromEntities(eventDao.getProgrammingEvents())
-        return events.filter {
+        val x = events.filter {
             it.participants!!.firstOrNull { user -> user.id == userId } != null
         }
+        Log.d("XXX", "X = $x")
+        return x
     }
 }

@@ -3,6 +3,7 @@ package com.example.programmingmeetups.framework.presentation.events.createevent
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,10 +16,7 @@ import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.domain.util.Resource.*
 import com.example.programmingmeetups.databinding.CreateEventFragmentBinding
 import com.example.programmingmeetups.framework.presentation.UIController
-import com.example.programmingmeetups.utils.DATE_BOTTOM_DIALOG
-import com.example.programmingmeetups.utils.PROGRAMMING_EVENT_CREATED
-import com.example.programmingmeetups.utils.SOMETHING_WENT_WRONG
-import com.example.programmingmeetups.utils.TAG_BOTTOM_DIALOG
+import com.example.programmingmeetups.utils.*
 import com.example.programmingmeetups.utils.extensions.view.hide
 import com.example.programmingmeetups.utils.extensions.view.show
 import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
@@ -84,7 +82,7 @@ class CreateEventFragment(
     }
 
     private fun setViewModel() {
-        createEventViewModel = createEventViewModel ?: ViewModelProvider(requireActivity()).get(
+        createEventViewModel = createEventViewModel ?: ViewModelProvider(this).get(
             CreateEventViewModel::class.java
         )
         eventTextWatcher.createEventViewModel = createEventViewModel!!
@@ -187,6 +185,7 @@ class CreateEventFragment(
     }
 
     private fun navigateBackWithErrorMessage() {
+        Log.d("XXX", "navigateBackWithErrorMessage")
         runUiControllerAction { uiController.showShortToast(SOMETHING_WENT_WRONG) }
         findNavController().popBackStack()
     }
@@ -221,8 +220,8 @@ class CreateEventFragment(
         setUIController()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding = null
     }
 }

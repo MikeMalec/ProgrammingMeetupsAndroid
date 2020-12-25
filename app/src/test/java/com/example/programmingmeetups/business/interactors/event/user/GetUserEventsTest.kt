@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.programmingmeetups.MainCoroutineRule
 import com.example.programmingmeetups.business.data.cache.event.FakeEventCacheDataSource
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
+import com.example.programmingmeetups.business.domain.model.User
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule

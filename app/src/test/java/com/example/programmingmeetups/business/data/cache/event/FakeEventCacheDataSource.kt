@@ -7,7 +7,7 @@ import com.example.programmingmeetups.framework.datasource.network.event.mappers
 class FakeEventCacheDataSource() :
     EventCacheDataSource {
 
-    val events = mutableListOf<ProgrammingEvent>()
+    var events = mutableListOf<ProgrammingEvent>()
 
     override suspend fun saveProgrammingEvent(programmingEvent: ProgrammingEvent) {
         events.add(programmingEvent)
@@ -25,5 +25,10 @@ class FakeEventCacheDataSource() :
         return events.filter {
             it.participants!!.firstOrNull { user -> user.id == userId } != null
         }
+    }
+
+    override suspend fun updateEvent(programmingEvent: ProgrammingEvent) {
+        events = events.filter { it.id!! != programmingEvent.id!! }.toMutableList()
+        events.add(programmingEvent)
     }
 }

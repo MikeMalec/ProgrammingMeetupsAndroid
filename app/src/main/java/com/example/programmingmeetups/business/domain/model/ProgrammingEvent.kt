@@ -1,7 +1,6 @@
 package com.example.programmingmeetups.business.domain.model
 
 import android.os.Parcelable
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -17,6 +16,5 @@ data class ProgrammingEvent(
     var happensAt: Long? = null,
     var description: String? = null,
     var participants: List<User>? = mutableListOf(),
-    var rates: List<Int>? = mutableListOf(),
     var createdAt: String? = null
 ) : Parcelable

@@ -2,7 +2,6 @@ package com.example.programmingmeetups.business.data.cache.event
 
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.framework.datasource.cache.event.EventDaoService
-import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 
 class EventCacheDataSourceImpl(private val eventDaoService: EventDaoService) :
     EventCacheDataSource {
@@ -20,5 +19,9 @@ class EventCacheDataSourceImpl(private val eventDaoService: EventDaoService) :
 
     override suspend fun getUserEvents(userId: String): List<ProgrammingEvent> {
         return eventDaoService.getUserEvents(userId)
+    }
+
+    override suspend fun updateEvent(programmingEvent: ProgrammingEvent) {
+        eventDaoService.updateEvent(programmingEvent)
     }
 }

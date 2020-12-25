@@ -2,14 +2,11 @@ package com.example.programmingmeetups.framework.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -65,13 +62,17 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setSupportActionBar(binding.toolbar)
     }
 
+    private var initialSetup = true
     private fun observeToken() {
         lifecycleScope.launchWhenStarted {
             authViewModel.token.observe(this@MainActivity, Observer {
-                when (it) {
-                    null -> setGraphAndNavigation(false)
-                    else -> setGraphAndNavigation(true)
+                if(initialSetup) {
+                    when (it) {
+                        null -> setGraphAndNavigation(false)
+                        else -> setGraphAndNavigation(true)
+                    }
                 }
+                initialSetup = false
             })
         }
     }

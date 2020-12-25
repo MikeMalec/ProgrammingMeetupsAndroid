@@ -4,7 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.utils.IMAGES_URL
 
 class UserProfileBindingAdapter {

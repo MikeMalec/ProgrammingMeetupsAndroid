@@ -1,7 +1,7 @@
 package com.example.programmingmeetups.framework.datasource.preferences
 
 import androidx.datastore.preferences.core.preferencesKey
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.utils.*
 import kotlinx.coroutines.flow.Flow
 

@@ -13,6 +13,7 @@ class EventCacheMapper @Inject constructor() {
         return ProgrammingEventCacheEntity(
             programmingEvent.id!!,
             programmingEvent.organizer!!.id,
+            programmingEvent.id!!,
             programmingEvent
         )
     }

@@ -3,7 +3,7 @@ package com.example.programmingmeetups.business.data.cache.event
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 
 class AndroidFakeEventCacheDataSourceImpl : EventCacheDataSource {
-    val events = mutableListOf<ProgrammingEvent>()
+    var events = mutableListOf<ProgrammingEvent>()
 
     override suspend fun saveProgrammingEvent(programmingEvent: ProgrammingEvent) {
         events.add(programmingEvent)
@@ -21,5 +21,10 @@ class AndroidFakeEventCacheDataSourceImpl : EventCacheDataSource {
         return events.filter {
             it.participants!!.firstOrNull { user -> user.id == userId } != null
         }
+    }
+
+    override suspend fun updateEvent(programmingEvent: ProgrammingEvent) {
+        events = events.filter { it.id!! != programmingEvent.id!! }.toMutableList()
+        events.add(programmingEvent)
     }
 }

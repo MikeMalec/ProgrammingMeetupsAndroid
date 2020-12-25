@@ -16,4 +16,6 @@
     <string name="attached_event_icon">Attached event icon</string>
     <string name="event_icon">Event Icon</string>
     <string name="add_tag">Add Tag</string>
+    <string name="participants">Participants</string>
+    <string name="edit">Edit</string>
 </resources>

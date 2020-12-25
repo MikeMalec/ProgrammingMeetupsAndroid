@@ -97,7 +97,7 @@ class CreateEventTest {
 
     @Test
     fun createEvent_fail_confirmCacheUnchanged() = runBlockingTest {
-        fakeEventNetworkDataSource.createEventThrowsException = true
+        fakeEventNetworkDataSource.throwsException = true
         createEvent.createEvent(
             "token123",
             MultipartBody.Part.createFormData(

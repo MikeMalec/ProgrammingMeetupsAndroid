@@ -14,5 +14,6 @@ data class ProgrammingEventCacheEntity(
     @PrimaryKey(autoGenerate = false)
     var id: String,
     var organizerId: String,
-    val programmingEvent: ProgrammingEvent
+    var programmingEventId: String,
+    var programmingEvent: ProgrammingEvent
 ) : Parcelable

@@ -1,8 +1,8 @@
 package com.example.programmingmeetups.business.data.network.auth
 
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.LoginRequest
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

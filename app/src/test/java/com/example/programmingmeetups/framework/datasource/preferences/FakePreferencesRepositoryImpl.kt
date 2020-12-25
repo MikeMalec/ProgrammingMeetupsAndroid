@@ -1,6 +1,6 @@
 package com.example.programmingmeetups.framework.datasource.preferences
 
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
+import com.example.programmingmeetups.business.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

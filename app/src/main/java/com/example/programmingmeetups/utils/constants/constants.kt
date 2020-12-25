@@ -53,6 +53,10 @@ const val DATE_BOTTOM_DIALOG = "DATE_BOTTOM_DIALOG"
 const val TAG_BOTTOM_DIALOG = "TAG_BOTTOM_DIALOG"
 const val ENTER_TAG = "Enter tag"
 const val PROGRAMMING_EVENT_CREATED = "Event has been created!"
+const val EDIT_EVENT = "EDIT EVENT"
+const val JOIN_EVENT = "JOIN EVENT"
+const val LEAVE_EVENT = "LEAVE EVENT"
+const val PARTICIPANTS_DIALOG = "PARTICIPANTS_DIALOG"
 
 //Rationales
 const val LOCATION_RATIONALE = "Location permission is necessary to use this app"

@@ -9,11 +9,10 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.example.programmingmeetups.R
-import com.example.programmingmeetups.business.domain.util.Resource
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.business.domain.util.Resource.Success
 import com.example.programmingmeetups.di.AppModule
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
 import com.example.programmingmeetups.framework.presentation.common.AndroidCustomFragmentFactory
 import com.example.programmingmeetups.getOrAwaitValue
 import com.example.programmingmeetups.launchFragmentInHiltContainer

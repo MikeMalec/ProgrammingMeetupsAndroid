@@ -57,7 +57,7 @@ class MapViewModelTest {
 
     @Test
     fun synchronizeEvents_fails_confirmNoNewEventsEmitted() {
-        fakeEventNetworkDataSource.fetchEventsThrowsException = true
+        fakeEventNetworkDataSource.throwsException = true
         val event = ProgrammingEvent(id = "2")
         fakeEventNetworkDataSource.events.add(event)
         mapViewModel = MapViewModel(

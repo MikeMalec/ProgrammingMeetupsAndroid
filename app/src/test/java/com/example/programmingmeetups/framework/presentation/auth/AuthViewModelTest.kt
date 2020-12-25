@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.programmingmeetups.MainCoroutineRule
 import com.example.programmingmeetups.business.data.network.auth.FakeAuthRepository
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.business.domain.util.Resource.Error
 import com.example.programmingmeetups.business.domain.util.Resource.Success
 import com.example.programmingmeetups.business.interactors.auth.AuthInteractors
@@ -13,7 +14,6 @@ import com.example.programmingmeetups.framework.datasource.network.auth.data.req
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.LoginRequest
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RegisterRequest
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
 import com.example.programmingmeetups.framework.datasource.network.auth.utils.AuthValidator
 import com.example.programmingmeetups.framework.datasource.preferences.FakePreferencesRepositoryImpl
 import com.example.programmingmeetups.getOrAwaitValueTest

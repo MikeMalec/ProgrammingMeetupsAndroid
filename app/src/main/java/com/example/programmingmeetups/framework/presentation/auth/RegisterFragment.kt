@@ -25,6 +25,7 @@ import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentMa
 import java.lang.Exception
 
 class RegisterFragment(
+    private val navigateToMapFragment: () -> Unit,
     private val contentManager: FrameworkContentManager,
     private val authViewModel: AuthViewModel
 ) :
@@ -114,6 +115,7 @@ class RegisterFragment(
                         when (authResp) {
                             is Success -> {
                                 hideLoading()
+                                navigateToMapFragment()
                             }
                             is Error -> {
                                 hideLoading()

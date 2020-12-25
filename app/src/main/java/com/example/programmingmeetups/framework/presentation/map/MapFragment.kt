@@ -70,7 +70,7 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
 
     private fun setViewModel() {
         mapViewModel =
-            mapViewModel ?: ViewModelProvider(requireActivity()).get(MapViewModel::class.java)
+            mapViewModel ?: ViewModelProvider(this).get(MapViewModel::class.java)
         permissionManager.requestLocationPermissions(this)
         requestPosition()
     }

@@ -3,11 +3,11 @@ package com.example.programmingmeetups.business.interactors.auth
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.programmingmeetups.MainCoroutineRule
 import com.example.programmingmeetups.business.data.network.auth.FakeAuthRepository
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.domain.util.Resource.*
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.LoginRequest
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
 import com.example.programmingmeetups.utils.ERROR_UNKNOWN
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector

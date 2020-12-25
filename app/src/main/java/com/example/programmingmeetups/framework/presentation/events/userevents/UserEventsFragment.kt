@@ -31,8 +31,13 @@ class UserEventsFragment(var userEventsViewModel: UserEventsViewModel? = null) :
         observeEvents()
     }
 
+    override fun onStart() {
+        super.onStart()
+        userEventsViewModel!!.setEvents()
+    }
+
     private fun setViewModel() {
-        userEventsViewModel = userEventsViewModel ?: ViewModelProvider(requireActivity()).get(
+        userEventsViewModel = userEventsViewModel ?: ViewModelProvider(this).get(
             UserEventsViewModel::class.java
         )
     }

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
+import com.example.programmingmeetups.business.domain.model.User
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException

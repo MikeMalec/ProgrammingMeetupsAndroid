@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentFactory
 import com.example.programmingmeetups.business.data.cache.event.AndroidFakeEventCacheDataSourceImpl
 import com.example.programmingmeetups.business.data.network.event.AndroidFakeEventNetworkDataSourceImpl
 import com.example.programmingmeetups.business.interactors.event.create.CreateEvent
+import com.example.programmingmeetups.business.interactors.event.join.JoinEvent
+import com.example.programmingmeetups.business.interactors.event.leave.LeaveEvent
 import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.AndroidFakeRequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.event.utils.EventValidator
@@ -13,6 +15,8 @@ import com.example.programmingmeetups.framework.presentation.auth.AuthFragment
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModel
 import com.example.programmingmeetups.framework.presentation.events.createevent.CreateEventFragment
 import com.example.programmingmeetups.framework.presentation.events.createevent.CreateEventViewModel
+import com.example.programmingmeetups.framework.presentation.events.showevent.EventFragment
+import com.example.programmingmeetups.framework.presentation.events.showevent.EventViewModel
 import com.example.programmingmeetups.framework.presentation.events.userevents.UserEventsFragment
 import com.example.programmingmeetups.framework.presentation.events.userevents.UserEventsViewModel
 import com.example.programmingmeetups.utils.FAKE_LOCALIZATION_DISPATCHER_IMPL
@@ -26,7 +30,8 @@ import javax.inject.Named
 class AndroidCustomFragmentFactory @Inject constructor(
     val authViewModel: AuthViewModel,
     val frameworkContentManager: FrameworkContentManager,
-    @Named(LOCALIZATION_DISPATCHER_IMPL) val localizationDispatcherInterface: LocalizationDispatcherInterface
+    @Named(LOCALIZATION_DISPATCHER_IMPL) val localizationDispatcherInterface: LocalizationDispatcherInterface,
+    val androidFakePreferencesRepository: AndroidFakePreferencesRepositoryImpl
 ) :
     FragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
@@ -53,6 +58,20 @@ class AndroidCustomFragmentFactory @Inject constructor(
                 UserEventsViewModel(
                     AndroidFakePreferencesRepositoryImpl(),
                     GetUserEvents(AndroidFakeEventCacheDataSourceImpl()),
+                    Dispatchers.Main
+                )
+            )
+            EventFragment::class.java.name -> EventFragment(
+                EventViewModel(
+                    androidFakePreferencesRepository,
+                    JoinEvent(
+                        AndroidFakeEventCacheDataSourceImpl(),
+                        AndroidFakeEventNetworkDataSourceImpl()
+                    ),
+                    LeaveEvent(
+                        AndroidFakeEventCacheDataSourceImpl(),
+                        AndroidFakeEventNetworkDataSourceImpl()
+                    ),
                     Dispatchers.Main
                 )
             )

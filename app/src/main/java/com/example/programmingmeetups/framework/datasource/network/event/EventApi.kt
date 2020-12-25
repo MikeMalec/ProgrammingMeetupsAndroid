@@ -25,4 +25,16 @@ interface EventApi {
     suspend fun fetchEvents(
         @Header("Authorization") token: String
     ): List<ProgrammingEventDto>
+
+    @POST("events/{id}/join")
+    suspend fun joinEvent(
+        @Header("Authorization") token: String,
+        @Path("id") eventId: String
+    ): ProgrammingEventDto
+
+    @DELETE("events/{id}/leave")
+    suspend fun leaveEvent(
+        @Header("Authorization") token: String,
+        @Path("id") eventId: String
+    ): ProgrammingEventDto
 }

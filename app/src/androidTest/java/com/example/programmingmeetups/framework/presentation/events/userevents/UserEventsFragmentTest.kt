@@ -11,8 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.MediumTest
 import com.example.programmingmeetups.business.data.cache.event.AndroidFakeEventCacheDataSourceImpl
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.di.AppModule
-import com.example.programmingmeetups.framework.datasource.network.auth.data.response.User
 import com.example.programmingmeetups.framework.datasource.preferences.AndroidFakePreferencesRepositoryImpl
 import com.example.programmingmeetups.framework.presentation.common.AndroidCustomFragmentFactory
 import com.example.programmingmeetups.getOrAwaitValue

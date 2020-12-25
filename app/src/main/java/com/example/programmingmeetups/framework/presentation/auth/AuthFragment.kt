@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.AuthFragmentBinding
 import com.example.programmingmeetups.utils.STORAGE_REQUEST
@@ -42,8 +43,9 @@ class AuthFragment(
     }
 
     private fun setAdapter() {
-        registerFragment = RegisterFragment(contentManager, authViewModel!!)
-        loginFragment = LoginFragment(authViewModel!!)
+        registerFragment =
+            RegisterFragment(::navigateToMapFragment, contentManager, authViewModel!!)
+        loginFragment = LoginFragment(::navigateToMapFragment, authViewModel!!)
         authAdapter = AuthAdapter(
             listOf(
                 registerFragment,
@@ -92,4 +94,10 @@ class AuthFragment(
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {}
     override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+    private fun navigateToMapFragment() {
+        AuthFragmentDirections.actionAuthFragmentToMapFragment().run {
+            findNavController().navigate(this)
+        }
+    }
 }

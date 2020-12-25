@@ -18,7 +18,10 @@ import com.example.programmingmeetups.utils.extensions.view.hide
 import com.example.programmingmeetups.utils.extensions.view.show
 import java.lang.Exception
 
-class LoginFragment(private val authViewModel: AuthViewModel) : Fragment(R.layout.login_fragment),
+class LoginFragment(
+    private val navigateToMapFragment: () -> Unit,
+    private val authViewModel: AuthViewModel
+) : Fragment(R.layout.login_fragment),
     NamedFragment, View.OnClickListener {
 
     override fun getName(): String {
@@ -73,6 +76,7 @@ class LoginFragment(private val authViewModel: AuthViewModel) : Fragment(R.layou
                 it.getContent().also { authResp ->
                     when (authResp) {
                         is Success -> {
+                            navigateToMapFragment()
                             hideLoading()
                         }
                         is Error -> {

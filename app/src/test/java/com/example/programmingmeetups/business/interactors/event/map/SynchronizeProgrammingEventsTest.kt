@@ -63,7 +63,7 @@ class SynchronizeProgrammingEventsTest {
 
     @Test
     fun synchronizeEvents_fail_confirmCacheUnchanged() = runBlockingTest {
-        fakeEventNetworkDataSource.fetchEventsThrowsException = true
+        fakeEventNetworkDataSource.throwsException = true
         synchronizeProgrammingEvent.synchronizeEvents("token", mainCoroutineRule.dispatcher)
             .collect(object : FlowCollector<List<ProgrammingEvent>?> {
                 override suspend fun emit(value: List<ProgrammingEvent>?) {

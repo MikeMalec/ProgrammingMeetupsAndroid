@@ -20,7 +20,6 @@ class EventNetworkMapper @Inject constructor() {
             happensAt = programmingEventDto.happensAt,
             description = programmingEventDto.description,
             participants = programmingEventDto.participants,
-            rates = programmingEventDto.rates,
             createdAt = programmingEventDto.createdAt
         )
     }
@@ -38,7 +37,6 @@ class EventNetworkMapper @Inject constructor() {
             happensAt = event.happensAt!!,
             description = event.description!!,
             participants = event.participants!!,
-            rates = event.rates!!,
             createdAt = event.createdAt!!
         )
     }

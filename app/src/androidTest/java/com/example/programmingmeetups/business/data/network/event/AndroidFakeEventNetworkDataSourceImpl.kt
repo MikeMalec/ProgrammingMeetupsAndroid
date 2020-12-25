@@ -1,14 +1,14 @@
 package com.example.programmingmeetups.business.data.network.event
 
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
+import com.example.programmingmeetups.business.domain.model.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class AndroidFakeEventNetworkDataSourceImpl : EventNetworkDataSource {
     val events = mutableListOf<ProgrammingEvent>()
 
-    var createEventThrowsException = false
-    var fetchEventsThrowsException = false
+    var throwsException = false
 
     override suspend fun createEvent(
         token: String,
@@ -21,7 +21,7 @@ class AndroidFakeEventNetworkDataSourceImpl : EventNetworkDataSource {
         tags: RequestBody,
         description: RequestBody
     ): ProgrammingEvent {
-        if (createEventThrowsException) throw Exception()
+        if (throwsException) throw Exception()
         val programmingEvent = ProgrammingEvent(
             id = token,
             image = "image",
@@ -37,7 +37,33 @@ class AndroidFakeEventNetworkDataSourceImpl : EventNetworkDataSource {
     }
 
     override suspend fun fetchEvents(token: String): List<ProgrammingEvent> {
-        if (fetchEventsThrowsException) throw Exception()
+        if (throwsException) throw Exception()
         return events
+    }
+
+    override suspend fun joinEvent(eventId: String, token: String): ProgrammingEvent {
+        if (throwsException) throw Exception()
+        return ProgrammingEvent(
+            id = eventId,
+            organizer = User("1", "firstName", "lastName", "email", "desc", "image"),
+            participants = mutableListOf(
+                User(
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "description",
+                    "image"
+                )
+            )
+        )
+    }
+
+    override suspend fun leaveEvent(eventId: String, token: String): ProgrammingEvent {
+        if (throwsException) throw Exception()
+        return ProgrammingEvent(
+            id = eventId,
+            participants = mutableListOf()
+        )
     }
 }
