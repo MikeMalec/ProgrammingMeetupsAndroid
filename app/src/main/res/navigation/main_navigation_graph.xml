@@ -13,8 +13,7 @@
             android:id="@+id/action_authFragment_to_mapFragment"
             app:destination="@id/mapFragment"
             app:popUpTo="@+id/authFragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
@@ -50,7 +49,37 @@
     <fragment
         android:id="@+id/eventFragment"
         android:name="com.example.programmingmeetups.framework.presentation.events.showevent.EventFragment"
-        android:label="EventFragment">
+        android:label="Event">
+        <argument
+            android:name="event"
+            app:argType="com.example.programmingmeetups.business.domain.model.ProgrammingEvent" />
+        <action
+            android:id="@+id/action_eventFragment_to_eventCommentsFragment"
+            app:destination="@id/eventCommentsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_eventFragment_to_updateEventFragment"
+            app:destination="@id/updateEventFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventCommentsFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.eventcomments.EventCommentsFragment"
+        android:label="Conversation">
+        <argument
+            android:name="event"
+            app:argType="com.example.programmingmeetups.business.domain.model.ProgrammingEvent" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateEventFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.updateevent.UpdateEventFragment"
+        android:label="Update Event">
         <argument
             android:name="event"
             app:argType="com.example.programmingmeetups.business.domain.model.ProgrammingEvent" />

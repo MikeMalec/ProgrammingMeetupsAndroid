@@ -2,8 +2,11 @@ package com.example.programmingmeetups.business.data.network.event
 
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.model.User
+import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
+import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventCommentDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import kotlin.math.ceil
 
 class FakeEventNetworkDataSource : EventNetworkDataSource {
 
@@ -64,5 +67,24 @@ class FakeEventNetworkDataSource : EventNetworkDataSource {
             id = eventId,
             participants = mutableListOf()
         )
+    }
+
+    var comments = listOf<ProgrammingEventCommentDto>()
+
+    override suspend fun getEventComments(
+        token: String,
+        eventId: String,
+        page: Int
+    ): EventCommentResponse {
+        val index = (page - 1) * 10
+        var counter = 0
+        val eventComments = mutableListOf<ProgrammingEventCommentDto>()
+        for (i in index until comments.size) {
+            if (counter > 9) break
+            eventComments.add(comments[i])
+            counter++
+        }
+        val pages = ceil((comments.size.toDouble() / 10.0)).toInt()
+        return EventCommentResponse(pages = pages, comments = eventComments)
     }
 }

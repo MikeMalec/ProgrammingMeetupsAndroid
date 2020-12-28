@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/participants"
-        app:actionLayout="@layout/amout_of_participants_menu_item"
         android:title="@string/participants"
+        app:actionLayout="@layout/amout_of_participants_menu_item"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/showEventComments"
+        android:icon="@drawable/ic_comment"
+        android:title="@string/comments"
         app:showAsAction="always" />
 
     <item

@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private fun observeToken() {
         lifecycleScope.launchWhenStarted {
             authViewModel.token.observe(this@MainActivity, Observer {
-                if(initialSetup) {
+                if (initialSetup) {
                     when (it) {
                         null -> setGraphAndNavigation(false)
                         else -> setGraphAndNavigation(true)
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         when (destination.id) {
-            R.id.authFragment, R.id.eventFragment, R.id.createEventFragment -> bottomNavigationView.hide()
+            R.id.authFragment, R.id.eventFragment, R.id.createEventFragment, R.id.eventCommentsFragment, R.id.updateEventFragment -> bottomNavigationView.hide()
             else -> bottomNavigationView.show()
         }
     }

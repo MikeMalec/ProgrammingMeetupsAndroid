@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.framework.datasource.network.event
 
+import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -37,4 +38,11 @@ interface EventApi {
         @Header("Authorization") token: String,
         @Path("id") eventId: String
     ): ProgrammingEventDto
+
+    @GET("events/{id}/comments")
+    suspend fun getEventComments(
+        @Header("Authorization") token: String,
+        @Path("id") eventId: String,
+        @Query("page") page: Int
+    ): EventCommentResponse
 }

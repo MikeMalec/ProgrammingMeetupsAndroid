@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class AndroidFakePreferencesRepositoryImpl @Inject constructor() : PreferencesRepository {
 
-    var token: String? = null
+    var token: String? = "token"
 
     var userInfo: User? = null
 

@@ -11,6 +11,8 @@ import com.example.programmingmeetups.business.interactors.auth.AuthInteractors
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
 import com.example.programmingmeetups.framework.datasource.network.auth.utils.AuthValidator
+import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManager
+import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManagerInterface
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModelFactory
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModelFactoryImpl
@@ -21,6 +23,7 @@ import com.example.programmingmeetups.utils.files.FileManager
 import com.example.programmingmeetups.utils.localization.LocalizationDispatcher
 import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -106,5 +109,11 @@ object AppModule {
     @Provides
     fun provideLocalizationDispatcher(geocoder: Geocoder): LocalizationDispatcherInterface {
         return LocalizationDispatcher(geocoder)
+    }
+
+    @Named(COMMENT_SOCKET_MANAGER_IMPL)
+    @Provides
+    fun provideEventCommentSocketManager(gson: Gson): EventCommentSocketManagerInterface {
+        return EventCommentSocketManager(gson)
     }
 }

@@ -13,6 +13,9 @@ import com.example.programmingmeetups.business.interactors.auth.Login
 import com.example.programmingmeetups.business.interactors.auth.Register
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.AndroidFakeRequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.auth.utils.AuthValidator
+import com.example.programmingmeetups.framework.datasource.network.event.sockets.AndroidFakeCommentSocketManager
+import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManager
+import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManagerInterface
 import com.example.programmingmeetups.framework.datasource.preferences.AndroidFakePreferencesRepositoryImpl
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModel
@@ -24,6 +27,7 @@ import com.example.programmingmeetups.utils.*
 import com.example.programmingmeetups.utils.localization.FakeLocalizationDispatcherImpl
 import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -132,5 +136,11 @@ object TestAppModule {
     @Provides
     fun provideFakeLocalizationDispatcher(): LocalizationDispatcherInterface {
         return FakeLocalizationDispatcherImpl()
+    }
+
+    @Named(COMMENT_SOCKET_MANAGER_IMPL)
+    @Provides
+    fun provideEventCommentSocketManager(): EventCommentSocketManagerInterface {
+        return AndroidFakeCommentSocketManager()
     }
 }

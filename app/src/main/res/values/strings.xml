@@ -18,4 +18,9 @@
     <string name="add_tag">Add Tag</string>
     <string name="participants">Participants</string>
     <string name="edit">Edit</string>
+    <string name="comments">comments</string>
+    <string name="text_message">Text message</string>
+    <string name="done">Done</string>
+    <string name="delete">Delete</string>
+    <string name="update_event">UPDATE EVENT</string>
 </resources>

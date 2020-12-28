@@ -3,6 +3,7 @@ package com.example.programmingmeetups.framework.datasource.network.event
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.framework.datasource.network.common.response.GenericResponse
 import com.example.programmingmeetups.framework.datasource.network.event.mappers.EventNetworkMapper
+import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -43,10 +44,18 @@ class EventNetworkServiceImpl(
     }
 
     override suspend fun joinEvent(eventId: String, token: String): ProgrammingEvent {
-        return networkMapper.mapFromEntity(eventApi.joinEvent(token,eventId ))
+        return networkMapper.mapFromEntity(eventApi.joinEvent(token, eventId))
     }
 
     override suspend fun leaveEvent(eventId: String, token: String): ProgrammingEvent {
-        return networkMapper.mapFromEntity(eventApi.leaveEvent(token,eventId))
+        return networkMapper.mapFromEntity(eventApi.leaveEvent(token, eventId))
+    }
+
+    override suspend fun getEventComments(
+        token: String,
+        eventId: String,
+        page: Int
+    ): EventCommentResponse {
+        return eventApi.getEventComments(token, eventId, page)
     }
 }

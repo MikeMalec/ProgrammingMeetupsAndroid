@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.R
@@ -58,6 +59,27 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         menu.findItem(R.id.participants).actionView.setOnClickListener {
             showParticipantsDialog()
         }
+        observeEvent()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.showEventComments -> showEventComments()
+            R.id.editEvent -> navigateToEditFragment()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showEventComments() {
+        EventFragmentDirections.actionEventFragmentToEventCommentsFragment(programmingEvent).run {
+            findNavController().navigate(this)
+        }
+    }
+
+    private fun navigateToEditFragment() {
+        EventFragmentDirections.actionEventFragmentToUpdateEventFragment(programmingEvent).run {
+            findNavController().navigate(this)
+        }
     }
 
     private fun setSharedViewsAnimation() {
@@ -72,7 +94,6 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
         setBinding(view)
-        observeEvent()
         observeResponseError()
         setMainButtonClick()
     }
