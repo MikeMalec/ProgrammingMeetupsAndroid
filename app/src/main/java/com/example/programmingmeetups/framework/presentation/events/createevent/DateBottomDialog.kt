@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.DateDialogBinding
+import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
 import com.example.programmingmeetups.framework.presentation.map.MapViewModel
 import com.example.programmingmeetups.utils.CHOOSE_DATE_FROM_FUTURE
 import com.example.programmingmeetups.utils.extensions.view.shortToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.*
 
-class DateBottomDialog(private val createEventViewModel: CreateEventViewModel) :
+class DateBottomDialog(private val createEventViewModel: EventCrudViewModel) :
     BottomSheetDialogFragment(),
     View.OnClickListener {
 

@@ -59,6 +59,10 @@ const val EDIT_EVENT = "EDIT EVENT"
 const val JOIN_EVENT = "JOIN EVENT"
 const val LEAVE_EVENT = "LEAVE EVENT"
 const val PARTICIPANTS_DIALOG = "PARTICIPANTS_DIALOG"
+const val DELETE_EVENT = "Delete Event"
+const val DELETE = "Delete"
+const val Cancel = "Cancel"
+const val PROFILE_SUCCESSFULLY_UPDATED = "Profile successfully updated"
 
 //Rationales
 const val LOCATION_RATIONALE = "Location permission is necessary to use this app"

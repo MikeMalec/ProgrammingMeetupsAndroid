@@ -6,5 +6,5 @@ import okhttp3.RequestBody
 
 interface RequestBodyFactoryInterface {
     fun createTextRequestBody(text: String): RequestBody
-    fun createImageRequestBody(uri: Uri): MultipartBody.Part
+    fun createImageRequestBody(uri: Uri, main: Boolean = true): MultipartBody.Part
 }

@@ -25,4 +25,12 @@ class AuthServiceImpl @Inject constructor(val authApi: AuthApi) : AuthService {
     ): AuthResponse {
         return authApi.login(loginRequest)
     }
+
+    override suspend fun updateProfile(
+        token: String,
+        description: RequestBody,
+        image: MultipartBody.Part?
+    ): AuthResponse {
+        return authApi.updateProfile(token, description, image)
+    }
 }

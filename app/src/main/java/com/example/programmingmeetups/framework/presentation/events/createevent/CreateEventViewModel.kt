@@ -16,6 +16,7 @@ import com.example.programmingmeetups.framework.datasource.network.auth.data.req
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 import com.example.programmingmeetups.framework.datasource.network.event.utils.EventValidator
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
+import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
 import com.example.programmingmeetups.utils.FILL_IN_ALL_FIELDS
 import com.example.programmingmeetups.utils.IO_DISPATCHER
 import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
@@ -30,8 +31,8 @@ class CreateEventViewModel @ViewModelInject constructor(
     @RequestBodyFactoryImplementation private val requestBodyFactory: RequestBodyFactoryInterface,
     private val createEvent: CreateEvent,
     private val eventValidator: EventValidator,
-    @Named(IO_DISPATCHER) private val dispatcher:CoroutineDispatcher
-) : ViewModel() {
+    @Named(IO_DISPATCHER) private val dispatcher: CoroutineDispatcher
+) : EventCrudViewModel() {
 
     private lateinit var token: String
 
@@ -41,7 +42,7 @@ class CreateEventViewModel @ViewModelInject constructor(
 
     private fun setToken() {
         viewModelScope.launch {
-            preferencesRepository.getToken().collect { token = "Bearer $it" }
+            preferencesRepository.getToken().collect { token = it!! }
         }
     }
 
@@ -76,24 +77,24 @@ class CreateEventViewModel @ViewModelInject constructor(
         setEvent()
     }
 
-    fun setDate(date: Long) {
+    override fun setDate(date: Long) {
         programmingEvent.happensAt = date
         setEvent()
     }
 
-    fun addTag(tag: String) {
+    override fun addTag(tag: String) {
         programmingEvent.tags?.add(tag)
         setEvent()
     }
 
-    fun removeTag(tag: String) {
+    override fun removeTag(tag: String) {
         programmingEvent.tags?.remove(tag)
         setEvent()
     }
 
     private var imageUri: Uri? = null
 
-    fun setImage(image: Uri) {
+    override fun setImage(image: Uri) {
         imageUri = image
         programmingEvent.image = image.toString()
         setEvent()
@@ -101,13 +102,13 @@ class CreateEventViewModel @ViewModelInject constructor(
 
     private var iconUri: Uri? = null
 
-    fun setIcon(icon: Uri) {
+    override fun setIcon(icon: Uri) {
         iconUri = icon
         programmingEvent.icon = icon.toString()
         setEvent()
     }
 
-    fun setDescription(description: String) {
+    override fun setDescription(description: String) {
         programmingEvent.description = description
     }
 
@@ -133,8 +134,8 @@ class CreateEventViewModel @ViewModelInject constructor(
                 requestBodyFactory.createTextRequestBody(
                     (programmingEvent.tags ?: listOf<String>()).joinToString(",")
                 )
-            val image = requestBodyFactory.createImageRequestBody(imageUri!!)
-            val icon = requestBodyFactory.createImageRequestBody(iconUri!!)
+            val image = requestBodyFactory.createImageRequestBody(imageUri!!, true)
+            val icon = requestBodyFactory.createImageRequestBody(iconUri!!, false)
             val description =
                 requestBodyFactory.createTextRequestBody(programmingEvent.description!!)
             createEvent.createEvent(

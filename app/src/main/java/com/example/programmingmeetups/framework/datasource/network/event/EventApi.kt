@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.framework.datasource.network.event
 
+import com.example.programmingmeetups.framework.datasource.network.common.response.GenericResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 import okhttp3.MultipartBody
@@ -21,6 +22,24 @@ interface EventApi {
         @Part("tags") tags: RequestBody,
         @Part("description") description: RequestBody
     ): ProgrammingEventDto
+
+    @Multipart
+    @POST("events/{id}")
+    suspend fun updateEvent(
+        @Header("Authorization") token: String,
+        @Path("id") eventId: String,
+        @Part("happensAt") happensAt: RequestBody,
+        @Part("tags") tags: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part image: MultipartBody.Part? = null,
+        @Part icon: MultipartBody.Part? = null
+    ): ProgrammingEventDto
+
+    @DELETE("events/{id}")
+    suspend fun deleteEvent(
+        @Header("Authorization") token: String,
+        @Path("id") eventId: String
+    ): GenericResponse
 
     @GET("events")
     suspend fun fetchEvents(

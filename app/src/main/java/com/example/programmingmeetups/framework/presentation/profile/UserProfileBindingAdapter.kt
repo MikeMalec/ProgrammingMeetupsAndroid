@@ -1,11 +1,12 @@
 package com.example.programmingmeetups.framework.presentation.profile
 
+import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.utils.IMAGES_URL
+import com.google.android.material.textfield.TextInputEditText
 
 class UserProfileBindingAdapter {
     companion object {
@@ -20,26 +21,26 @@ class UserProfileBindingAdapter {
 
         @BindingAdapter("setFirstName")
         @JvmStatic
-        fun setFirstName(textView: TextView, user: User?) {
-            textView.text = user?.firstName
+        fun setFirstName(editText: TextInputEditText, user: User?) {
+            editText.setText(user?.firstName)
         }
 
         @BindingAdapter("setLastName")
         @JvmStatic
-        fun setLastName(textView: TextView, user: User?) {
-            textView.text = user?.lastName
+        fun setLastName(editText: TextInputEditText, user: User?) {
+            editText.setText(user?.lastName)
         }
 
         @BindingAdapter("setEmail")
         @JvmStatic
-        fun setEmail(textView: TextView, user: User?) {
-            textView.text = user?.email
+        fun setEmail(editText: TextInputEditText, user: User?) {
+            editText.setText(user?.email)
         }
 
         @BindingAdapter("setDescription")
         @JvmStatic
-        fun setDescription(textView: TextView, user: User?) {
-            textView.text = user?.description
+        fun setDescription(editText: TextInputEditText, user: User?) {
+            editText.setText(user?.description)
         }
     }
 }

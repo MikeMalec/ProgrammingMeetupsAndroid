@@ -13,9 +13,15 @@ class RequestBodyFactoryImpl(private val fileManager: FileManager) :
         return RequestBody.create(MediaType.parse("text/plain"), text)
     }
 
-    override fun createImageRequestBody(uri: Uri): MultipartBody.Part {
+    override fun createImageRequestBody(uri: Uri, main: Boolean): MultipartBody.Part {
         val file = File(fileManager.getPath(uri)!!)
+        var fileName: String? = null
+        if (main) {
+            fileName = "Main${file.name}"
+        } else {
+            fileName = "Icon${file.name}"
+        }
         val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
-        return MultipartBody.Part.createFormData("image", file.name, requestBody)
+        return MultipartBody.Part.createFormData("image", fileName, requestBody)
     }
 }

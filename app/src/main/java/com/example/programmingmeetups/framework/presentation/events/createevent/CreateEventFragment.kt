@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.programmingmeetups.R
-import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.domain.util.Resource.*
 import com.example.programmingmeetups.databinding.CreateEventFragmentBinding
 import com.example.programmingmeetups.framework.presentation.UIController
@@ -20,7 +19,6 @@ import com.example.programmingmeetups.utils.*
 import com.example.programmingmeetups.utils.extensions.view.hide
 import com.example.programmingmeetups.utils.extensions.view.show
 import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
-import com.example.programmingmeetups.utils.localization.LocalizationDispatcher
 import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.create_event_fragment.*
@@ -85,7 +83,7 @@ class CreateEventFragment(
         createEventViewModel = createEventViewModel ?: ViewModelProvider(this).get(
             CreateEventViewModel::class.java
         )
-        eventTextWatcher.createEventViewModel = createEventViewModel!!
+        eventTextWatcher.viewModel = createEventViewModel!!
     }
 
     private fun setTextListener() {

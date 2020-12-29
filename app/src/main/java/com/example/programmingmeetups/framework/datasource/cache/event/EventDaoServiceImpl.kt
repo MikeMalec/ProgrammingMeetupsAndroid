@@ -31,10 +31,9 @@ class EventDaoServiceImpl(
 
     override suspend fun getUserEvents(userId: String): List<ProgrammingEvent> {
         val events = eventCacheMapper.mapFromEntities(eventDao.getProgrammingEvents())
-        val x = events.filter {
+        return events.filter {
             it.participants!!.firstOrNull { user -> user.id == userId } != null
         }
-        Log.d("XXX", "X = $x")
-        return x
+
     }
 }

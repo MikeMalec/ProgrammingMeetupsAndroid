@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.events.eventcomments
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -73,7 +74,7 @@ class EventCommentsViewModel @ViewModelInject constructor(
             fetching = true
             page++
             viewModelScope.launch(dispatcher) {
-                getEventComments.getEventComments("Bearer $token", eventId, cPage, dispatcher)
+                getEventComments.getEventComments(token, eventId, cPage, dispatcher)
                     .collect {
                         dispatchCommentResponse(it)
                     }

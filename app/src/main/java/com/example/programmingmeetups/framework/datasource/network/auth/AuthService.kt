@@ -16,4 +16,10 @@ interface AuthService {
     ): AuthResponse
 
     suspend fun login(loginRequest: LoginRequest): AuthResponse
+
+    suspend fun updateProfile(
+        token: String,
+        description: RequestBody,
+        image: MultipartBody.Part?
+    ): AuthResponse
 }

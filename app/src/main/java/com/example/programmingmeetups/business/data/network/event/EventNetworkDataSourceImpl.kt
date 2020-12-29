@@ -54,4 +54,20 @@ class EventNetworkDataSourceImpl(private val eventNetworkService: EventNetworkSe
     ): EventCommentResponse {
         return eventNetworkService.getEventComments(token, eventId, page)
     }
+
+    override suspend fun deleteEvent(token: String, eventId: String):GenericResponse {
+        return eventNetworkService.deleteEvent(token, eventId)
+    }
+
+    override suspend fun updateEvent(
+        token: String,
+        id: String,
+        happensAt: RequestBody,
+        tags: RequestBody,
+        description: RequestBody,
+        image: MultipartBody.Part?,
+        icon: MultipartBody.Part?
+    ): ProgrammingEvent {
+        return eventNetworkService.updateEvent(token, id, happensAt, tags, description, image, icon)
+    }
 }

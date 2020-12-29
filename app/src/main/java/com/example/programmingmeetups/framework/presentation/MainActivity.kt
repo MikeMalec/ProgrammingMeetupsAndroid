@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -116,6 +117,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             R.id.authFragment, R.id.eventFragment, R.id.createEventFragment, R.id.eventCommentsFragment, R.id.updateEventFragment -> bottomNavigationView.hide()
             else -> bottomNavigationView.show()
         }
+    }
+
+    fun navigateToUserEvents() {
+        navController.navigate(R.id.userEventsFragment)
     }
 
     override fun showShortToast(message: String) = shortToast(message)

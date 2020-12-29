@@ -24,7 +24,7 @@ class PreferencesRepositoryImpl(private val dataStore: DataStore<Preferences>) :
             }
             .map { preferences ->
                 preferences[PreferencesRepository.token]
-            }
+            }.map { "Bearer $it" }
     }
 
     override suspend fun saveToken(token: String) {

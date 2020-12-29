@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.AddTagDialogBinding
+import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
 import com.example.programmingmeetups.utils.ENTER_TAG
 import com.example.programmingmeetups.utils.extensions.view.shortToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class TagBottomDialog(private val createEventViewModel: CreateEventViewModel) :
+class TagBottomDialog(private val createEventViewModel: EventCrudViewModel) :
     BottomSheetDialogFragment() {
 
     private lateinit var binding: AddTagDialogBinding

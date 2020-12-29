@@ -42,7 +42,7 @@ class MapViewModel @ViewModelInject constructor(
 
     private fun setToken() {
         viewModelScope.launch {
-            preferencesRepository.getToken().collect { token = "Bearer $it" }
+            preferencesRepository.getToken().collect { token = it!! }
         }
     }
 

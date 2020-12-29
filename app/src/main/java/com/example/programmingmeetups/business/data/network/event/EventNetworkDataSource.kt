@@ -21,10 +21,22 @@ interface EventNetworkDataSource {
         description: RequestBody
     ): ProgrammingEvent
 
+    suspend fun updateEvent(
+        token: String,
+        id: String,
+        happensAt: RequestBody,
+        tags: RequestBody,
+        description: RequestBody,
+        image: MultipartBody.Part?,
+        icon: MultipartBody.Part?
+    ): ProgrammingEvent
+
     suspend fun fetchEvents(token: String): List<ProgrammingEvent>
 
     suspend fun joinEvent(eventId: String, token: String): ProgrammingEvent
     suspend fun leaveEvent(eventId: String, token: String): ProgrammingEvent
 
     suspend fun getEventComments(token: String, eventId: String, page: Int): EventCommentResponse
+
+    suspend fun deleteEvent(token: String, eventId: String):GenericResponse
 }

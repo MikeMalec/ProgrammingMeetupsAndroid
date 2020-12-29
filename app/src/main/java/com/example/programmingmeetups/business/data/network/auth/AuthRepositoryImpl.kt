@@ -24,4 +24,12 @@ class AuthRepositoryImpl(private val authService: AuthService) : AuthRepository 
     ): AuthResponse {
         return authService.login(loginRequest)
     }
+
+    override suspend fun updateProfile(
+        token: String,
+        description: RequestBody,
+        image: MultipartBody.Part?
+    ): AuthResponse {
+        return authService.updateProfile(token, description, image)
+    }
 }

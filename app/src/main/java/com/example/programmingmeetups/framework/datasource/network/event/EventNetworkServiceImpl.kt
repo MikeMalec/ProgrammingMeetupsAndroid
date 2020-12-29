@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.framework.datasource.network.event
 
+import android.util.Log
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.framework.datasource.network.common.response.GenericResponse
 import com.example.programmingmeetups.framework.datasource.network.event.mappers.EventNetworkMapper
@@ -37,6 +38,33 @@ class EventNetworkServiceImpl(
                 description
             )
         )
+    }
+
+    override suspend fun updateEvent(
+        token: String,
+        id: String,
+        happensAt: RequestBody,
+        tags: RequestBody,
+        description: RequestBody,
+        image: MultipartBody.Part?,
+        icon: MultipartBody.Part?
+    ): ProgrammingEvent {
+        Log.d("XXX", "TOKEN = $token id = $id")
+        return networkMapper.mapFromEntity(
+            eventApi.updateEvent(
+                token,
+                id,
+                happensAt,
+                tags,
+                description,
+                image,
+                icon
+            )
+        )
+    }
+
+    override suspend fun deleteEvent(token: String, eventId: String): GenericResponse {
+        return eventApi.deleteEvent(token, eventId)
     }
 
     override suspend fun fetchEvents(token: String): List<ProgrammingEvent> {
