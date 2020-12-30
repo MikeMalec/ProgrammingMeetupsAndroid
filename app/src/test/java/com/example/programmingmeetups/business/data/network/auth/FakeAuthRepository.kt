@@ -3,16 +3,13 @@ package com.example.programmingmeetups.business.data.network.auth
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.LoginRequest
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import okio.Buffer
-import retrofit2.Response
 
 class FakeAuthRepository : AuthRepository {
 
-    var throwRegisterError = false
+    var throwsException = false
     var registerSuccessfully = true
 
     override suspend fun register(
@@ -22,7 +19,7 @@ class FakeAuthRepository : AuthRepository {
         email: RequestBody,
         password: RequestBody
     ): AuthResponse {
-        if (throwRegisterError) throw Exception()
+        if (throwsException) throw Exception()
         if (registerSuccessfully == true) {
             val firstNameValue = Buffer()
             firstName.writeTo(firstNameValue)
@@ -69,5 +66,20 @@ class FakeAuthRepository : AuthRepository {
             throw  Exception()
         }
         return AuthResponse()
+    }
+
+    override suspend fun updateProfile(
+        token: String,
+        description: RequestBody,
+        image: MultipartBody.Part?
+    ): AuthResponse {
+        if (throwsException) throw Exception()
+        val desc = Buffer()
+        description.writeTo(desc)
+        return AuthResponse(
+            user = User(
+                "id", "firstName", "lastName", "email", desc.readUtf8(), "image"
+            )
+        )
     }
 }

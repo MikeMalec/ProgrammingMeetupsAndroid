@@ -1,6 +1,5 @@
 package com.example.programmingmeetups.business.interactors.event.update
 
-import android.util.Log
 import com.example.programmingmeetups.business.data.cache.event.EventCacheDataSource
 import com.example.programmingmeetups.business.data.network.event.EventNetworkDataSource
 import com.example.programmingmeetups.business.data.util.safeApiCall
@@ -19,8 +18,8 @@ import javax.inject.Singleton
 
 @Singleton
 class UpdateEvent @Inject constructor(
-    @EventNetworkDataSourceImplementation private val eventNetworkDataSource: EventNetworkDataSource,
-    @EventCacheDataSourceImplementation private val eventCacheDataSource: EventCacheDataSource
+    @EventNetworkDataSourceImplementation val eventNetworkDataSource: EventNetworkDataSource,
+    @EventCacheDataSourceImplementation val eventCacheDataSource: EventCacheDataSource
 ) {
     fun updateEvent(
         token: String,

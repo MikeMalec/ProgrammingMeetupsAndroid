@@ -1,11 +1,15 @@
 package com.example.programmingmeetups.framework.presentation.profile
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.domain.util.Resource.*
@@ -14,9 +18,13 @@ import com.example.programmingmeetups.framework.presentation.events.common.BaseF
 import com.example.programmingmeetups.utils.PROFILE_SUCCESSFULLY_UPDATED
 import com.example.programmingmeetups.utils.extensions.view.hide
 import com.example.programmingmeetups.utils.extensions.view.show
+import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserProfileFragment(
-    private var userProfileViewModel: UserProfileViewModel? = null
+    private val contentManager: FrameworkContentManager,
+    var userProfileViewModel: UserProfileViewModel? = null
 ) :
     BaseFragment(R.layout.user_profile_fragment), View.OnClickListener {
 
@@ -92,7 +100,11 @@ class UserProfileFragment(
     }
 
     private fun setClicks() {
-        binding!!.btnUpdateProfile.setOnClickListener(this)
+        binding!!.apply {
+            btnUpdateProfile.setOnClickListener(this@UserProfileFragment)
+            ivUserImage.setOnClickListener(this@UserProfileFragment)
+
+        }
     }
 
     private val description: String
@@ -101,6 +113,18 @@ class UserProfileFragment(
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnUpdateProfile -> userProfileViewModel?.updateProfile(description)
+            R.id.ivUserImage -> requestImage()
         }
+    }
+
+    private val getImage = registerForActivityResult(contentManager.PickImage()) { result: Uri? ->
+        result?.also {
+            Glide.with(binding!!.ivUserImage).load(it).into(binding!!.ivUserImage)
+            userProfileViewModel!!.imageUri = it
+        }
+    }
+
+    private fun requestImage() {
+        getImage.launch("")
     }
 }

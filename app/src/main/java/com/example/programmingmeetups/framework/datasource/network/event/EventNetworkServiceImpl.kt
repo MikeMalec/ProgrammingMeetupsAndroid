@@ -49,7 +49,6 @@ class EventNetworkServiceImpl(
         image: MultipartBody.Part?,
         icon: MultipartBody.Part?
     ): ProgrammingEvent {
-        Log.d("XXX", "TOKEN = $token id = $id")
         return networkMapper.mapFromEntity(
             eventApi.updateEvent(
                 token,

@@ -43,7 +43,9 @@ class UserEventBindAdapter {
                     imageView to "eventImage"
                 )
                 val action =
-                    UserEventsFragmentDirections.actionUserEventsFragmentToEventFragment(event)
+                    UserEventsFragmentDirections.actionUserEventsFragmentToEventFragment(
+                        event
+                    )
                 cardView.findNavController().navigate(action, extras)
             }
         }

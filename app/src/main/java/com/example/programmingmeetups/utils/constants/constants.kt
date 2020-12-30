@@ -68,9 +68,9 @@ const val PROFILE_SUCCESSFULLY_UPDATED = "Profile successfully updated"
 const val LOCATION_RATIONALE = "Location permission is necessary to use this app"
 
 //Map
-const val LOCATION_UPDATE_INTERVAL = 60000L
+const val LOCATION_UPDATE_INTERVAL = 300000L
 const val FASTEST_LOCATION_INTERVAL = 2000L
-const val MAP_ZOOM = 15f
+const val MAP_ZOOM = 20f
 
 //SOCKETS
 const val NEW_COMMENT = "NEW_COMMENT"

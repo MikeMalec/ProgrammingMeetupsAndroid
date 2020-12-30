@@ -117,7 +117,7 @@ class AuthViewModelTest {
 
     @Test
     fun register_throws_exception_shows_error_unknown() = runBlockingTest {
-        fakeAuthRepository.throwRegisterError = true
+        fakeAuthRepository.throwsException = true
         val uri = mock(Uri::class.java)
         authViewModel.attemptRegister(
             uri,

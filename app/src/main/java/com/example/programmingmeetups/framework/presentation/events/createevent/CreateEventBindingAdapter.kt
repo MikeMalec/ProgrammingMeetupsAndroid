@@ -45,7 +45,7 @@ class CreateEventBindingAdapter {
                     layoutInflater.inflate(R.layout.event_tag, null, false)
                 val chip = tagLayout.findViewById<Chip>(R.id.eventTagChip)
                 chip.text = tag
-                chip.setOnClickListener {
+                chip.setOnCloseIconClickListener {
                     linearLayout.removeView(tagLayout)
                     viewModel.removeTag(tag)
                 }

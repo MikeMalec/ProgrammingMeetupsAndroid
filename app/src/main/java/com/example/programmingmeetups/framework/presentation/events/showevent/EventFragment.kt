@@ -28,6 +28,7 @@ import com.example.programmingmeetups.utils.extensions.view.hide
 import com.example.programmingmeetups.utils.extensions.view.show
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.event_fragment.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -95,6 +96,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         setViewModel()
         setBinding(view)
         observeResponseError()
+        observeLoading()
         setMainButtonClick()
     }
 
@@ -107,9 +109,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     private fun setMainButtonClick() {
         binding!!.btnEventAction.setOnClickListener {
             when (eventViewModel!!.getUserEventRelation()) {
-                EDIT_EVENT -> {
-                    // navigate to event edit fragment
-                }
+                EDIT_EVENT -> navigateToEditFragment()
                 LEAVE_EVENT -> eventViewModel!!.leaveEvent()
                 JOIN_EVENT -> eventViewModel!!.joinEvent()
             }
@@ -119,6 +119,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     private fun observeEvent() {
         lifecycleScope.launchWhenStarted {
             eventViewModel!!.event.observe(viewLifecycleOwner, Observer {
+                hideLoading()
                 runMenuAction {
                     setEditIcon()
                     setAmountOfParticipants(it.participants!!.size)
@@ -130,16 +131,38 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     private fun setViewModel() {
         eventViewModel =
             eventViewModel ?: ViewModelProvider(this).get(EventViewModel::class.java)
-        eventViewModel!!.setEvent(programmingEvent)
+        lifecycleScope.launchWhenStarted {
+            eventViewModel!!.setEvent(programmingEvent)
+        }
     }
 
     private fun observeResponseError() {
         lifecycleScope.launchWhenStarted {
             eventViewModel!!.responseError.observe(viewLifecycleOwner, Observer {
+                hideLoading()
                 it.getContent()
                     ?.also { err -> runUiControllerAction { uiController.showShortToast(err) } }
             })
         }
+    }
+
+    private fun observeLoading() {
+        lifecycleScope.launchWhenStarted {
+            eventViewModel!!.loading.observe(viewLifecycleOwner, Observer {
+                when (it.getContent()) {
+                    true -> showLoading()
+                    else -> hideLoading()
+                }
+            })
+        }
+    }
+
+    private fun showLoading() {
+        binding!!.pbEventLoading.show()
+    }
+
+    private fun hideLoading() {
+        binding!!.pbEventLoading.hide()
     }
 
     // Had to do it like this for UI tests

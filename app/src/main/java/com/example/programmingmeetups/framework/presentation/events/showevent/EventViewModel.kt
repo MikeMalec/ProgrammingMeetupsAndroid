@@ -35,14 +35,17 @@ class EventViewModel @ViewModelInject constructor(
     private val _event: MutableLiveData<ProgrammingEvent> = MutableLiveData()
     val event: LiveData<ProgrammingEvent> = _event
 
+    private val _loading: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val loading: LiveData<Event<Boolean>> = _loading
+
     fun getUserEventRelation(): String {
-        val event = event.value!!
-        val participants = event.participants!!
-        if(user != null) {
+        val event = event.value
+        val participants = event?.participants
+        if (user != null && event != null) {
             if (event.organizer!!.id == user!!.id) {
                 return EDIT_EVENT
             } else {
-                val existsInParticipants = participants.firstOrNull { it.id == user!!.id }
+                val existsInParticipants = participants!!.firstOrNull { it.id == user!!.id }
                 if (existsInParticipants != null) {
                     return LEAVE_EVENT
                 } else {
@@ -74,16 +77,18 @@ class EventViewModel @ViewModelInject constructor(
     }
 
     fun joinEvent() {
+        _loading.value = Event(true)
         viewModelScope.launch(dispatcher) {
-            joinEvent.joinEvent(event.value!!.id!!, "Bearer $token", dispatcher).collect {
+            joinEvent.joinEvent(event.value!!.id!!, "$token", dispatcher).collect {
                 dispatchEventResponse(it)
             }
         }
     }
 
     fun leaveEvent() {
+        _loading.value = Event(true)
         viewModelScope.launch(dispatcher) {
-            leaveEvent.leaveEvent(event.value!!.id!!, "Bearer $token", dispatcher).collect {
+            leaveEvent.leaveEvent(event.value!!.id!!, "$token", dispatcher).collect {
                 dispatchEventResponse(it)
             }
         }

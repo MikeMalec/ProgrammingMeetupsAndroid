@@ -1,6 +1,7 @@
 package com.example.programmingmeetups.framework.presentation.map
 
 import android.graphics.Bitmap
+import android.graphics.Camera
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,10 +29,7 @@ import com.example.programmingmeetups.utils.extensions.view.show
 import com.example.programmingmeetups.utils.permissions.PermissionManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.map_fragment.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -70,7 +68,7 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
 
     private fun setViewModel() {
         mapViewModel =
-            mapViewModel ?: ViewModelProvider(this).get(MapViewModel::class.java)
+            mapViewModel ?: ViewModelProvider(requireActivity()).get(MapViewModel::class.java)
         permissionManager.requestLocationPermissions(this)
         requestPosition()
     }
@@ -124,6 +122,9 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
                     }
                 }
             }
+            withContext(Main) {
+                userPosition?.also { setUserPosition(it) }
+            }
         }
     }
 
@@ -150,24 +151,37 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     }
 
     private fun showEvent(event: ProgrammingEvent) {
+        hideMap()
         MapFragmentDirections.actionMapFragmentToEventFragment(event).run {
             findNavController().navigate(this)
         }
     }
 
+    private var userPosition: LatLng? = null
     private var positionSet = false
     private fun setPosition() {
         mapViewModel!!.position.observe(viewLifecycleOwner, Observer { latLng ->
             if (!positionSet) {
                 positionSet = true
                 moveCameraToSpecificPosition(latLng)
+                userPosition = latLng
             }
         })
     }
 
     private fun moveCameraToSpecificPosition(position: LatLng) {
         showMap()
-        map?.animateCamera(CameraUpdateFactory.newLatLngZoom(position, MAP_ZOOM))
+        if (mapViewModel!!.cameraPosition != null) {
+            map?.animateCamera(CameraUpdateFactory.newCameraPosition(mapViewModel?.cameraPosition))
+        } else {
+            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(position, MAP_ZOOM))
+        }
+    }
+
+    private fun setUserPosition(latLng: LatLng) {
+        val markerOptions = MarkerOptions().title("You are here!").position(latLng)
+        val marker = map?.addMarker(markerOptions)
+        marker?.showInfoWindow()
     }
 
     override fun onResume() {
@@ -183,6 +197,10 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     override fun onStop() {
         super.onStop()
         mapView.onStop()
+        map?.also {
+            mapViewModel?.cameraPosition = it.cameraPosition
+        }
+        mapViewModel?.stop()
     }
 
     override fun onPause() {

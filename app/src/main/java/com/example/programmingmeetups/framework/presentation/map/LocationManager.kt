@@ -2,6 +2,7 @@ package com.example.programmingmeetups.framework.presentation.map
 
 import android.annotation.SuppressLint
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.programmingmeetups.utils.FASTEST_LOCATION_INTERVAL
@@ -32,6 +33,10 @@ class LocationManager constructor(
         }
     }
 
+    override fun stop() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    }
+
     private fun getLocationRequest(): LocationRequest {
         return LocationRequest().apply {
             interval = LOCATION_UPDATE_INTERVAL
@@ -52,5 +57,6 @@ class LocationManager constructor(
 
 interface LocationManagerInterface {
     fun getLocation()
+    fun stop()
     var position: LiveData<LatLng>
 }

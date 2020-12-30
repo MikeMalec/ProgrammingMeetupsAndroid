@@ -1,6 +1,7 @@
 package com.example.programmingmeetups.framework.presentation.events.eventcomments
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.databinding.EventCommentsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -69,13 +71,22 @@ class EventCommentsFragment(var eventCommentsViewModel: EventCommentsViewModel? 
     }
 
     private fun setSendClick() {
-        binding.btnSendComment.setOnClickListener {
-            viewModel.sendComment(event.id!!, binding.etComment.text.toString())
+        binding.etComment.setOnTouchListener { view, motionEvent ->
+            val right = 2
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if (motionEvent.rawX >= (binding.etComment.right - binding.etComment.compoundDrawables[right].bounds.width())) {
+                    viewModel.sendComment(event.id!!, binding.etComment.text.toString())
+                    binding.etComment.setText("")
+                    true
+                }
+            }
+            false
         }
     }
 
     private fun observeComments() {
         lifecycleScope.launchWhenStarted {
+            delay(300)
             viewModel.comments.observe(viewLifecycleOwner, Observer {
                 eventCommentAdapter.submitComments(it)
             })

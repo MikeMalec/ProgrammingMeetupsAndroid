@@ -75,7 +75,7 @@ class RegisterTest {
 
     @Test
     fun register_throws_error_unknown() = runBlockingTest {
-        fakeAuthRepository!!.throwRegisterError = true
+        fakeAuthRepository!!.throwsException = true
         register!!.register(
             MultipartBody.Part.createFormData(
                 "image", "test", RequestBody.create(

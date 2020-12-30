@@ -1,6 +1,7 @@
 package com.example.programmingmeetups.framework.presentation.events.updateevent
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -21,10 +22,13 @@ import com.example.programmingmeetups.framework.presentation.events.createevent.
 import com.example.programmingmeetups.utils.Cancel
 import com.example.programmingmeetups.utils.DELETE
 import com.example.programmingmeetups.utils.DELETE_EVENT
+import com.example.programmingmeetups.utils.extensions.view.hide
+import com.example.programmingmeetups.utils.extensions.view.show
 import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.create_event_fragment.*
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,13 +62,17 @@ class UpdateEventFragment(
         observeValidationMessage()
         observeUpdateRequestResponse()
         observeDeleteRequestResponse()
+        observeLoading()
     }
 
     private fun setViewModelAndEvent() {
         updateEventViewModel =
             updateEventViewModel ?: ViewModelProvider(this).get(UpdateEventViewModel::class.java)
-        updateEventViewModel!!.programmingEvent = args.event.copy()
-        updateEventViewModel!!.setEvent()
+        lifecycleScope.launchWhenStarted {
+            delay(300)
+            updateEventViewModel!!.programmingEvent = args.event.copy()
+            updateEventViewModel!!.setEvent()
+        }
     }
 
     private fun setBinding(view: View) {
@@ -104,9 +112,11 @@ class UpdateEventFragment(
                 val value = it.getContent()
                 when (value) {
                     is Resource.Success -> {
+                        hideLoading()
                         value.data?.also { event -> setEventAndNavigateBack(event) }
                     }
                     is Resource.Error -> {
+                        hideLoading()
                         runUiControllerAction {
                             value.error?.also { err ->
                                 uiController.showShortToast(err)
@@ -123,6 +133,7 @@ class UpdateEventFragment(
     private fun observeDeleteRequestResponse() {
         lifecycleScope.launchWhenStarted {
             updateEventViewModel!!.deleteRequestResponse.observe(viewLifecycleOwner, Observer {
+                hideLoading()
                 val value = it.getContent()
                 when (value) {
                     is Resource.Success -> navigateToUserEvents()
@@ -138,6 +149,25 @@ class UpdateEventFragment(
                 }
             })
         }
+    }
+
+    private fun observeLoading() {
+        lifecycleScope.launchWhenStarted {
+            updateEventViewModel!!.loading.observe(viewLifecycleOwner, Observer {
+                when (it.getContent()) {
+                    true -> showLoading()
+                    else -> hideLoading()
+                }
+            })
+        }
+    }
+
+    private fun showLoading() {
+        binding.pbUpdateEvent.show()
+    }
+
+    private fun hideLoading() {
+        binding.pbUpdateEvent.hide()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

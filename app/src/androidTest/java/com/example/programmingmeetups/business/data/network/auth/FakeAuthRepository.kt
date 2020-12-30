@@ -48,25 +48,33 @@ class AndroidFakeAuthRepository : AuthRepository {
         }
     }
 
-        var throwLoginError = false
-        var loginSuccessfully = true
+    var throwLoginError = false
+    var loginSuccessfully = true
 
-        override suspend fun login(loginRequest: LoginRequest): AuthResponse {
-            if (throwLoginError) throw Exception()
-            if (loginSuccessfully) {
-                return AuthResponse(
-                    token = "token", user =
-                    User(
-                        firstName = "firstName",
-                        lastName = "lastName",
-                        email = loginRequest.email,
-                        image = "image",
-                        description = "",
-                        id = "id"
-                    )
+    override suspend fun login(loginRequest: LoginRequest): AuthResponse {
+        if (throwLoginError) throw Exception()
+        if (loginSuccessfully) {
+            return AuthResponse(
+                token = "token", user =
+                User(
+                    firstName = "firstName",
+                    lastName = "lastName",
+                    email = loginRequest.email,
+                    image = "image",
+                    description = "",
+                    id = "id"
                 )
-            } else {
-                throw Exception()
-            }
+            )
+        } else {
+            throw Exception()
         }
     }
+
+    override suspend fun updateProfile(
+        token: String,
+        description: RequestBody,
+        image: MultipartBody.Part?
+    ): AuthResponse {
+        return AuthResponse()
+    }
+}

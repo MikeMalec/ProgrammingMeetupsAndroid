@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 
 class FakePreferencesRepositoryImpl : PreferencesRepository {
 
-    var token: String? = null
+    var token: String? = "token"
 
     var userInfo: User? = null
 

@@ -3,6 +3,7 @@ package com.example.programmingmeetups.business.data.network.event
 import android.util.Log
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.model.User
+import com.example.programmingmeetups.framework.datasource.network.common.response.GenericResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventCommentDto
 import okhttp3.MultipartBody
@@ -10,7 +11,7 @@ import okhttp3.RequestBody
 import kotlin.math.ceil
 
 class AndroidFakeEventNetworkDataSourceImpl : EventNetworkDataSource {
-    val events = mutableListOf<ProgrammingEvent>()
+    var events = mutableListOf<ProgrammingEvent>()
 
     var throwsException = false
 
@@ -38,6 +39,35 @@ class AndroidFakeEventNetworkDataSourceImpl : EventNetworkDataSource {
             description = "test"
         )
         return programmingEvent
+    }
+
+    override suspend fun updateEvent(
+        token: String,
+        id: String,
+        happensAt: RequestBody,
+        tags: RequestBody,
+        description: RequestBody,
+        image: MultipartBody.Part?,
+        icon: MultipartBody.Part?
+    ): ProgrammingEvent {
+        if (throwsException) throw Exception()
+        val event = events.first { it.id == id }
+        event.happensAt = 1L
+        event.tags = mutableListOf("updated")
+        event.description = "updated"
+        if (image != null) {
+            event.image = "new image"
+        }
+        if (icon != null) {
+            event.icon = "new icon"
+        }
+        return event
+    }
+
+    override suspend fun deleteEvent(token: String, eventId: String): GenericResponse {
+        if (throwsException) throw Exception()
+        events = events.filter { it.id != eventId }.toMutableList()
+        return GenericResponse()
     }
 
     override suspend fun fetchEvents(token: String): List<ProgrammingEvent> {

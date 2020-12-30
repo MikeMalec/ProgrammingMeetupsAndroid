@@ -58,7 +58,6 @@ class UpdateEventViewModel @ViewModelInject constructor(
 
     val event: LiveData<ProgrammingEvent> = _event
 
-
     private val _validationMessage: MutableLiveData<Event<String>> = MutableLiveData()
     val validationMessage: LiveData<Event<String>> = _validationMessage
 
@@ -69,6 +68,9 @@ class UpdateEventViewModel @ViewModelInject constructor(
     private val _deleteRequestResponse: MutableLiveData<Event<Resource<GenericResponse?>>> =
         MutableLiveData()
     val deleteRequestResponse: LiveData<Event<Resource<GenericResponse?>>> = _deleteRequestResponse
+
+    private val _loading: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val loading: LiveData<Event<Boolean>> = _loading
 
     fun setEvent() {
         _event.postValue(programmingEvent)
@@ -111,6 +113,7 @@ class UpdateEventViewModel @ViewModelInject constructor(
     }
 
     private fun updateEvent() {
+        _loading.value = Event(true)
         viewModelScope.launch(dispatcher) {
             val happensAt =
                 requestBodyFactory.createTextRequestBody(programmingEvent.happensAt.toString())
@@ -146,6 +149,7 @@ class UpdateEventViewModel @ViewModelInject constructor(
     }
 
     fun deleteEvent() {
+        _loading.value = Event(true)
         viewModelScope.launch(dispatcher) {
             deleteEvent.deleteEvent(token, programmingEvent, dispatcher).collect {
                 _deleteRequestResponse.postValue(Event(it))

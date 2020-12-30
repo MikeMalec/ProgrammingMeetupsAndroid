@@ -24,7 +24,6 @@ suspend fun <T> safeApiCall(
                 Resource.Success(apiCall())
             }
         } catch (throwable: Throwable) {
-            Log.d("XXX","ERR $throwable")
             throwable.printStackTrace()
             when (throwable) {
                 is TimeoutCancellationException -> {

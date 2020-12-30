@@ -15,7 +15,7 @@ class FakeRequestBodyFactoryImpl : RequestBodyFactoryInterface {
 
     }
 
-    override fun createImageRequestBody(uri: Uri): MultipartBody.Part {
+    override fun createImageRequestBody(uri: Uri, main: Boolean): MultipartBody.Part {
         val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
         return MultipartBody.Part.createFormData("image", file.name, requestBody)
     }

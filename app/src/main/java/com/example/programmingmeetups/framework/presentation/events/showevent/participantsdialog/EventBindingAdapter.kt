@@ -19,63 +19,83 @@ class EventBindingAdapter {
     companion object {
         @BindingAdapter("setEventMainImage")
         @JvmStatic
-        fun setEventMainImage(imageView: ImageView, event: ProgrammingEvent) {
-            Glide.with(imageView).load("$IMAGES_URL${event.image}").into(imageView)
+        fun setEventMainImage(imageView: ImageView, event: ProgrammingEvent?) {
+            event?.also {
+                Glide.with(imageView).load("$IMAGES_URL${event.image}").into(imageView)
+            }
         }
 
         @BindingAdapter("setShowEventAddress")
         @JvmStatic
-        fun setShowEventAddress(textView: TextView, event: ProgrammingEvent) {
-            textView.text = event.address
+        fun setShowEventAddress(textView: TextView, event: ProgrammingEvent?) {
+            event?.also {
+                textView.text = event.address
+            }
         }
 
         @BindingAdapter("setShowEventDate")
         @JvmStatic
-        fun setShowEventDate(textView: TextView, event: ProgrammingEvent) {
-            event.happensAt?.also {
-                textView.text = DateManager.getDateWithDayNameAndHours(it)
+        fun setShowEventDate(textView: TextView, event: ProgrammingEvent?) {
+            event?.also {
+                event.happensAt?.also {
+                    textView.text = DateManager.getDateWithDayNameAndHours(it)
+                }
             }
         }
 
         @BindingAdapter("setShowEventDescription")
         @JvmStatic
-        fun setShowEventDescription(textView: TextView, event: ProgrammingEvent) {
-            textView.text = event.description
+        fun setShowEventDescription(textView: TextView, event: ProgrammingEvent?) {
+            event?.also {
+                textView.text = event.description
+            }
         }
 
         @BindingAdapter("setOrganizerName")
         @JvmStatic
-        fun setOrganizerName(textView: TextView, event: ProgrammingEvent) {
-            textView.text =
-                "${event.organizer?.firstName} ${event.organizer?.lastName}"
+        fun setOrganizerName(textView: TextView, event: ProgrammingEvent?) {
+            event?.also {
+                textView.text =
+                    "Organized by ${event.organizer?.firstName} ${event.organizer?.lastName}"
+            }
         }
 
         @BindingAdapter("setOrganizerImage")
         @JvmStatic
-        fun setOrganizerImage(imageView: ImageView, event: ProgrammingEvent) {
-            Glide.with(imageView.context).load("$IMAGES_URL${event.organizer!!.image}")
-                .into(imageView)
+        fun setOrganizerImage(imageView: ImageView, event: ProgrammingEvent?) {
+            event?.also {
+                Glide.with(imageView.context).load("$IMAGES_URL${event.organizer!!.image}")
+                    .into(imageView)
+            }
         }
 
         @BindingAdapter("setEventTags")
         @JvmStatic
-        fun setEventTags(linearLayout: LinearLayout, event: ProgrammingEvent) {
-            val layoutInflater = LayoutInflater.from(linearLayout.context)
-            linearLayout.removeAllViews()
-            event.tags?.forEach { tag ->
-                val tagLayout =
-                    layoutInflater.inflate(R.layout.event_tag_without_close, null, false)
-                val chip = tagLayout.findViewById<Chip>(R.id.eventTagChip)
-                chip.text = tag
-                linearLayout.addView(tagLayout)
+        fun setEventTags(linearLayout: LinearLayout, event: ProgrammingEvent?) {
+            event?.also {
+                val layoutInflater = LayoutInflater.from(linearLayout.context)
+                linearLayout.removeAllViews()
+                event.tags?.forEach { tag ->
+                    val tagLayout =
+                        layoutInflater.inflate(R.layout.event_tag_without_close, null, false)
+                    val chip = tagLayout.findViewById<Chip>(R.id.eventTagChip)
+                    chip.text = tag
+                    linearLayout.addView(tagLayout)
+                }
             }
         }
 
-        @BindingAdapter("setMainBtn","setEventViewModel")
+        @BindingAdapter("setMainBtn", "setEventViewModel")
         @JvmStatic
-        fun setMainBtn(button: MaterialButton, event: ProgrammingEvent?, eventViewModel: EventViewModel) {
-            event?.organizer
-            button.text = eventViewModel.getUserEventRelation()
+        fun setMainBtn(
+            button: MaterialButton,
+            event: ProgrammingEvent?,
+            eventViewModel: EventViewModel
+        ) {
+            event.also {
+                event?.organizer
+                button.text = eventViewModel.getUserEventRelation()
+            }
         }
     }
 }

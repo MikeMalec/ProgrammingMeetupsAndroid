@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentFactory
 import com.example.programmingmeetups.framework.presentation.auth.AuthFragment
 import com.example.programmingmeetups.framework.presentation.events.createevent.CreateEventFragment
 import com.example.programmingmeetups.framework.presentation.events.updateevent.UpdateEventFragment
+import com.example.programmingmeetups.framework.presentation.profile.UserProfileFragment
 import com.example.programmingmeetups.utils.LOCALIZATION_DISPATCHER_IMPL
 import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
 import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
@@ -24,6 +25,7 @@ class CustomFragmentFactory @Inject constructor(
                 localizationDispatcherInterface = localizationDispatcherInterface
             )
             UpdateEventFragment::class.java.name -> UpdateEventFragment(frameworkContentManager)
+            UserProfileFragment::class.java.name -> UserProfileFragment(frameworkContentManager)
             else -> super.instantiate(classLoader, className)
         }
     }

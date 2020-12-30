@@ -18,7 +18,8 @@ class FakeEventCacheDataSource() :
     }
 
     override suspend fun deleteProgrammingEvent(programmingEvent: ProgrammingEvent) {
-        events.remove(programmingEvent)
+        val event = events.first { it.id == programmingEvent.id }
+        events.remove(event)
     }
 
     override suspend fun getUserEvents(userId: String): List<ProgrammingEvent> {

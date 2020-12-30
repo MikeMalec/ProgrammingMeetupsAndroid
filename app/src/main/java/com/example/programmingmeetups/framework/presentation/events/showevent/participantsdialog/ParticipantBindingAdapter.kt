@@ -10,17 +10,10 @@ import com.example.programmingmeetups.utils.IMAGES_URL
 
 class ParticipantBindingAdapter {
     companion object {
-        @BindingAdapter("setParticipantFirstName")
+        @BindingAdapter("setParticipantName")
         @JvmStatic
-        fun setParticipantFirstName(textView: TextView, user: User) {
-            textView.text = user.firstName
-        }
-
-        @BindingAdapter("setParticipantLastName")
-        @JvmStatic
-        fun setParticipantLastName(textView: TextView, user: User) {
-            Log.d("XXX","setParticipantLastName $user")
-            textView.text = user.lastName
+        fun setParticipantName(textView: TextView, user: User) {
+            textView.text = "${user.firstName} ${user.lastName}"
         }
 
         @BindingAdapter("setParticipantPhoto")
