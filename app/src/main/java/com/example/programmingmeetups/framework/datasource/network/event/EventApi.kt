@@ -46,6 +46,14 @@ interface EventApi {
         @Header("Authorization") token: String
     ): List<ProgrammingEventDto>
 
+    @GET("events")
+    suspend fun fetchEvents(
+        @Header("Authorization") token: String,
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double,
+        @Query("radius") radius: Double
+    ): List<ProgrammingEventDto>
+
     @POST("events/{id}/join")
     suspend fun joinEvent(
         @Header("Authorization") token: String,

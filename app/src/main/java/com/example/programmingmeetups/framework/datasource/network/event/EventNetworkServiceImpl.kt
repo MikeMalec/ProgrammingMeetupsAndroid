@@ -6,6 +6,7 @@ import com.example.programmingmeetups.framework.datasource.network.common.respon
 import com.example.programmingmeetups.framework.datasource.network.event.mappers.EventNetworkMapper
 import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
+import com.google.android.gms.maps.model.LatLng
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -68,6 +69,15 @@ class EventNetworkServiceImpl(
 
     override suspend fun fetchEvents(token: String): List<ProgrammingEvent> {
         return eventApi.fetchEvents(token).map { networkMapper.mapFromEntity(it) }
+    }
+
+    override suspend fun fetchEvents(
+        token: String,
+        position: LatLng,
+        radius: Double
+    ): List<ProgrammingEvent> {
+        return eventApi.fetchEvents(token, position.longitude, position.latitude, radius)
+            .map { networkMapper.mapFromEntity(it) }
     }
 
     override suspend fun joinEvent(eventId: String, token: String): ProgrammingEvent {

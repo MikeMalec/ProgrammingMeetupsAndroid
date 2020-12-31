@@ -5,6 +5,7 @@ import com.example.programmingmeetups.framework.datasource.network.common.respon
 import com.example.programmingmeetups.framework.datasource.network.event.EventNetworkService
 import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
+import com.google.android.gms.maps.model.LatLng
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -39,6 +40,14 @@ class EventNetworkDataSourceImpl(private val eventNetworkService: EventNetworkSe
         return eventNetworkService.fetchEvents(token)
     }
 
+    override suspend fun fetchEvents(
+        token: String,
+        position: LatLng,
+        radius: Double
+    ): List<ProgrammingEvent> {
+        return eventNetworkService.fetchEvents(token, position, radius)
+    }
+
     override suspend fun joinEvent(eventId: String, token: String): ProgrammingEvent {
         return eventNetworkService.joinEvent(eventId, token)
     }
@@ -55,7 +64,7 @@ class EventNetworkDataSourceImpl(private val eventNetworkService: EventNetworkSe
         return eventNetworkService.getEventComments(token, eventId, page)
     }
 
-    override suspend fun deleteEvent(token: String, eventId: String):GenericResponse {
+    override suspend fun deleteEvent(token: String, eventId: String): GenericResponse {
         return eventNetworkService.deleteEvent(token, eventId)
     }
 

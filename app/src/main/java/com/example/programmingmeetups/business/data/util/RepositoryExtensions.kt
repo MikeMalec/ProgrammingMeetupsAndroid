@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.business.data.util
 
+import android.util.Log
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.framework.utils.ERROR_TIMEOUT
 import com.example.programmingmeetups.framework.utils.CACHE_TIMEOUT
@@ -23,6 +24,7 @@ suspend fun <T> safeApiCall(
                 Resource.Success(apiCall())
             }
         } catch (throwable: Throwable) {
+            Log.d("XXX", "$throwable")
             throwable.printStackTrace()
             when (throwable) {
                 is TimeoutCancellationException -> {

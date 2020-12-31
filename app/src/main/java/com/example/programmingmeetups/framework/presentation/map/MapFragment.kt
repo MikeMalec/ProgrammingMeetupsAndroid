@@ -1,6 +1,7 @@
 package com.example.programmingmeetups.framework.presentation.map
 
 import android.graphics.Bitmap
+import android.location.Location
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -36,6 +37,8 @@ import javax.inject.Named
 @AndroidEntryPoint
 class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.map_fragment),
     EasyPermissions.PermissionCallbacks, GoogleMap.OnMapClickListener,
+    GoogleMap.OnCameraIdleListener,
+    GoogleMap.OnCameraMoveListener,
     GoogleMap.OnMarkerClickListener {
 
     @Inject
@@ -79,6 +82,8 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
             setPosition()
             map!!.setOnMapClickListener(this)
             map!!.setOnMarkerClickListener(this)
+            map!!.setOnCameraMoveListener(this)
+            map!!.setOnCameraIdleListener(this)
             observeEvents()
         }
     }
@@ -88,7 +93,6 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
             mapViewModel!!.events.observe(viewLifecycleOwner, Observer {
                 showMarkers(it)
             })
-            mapViewModel!!.fetchEvents()
         }
     }
 
@@ -134,6 +138,55 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
                 findNavController().navigate(it)
             }
         }
+    }
+
+    override fun onCameraMove() {
+        fetchEvents()
+    }
+
+    override fun onCameraIdle() {
+        fetchEvents()
+    }
+
+    private fun fetchEvents() {
+        val positionAndRadius = calculateRadius()
+        if (positionAndRadius != null) {
+            mapViewModel?.fetchEvents(positionAndRadius.first, positionAndRadius.second)
+        }
+    }
+
+    private fun calculateRadius(): Pair<LatLng, Double>? {
+        if (map != null) {
+            val position = map!!.cameraPosition.target
+            val visibleRegion = map!!.projection.visibleRegion
+            val distanceWidth = FloatArray(1)
+            val distanceHeight = FloatArray(1)
+            val farRight = visibleRegion.farRight
+            val farLeft = visibleRegion.farLeft
+            val nearLeft = visibleRegion.nearLeft
+            Location.distanceBetween(
+                farLeft.latitude,
+                farLeft.longitude,
+                nearLeft.latitude,
+                nearLeft.longitude,
+                distanceHeight
+            )
+            Location.distanceBetween(
+                farLeft.latitude,
+                farLeft.longitude,
+                farRight.latitude,
+                farRight.longitude,
+                distanceHeight
+            )
+            val radius = Math.sqrt(
+                (Math.pow(
+                    distanceHeight[0].toDouble(),
+                    2.0
+                )) + Math.pow(distanceWidth[0].toDouble(), 2.0)
+            ) / 2
+            return Pair(position, radius)
+        }
+        return null
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
