@@ -2,6 +2,7 @@ package com.example.programmingmeetups.framework.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -67,9 +68,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         lifecycleScope.launchWhenStarted {
             authViewModel.token.observe(this@MainActivity, Observer {
                 if (initialSetup) {
-                    when (it) {
-                        null -> setGraphAndNavigation(false)
-                        else -> setGraphAndNavigation(true)
+                    when (it!!.length > 11) {
+                        false -> setGraphAndNavigation(false)
+                        true -> setGraphAndNavigation(true)
                     }
                 }
                 initialSetup = false
