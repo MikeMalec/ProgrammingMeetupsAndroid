@@ -6,7 +6,7 @@ import com.example.programmingmeetups.business.data.cache.event.FakeEventCacheDa
 import com.example.programmingmeetups.business.data.network.event.FakeEventNetworkDataSource
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.Resource
-import com.example.programmingmeetups.utils.ERROR_UNKNOWN
+import com.example.programmingmeetups.framework.utils.ERROR_UNKNOWN
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.test.runBlockingTest

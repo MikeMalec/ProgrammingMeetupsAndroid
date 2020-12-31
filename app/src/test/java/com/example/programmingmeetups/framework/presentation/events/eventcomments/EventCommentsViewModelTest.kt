@@ -7,7 +7,7 @@ import com.example.programmingmeetups.business.interactors.event.getcomments.Get
 import com.example.programmingmeetups.framework.datasource.network.event.sockets.FakeCommentSocketManager
 import com.example.programmingmeetups.framework.datasource.preferences.FakePreferencesRepositoryImpl
 import com.example.programmingmeetups.getOrAwaitValueTest
-import com.example.programmingmeetups.utils.EventCommentFactory
+import com.example.programmingmeetups.framework.utils.EventCommentFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.google.common.truth.Truth.*
 import org.junit.Before

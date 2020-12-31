@@ -3,11 +3,10 @@ package com.example.programmingmeetups.framework.presentation.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.programmingmeetups.business.interactors.auth.AuthInteractors
-import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
 import com.example.programmingmeetups.framework.datasource.network.auth.utils.AuthValidator
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Named
 

@@ -1,11 +1,9 @@
 package com.example.programmingmeetups.framework.datasource.network.auth.utils
 
 import android.net.Uri
-import android.util.Log
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.LoginRequest
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RegisterRequest
-import com.example.programmingmeetups.utils.FILL_IN_ALL_FIELDS
-import okhttp3.MultipartBody
+import com.example.programmingmeetups.framework.utils.FILL_IN_ALL_FIELDS
 import javax.inject.Inject
 
 class AuthValidator @Inject constructor() {

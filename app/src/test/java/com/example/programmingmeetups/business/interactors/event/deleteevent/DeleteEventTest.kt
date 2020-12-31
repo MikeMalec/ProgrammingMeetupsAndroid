@@ -7,12 +7,11 @@ import com.example.programmingmeetups.business.data.network.event.FakeEventNetwo
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.framework.datasource.network.common.response.GenericResponse
-import com.example.programmingmeetups.utils.ERROR_UNKNOWN
+import com.example.programmingmeetups.framework.utils.ERROR_UNKNOWN
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before

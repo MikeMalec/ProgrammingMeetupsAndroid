@@ -8,7 +8,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.programmingmeetups.business.interactors.auth.AuthInteractors
-import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
 import com.example.programmingmeetups.framework.datasource.network.auth.utils.AuthValidator
 import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManager
@@ -18,10 +17,9 @@ import com.example.programmingmeetups.framework.presentation.auth.AuthViewModelF
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModelFactoryImpl
 import com.example.programmingmeetups.framework.presentation.map.LocationManager
 import com.example.programmingmeetups.framework.presentation.map.LocationManagerInterface
-import com.example.programmingmeetups.utils.*
-import com.example.programmingmeetups.utils.files.FileManager
-import com.example.programmingmeetups.utils.localization.LocalizationDispatcher
-import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
+import com.example.programmingmeetups.framework.utils.*
+import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcher
+import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcherInterface
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.gson.Gson
 import dagger.Module

@@ -17,9 +17,9 @@ import com.example.programmingmeetups.framework.datasource.cache.event.database.
 import com.example.programmingmeetups.framework.datasource.cache.event.mappers.EventCacheMapper
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepositoryImpl
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
-import com.example.programmingmeetups.utils.PREFERENCES_NAME
-import com.example.programmingmeetups.utils.PROGRAMMING_MEETUPS_DB
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
+import com.example.programmingmeetups.framework.utils.PREFERENCES_NAME
+import com.example.programmingmeetups.framework.utils.PROGRAMMING_MEETUPS_DB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

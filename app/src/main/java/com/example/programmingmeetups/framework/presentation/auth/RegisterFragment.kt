@@ -10,18 +10,17 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.util.Resource.Error
-import com.example.programmingmeetups.business.domain.util.Resource.Loading
 import com.example.programmingmeetups.business.domain.util.Resource.Success
 import com.example.programmingmeetups.databinding.RegisterFragmentBinding
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RegisterRequest
 import com.example.programmingmeetups.framework.presentation.UIController
-import com.example.programmingmeetups.utils.REGISTER_FRAGMENT
-import com.example.programmingmeetups.utils.SOMETHING_WENT_WRONG
-import com.example.programmingmeetups.utils.extensions.view.clearBackground
-import com.example.programmingmeetups.utils.extensions.view.clearImageTintList
-import com.example.programmingmeetups.utils.extensions.view.hide
-import com.example.programmingmeetups.utils.extensions.view.show
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.REGISTER_FRAGMENT
+import com.example.programmingmeetups.framework.utils.SOMETHING_WENT_WRONG
+import com.example.programmingmeetups.framework.utils.extensions.view.clearBackground
+import com.example.programmingmeetups.framework.utils.extensions.view.clearImageTintList
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
 import java.lang.Exception
 
 class RegisterFragment(

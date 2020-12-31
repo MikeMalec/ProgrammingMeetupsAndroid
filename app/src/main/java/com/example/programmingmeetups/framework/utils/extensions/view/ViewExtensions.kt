@@ -1,4 +1,4 @@
-package com.example.programmingmeetups.utils.extensions.view
+package com.example.programmingmeetups.framework.utils.extensions.view
 
 import android.view.View
 import android.widget.ImageView

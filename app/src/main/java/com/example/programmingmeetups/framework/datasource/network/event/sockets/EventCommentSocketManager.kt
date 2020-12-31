@@ -2,9 +2,9 @@ package com.example.programmingmeetups.framework.datasource.network.event.socket
 
 import android.util.Log
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventCommentDto
-import com.example.programmingmeetups.utils.JOIN_EVENT_COMMENTS
-import com.example.programmingmeetups.utils.NEW_COMMENT
-import com.example.programmingmeetups.utils.SOCKET_URL
+import com.example.programmingmeetups.framework.utils.JOIN_EVENT_COMMENTS
+import com.example.programmingmeetups.framework.utils.NEW_COMMENT
+import com.example.programmingmeetups.framework.utils.SOCKET_URL
 import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Manager

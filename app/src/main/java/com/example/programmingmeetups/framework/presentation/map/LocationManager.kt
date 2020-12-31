@@ -2,19 +2,16 @@ package com.example.programmingmeetups.framework.presentation.map
 
 import android.annotation.SuppressLint
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.programmingmeetups.utils.FASTEST_LOCATION_INTERVAL
-import com.example.programmingmeetups.utils.LOCATION_UPDATE_INTERVAL
+import com.example.programmingmeetups.framework.utils.FASTEST_LOCATION_INTERVAL
+import com.example.programmingmeetups.framework.utils.LOCATION_UPDATE_INTERVAL
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
-import javax.inject.Inject
-import javax.inject.Singleton
 
 class LocationManager constructor(
     private val fusedLocationProviderClient: FusedLocationProviderClient

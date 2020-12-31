@@ -16,7 +16,7 @@ import com.example.programmingmeetups.framework.datasource.network.auth.data.res
 import com.example.programmingmeetups.framework.presentation.common.AndroidCustomFragmentFactory
 import com.example.programmingmeetups.getOrAwaitValue
 import com.example.programmingmeetups.launchFragmentInHiltContainer
-import com.example.programmingmeetups.utils.FILL_IN_ALL_FIELDS
+import com.example.programmingmeetups.framework.utils.FILL_IN_ALL_FIELDS
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

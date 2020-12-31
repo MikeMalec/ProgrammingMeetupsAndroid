@@ -6,14 +6,12 @@ import com.example.programmingmeetups.business.data.network.event.FakeEventNetwo
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventCommentDto
-import com.example.programmingmeetups.utils.EventCommentFactory
+import com.example.programmingmeetups.framework.utils.EventCommentFactory
 import kotlinx.coroutines.test.runBlockingTest
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.collect
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

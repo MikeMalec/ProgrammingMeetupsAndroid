@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.AuthFragmentBinding
-import com.example.programmingmeetups.utils.STORAGE_REQUEST
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.STORAGE_REQUEST
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint

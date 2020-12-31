@@ -31,11 +31,10 @@ import com.example.programmingmeetups.framework.presentation.events.userevents.U
 import com.example.programmingmeetups.framework.presentation.events.userevents.UserEventsViewModel
 import com.example.programmingmeetups.framework.presentation.profile.UserProfileFragment
 import com.example.programmingmeetups.framework.presentation.profile.UserProfileViewModel
-import com.example.programmingmeetups.utils.COMMENT_SOCKET_MANAGER_IMPL
-import com.example.programmingmeetups.utils.FAKE_LOCALIZATION_DISPATCHER_IMPL
-import com.example.programmingmeetups.utils.LOCALIZATION_DISPATCHER_IMPL
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
-import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
+import com.example.programmingmeetups.framework.utils.COMMENT_SOCKET_MANAGER_IMPL
+import com.example.programmingmeetups.framework.utils.LOCALIZATION_DISPATCHER_IMPL
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcherInterface
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import javax.inject.Named

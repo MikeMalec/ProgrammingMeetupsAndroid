@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.Event
@@ -13,15 +12,13 @@ import com.example.programmingmeetups.business.domain.util.Resource.Loading
 import com.example.programmingmeetups.business.interactors.event.create.CreateEvent
 import com.example.programmingmeetups.di.RequestBodyFactoryImplementation
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
-import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
 import com.example.programmingmeetups.framework.datasource.network.event.utils.EventValidator
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
-import com.example.programmingmeetups.utils.FILL_IN_ALL_FIELDS
-import com.example.programmingmeetups.utils.IO_DISPATCHER
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
+import com.example.programmingmeetups.framework.utils.FILL_IN_ALL_FIELDS
+import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Named

@@ -1,12 +1,11 @@
 package com.example.programmingmeetups.framework.presentation.events.common
 
 import android.net.Uri
-import androidx.fragment.app.Fragment
 import com.example.programmingmeetups.framework.presentation.events.createevent.DateBottomDialog
 import com.example.programmingmeetups.framework.presentation.events.createevent.TagBottomDialog
-import com.example.programmingmeetups.utils.DATE_BOTTOM_DIALOG
-import com.example.programmingmeetups.utils.TAG_BOTTOM_DIALOG
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.DATE_BOTTOM_DIALOG
+import com.example.programmingmeetups.framework.utils.TAG_BOTTOM_DIALOG
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
 
 abstract class EventCrudFragment(
     open val contentManager: FrameworkContentManager,

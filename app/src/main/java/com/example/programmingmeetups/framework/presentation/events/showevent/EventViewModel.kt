@@ -9,7 +9,7 @@ import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.interactors.event.join.JoinEvent
 import com.example.programmingmeetups.business.interactors.event.leave.LeaveEvent
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
-import com.example.programmingmeetups.utils.*
+import com.example.programmingmeetups.framework.utils.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

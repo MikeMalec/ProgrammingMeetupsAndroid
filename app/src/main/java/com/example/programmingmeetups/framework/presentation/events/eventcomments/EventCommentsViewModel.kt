@@ -1,6 +1,5 @@
 package com.example.programmingmeetups.framework.presentation.events.eventcomments
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,9 +12,9 @@ import com.example.programmingmeetups.framework.datasource.network.event.sockets
 import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventCommentDto
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
-import com.example.programmingmeetups.utils.COMMENT_SOCKET_MANAGER_IMPL
-import com.example.programmingmeetups.utils.IO_DISPATCHER
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
+import com.example.programmingmeetups.framework.utils.COMMENT_SOCKET_MANAGER_IMPL
+import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow

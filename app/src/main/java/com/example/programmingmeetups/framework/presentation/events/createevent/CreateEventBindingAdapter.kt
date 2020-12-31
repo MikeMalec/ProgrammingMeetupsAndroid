@@ -1,18 +1,15 @@
 package com.example.programmingmeetups.framework.presentation.events.createevent
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.DateManager
 import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
-import com.example.programmingmeetups.utils.extensions.view.show
+import com.example.programmingmeetups.framework.utils.extensions.view.show
 import com.google.android.material.chip.Chip
 
 class CreateEventBindingAdapter {

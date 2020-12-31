@@ -12,7 +12,7 @@ import com.example.programmingmeetups.framework.datasource.network.auth.data.req
 import com.example.programmingmeetups.framework.datasource.network.event.utils.EventValidator
 import com.example.programmingmeetups.framework.datasource.preferences.FakePreferencesRepositoryImpl
 import com.example.programmingmeetups.getOrAwaitValueTest
-import com.example.programmingmeetups.utils.FILL_IN_ALL_FIELDS
+import com.example.programmingmeetups.framework.utils.FILL_IN_ALL_FIELDS
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

@@ -6,9 +6,9 @@ import com.example.programmingmeetups.framework.presentation.auth.AuthFragment
 import com.example.programmingmeetups.framework.presentation.events.createevent.CreateEventFragment
 import com.example.programmingmeetups.framework.presentation.events.updateevent.UpdateEventFragment
 import com.example.programmingmeetups.framework.presentation.profile.UserProfileFragment
-import com.example.programmingmeetups.utils.LOCALIZATION_DISPATCHER_IMPL
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
-import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
+import com.example.programmingmeetups.framework.utils.LOCALIZATION_DISPATCHER_IMPL
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcherInterface
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -22,7 +22,7 @@ class CustomFragmentFactory @Inject constructor(
             AuthFragment::class.java.name -> AuthFragment(frameworkContentManager)
             CreateEventFragment::class.java.name -> CreateEventFragment(
                 frameworkContentManager,
-                localizationDispatcherInterface = localizationDispatcherInterface
+                localizationDispatcher = localizationDispatcherInterface
             )
             UpdateEventFragment::class.java.name -> UpdateEventFragment(frameworkContentManager)
             UserProfileFragment::class.java.name -> UserProfileFragment(frameworkContentManager)

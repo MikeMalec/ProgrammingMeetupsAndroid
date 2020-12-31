@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.interactors.event.map.SynchronizeProgrammingEvents
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
-import com.example.programmingmeetups.utils.IO_DISPATCHER
-import com.example.programmingmeetups.utils.LOCATION_MANAGER_IMPL
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
+import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
+import com.example.programmingmeetups.framework.utils.LOCATION_MANAGER_IMPL
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import com.google.android.gms.maps.model.CameraPosition
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect

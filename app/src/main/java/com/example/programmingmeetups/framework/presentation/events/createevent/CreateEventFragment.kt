@@ -15,11 +15,11 @@ import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.util.Resource.*
 import com.example.programmingmeetups.databinding.CreateEventFragmentBinding
 import com.example.programmingmeetups.framework.presentation.UIController
-import com.example.programmingmeetups.utils.*
-import com.example.programmingmeetups.utils.extensions.view.hide
-import com.example.programmingmeetups.utils.extensions.view.show
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
-import com.example.programmingmeetups.utils.localization.LocalizationDispatcherInterface
+import com.example.programmingmeetups.framework.utils.*
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcherInterface
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.create_event_fragment.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class CreateEventFragment(
     private val contentManager: FrameworkContentManager,
     var createEventViewModel: CreateEventViewModel? = null,
-    private val localizationDispatcherInterface: LocalizationDispatcherInterface
+    private val localizationDispatcher: LocalizationDispatcherInterface
 ) :
     Fragment(R.layout.create_event_fragment), View.OnClickListener {
 
@@ -131,7 +131,7 @@ class CreateEventFragment(
     private fun setAddress() {
         lifecycleScope.launchWhenStarted {
             withContext(IO) {
-                val localization = localizationDispatcherInterface.getAddress(latitude, longitude)
+                val localization = localizationDispatcher.getAddress(latitude, longitude)
                 if (localization != null) {
                     createEventViewModel!!.setAddress(localization)
                 } else {
@@ -183,7 +183,6 @@ class CreateEventFragment(
     }
 
     private fun navigateBackWithErrorMessage() {
-        Log.d("XXX", "navigateBackWithErrorMessage")
         runUiControllerAction { uiController.showShortToast(SOMETHING_WENT_WRONG) }
         findNavController().popBackStack()
     }

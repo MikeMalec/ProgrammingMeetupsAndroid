@@ -1,4 +1,4 @@
-package com.example.programmingmeetups.utils
+package com.example.programmingmeetups.framework.utils
 
 const val SOCKET_URL = "http://192.168.0.105:7000/"
 const val BASE_URL = "http://192.168.0.105:7000/api/"

@@ -1,7 +1,7 @@
 package com.example.programmingmeetups.framework.datasource.network.auth.data.request
 
 import android.net.Uri
-import com.example.programmingmeetups.utils.files.FileManager
+import com.example.programmingmeetups.framework.utils.files.FileManager
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

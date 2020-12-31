@@ -12,10 +12,10 @@ import com.example.programmingmeetups.business.domain.util.Resource.Success
 import com.example.programmingmeetups.databinding.LoginFragmentBinding
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.LoginRequest
 import com.example.programmingmeetups.framework.presentation.UIController
-import com.example.programmingmeetups.utils.LOGIN_FRAGMENT
-import com.example.programmingmeetups.utils.SOMETHING_WENT_WRONG
-import com.example.programmingmeetups.utils.extensions.view.hide
-import com.example.programmingmeetups.utils.extensions.view.show
+import com.example.programmingmeetups.framework.utils.LOGIN_FRAGMENT
+import com.example.programmingmeetups.framework.utils.SOMETHING_WENT_WRONG
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
 import java.lang.Exception
 
 class LoginFragment(

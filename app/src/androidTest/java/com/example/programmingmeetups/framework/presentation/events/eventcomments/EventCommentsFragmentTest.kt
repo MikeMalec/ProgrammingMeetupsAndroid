@@ -2,12 +2,10 @@ package com.example.programmingmeetups.framework.presentation.events.eventcommen
 
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.MediumTest
 import com.example.programmingmeetups.R
@@ -17,7 +15,7 @@ import com.example.programmingmeetups.di.AppModule
 import com.example.programmingmeetups.framework.presentation.common.AndroidCustomFragmentFactory
 import com.example.programmingmeetups.getOrAwaitValue
 import com.example.programmingmeetups.launchFragmentInHiltContainer
-import com.example.programmingmeetups.utils.AndroidEventCommentFactory
+import com.example.programmingmeetups.framework.utils.AndroidEventCommentFactory
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import com.google.common.truth.Truth.*

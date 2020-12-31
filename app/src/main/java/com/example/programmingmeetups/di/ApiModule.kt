@@ -2,11 +2,8 @@ package com.example.programmingmeetups.di
 
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
-import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManager
-import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManagerInterface
-import com.example.programmingmeetups.utils.BASE_URL
-import com.example.programmingmeetups.utils.COMMENT_SOCKET_MANAGER_IMPL
-import com.example.programmingmeetups.utils.files.FileManager
+import com.example.programmingmeetups.framework.utils.BASE_URL
+import com.example.programmingmeetups.framework.utils.files.FileManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -15,7 +12,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
 import javax.inject.Qualifier
 import javax.inject.Singleton
 

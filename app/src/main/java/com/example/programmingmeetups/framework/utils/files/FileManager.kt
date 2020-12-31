@@ -1,4 +1,4 @@
-package com.example.programmingmeetups.utils.files
+package com.example.programmingmeetups.framework.utils.files
 
 import android.content.Context
 import android.net.Uri

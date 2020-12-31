@@ -8,7 +8,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.DateManager
-import com.example.programmingmeetups.utils.IMAGES_URL
+import com.example.programmingmeetups.framework.utils.IMAGES_URL
 import com.google.android.material.card.MaterialCardView
 
 class UserEventBindAdapter {

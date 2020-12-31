@@ -1,7 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.events.updateevent
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -19,12 +18,12 @@ import com.example.programmingmeetups.framework.presentation.MainActivity
 import com.example.programmingmeetups.framework.presentation.events.common.EventCrudFragment
 import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
 import com.example.programmingmeetups.framework.presentation.events.createevent.EventTextWatcher
-import com.example.programmingmeetups.utils.Cancel
-import com.example.programmingmeetups.utils.DELETE
-import com.example.programmingmeetups.utils.DELETE_EVENT
-import com.example.programmingmeetups.utils.extensions.view.hide
-import com.example.programmingmeetups.utils.extensions.view.show
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.Cancel
+import com.example.programmingmeetups.framework.utils.DELETE
+import com.example.programmingmeetups.framework.utils.DELETE_EVENT
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.create_event_fragment.*

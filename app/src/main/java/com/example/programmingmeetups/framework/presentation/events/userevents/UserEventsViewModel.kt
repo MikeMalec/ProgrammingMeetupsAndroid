@@ -8,10 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
-import com.example.programmingmeetups.utils.IO_DISPATCHER
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
+import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch

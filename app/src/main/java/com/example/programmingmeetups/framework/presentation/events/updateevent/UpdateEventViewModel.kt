@@ -1,11 +1,9 @@
 package com.example.programmingmeetups.framework.presentation.events.updateevent
 
 import android.net.Uri
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.Event
@@ -18,10 +16,9 @@ import com.example.programmingmeetups.framework.datasource.network.common.respon
 import com.example.programmingmeetups.framework.datasource.network.event.utils.EventValidator
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.presentation.events.common.EventCrudViewModel
-import com.example.programmingmeetups.utils.FILL_IN_ALL_FIELDS
-import com.example.programmingmeetups.utils.IO_DISPATCHER
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
-import com.example.programmingmeetups.utils.REQUEST_BODY_FACTORY_IMPL
+import com.example.programmingmeetups.framework.utils.FILL_IN_ALL_FIELDS
+import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

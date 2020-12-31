@@ -1,11 +1,10 @@
 package com.example.programmingmeetups.business.data.util
 
-import android.util.Log
 import com.example.programmingmeetups.business.domain.util.Resource
-import com.example.programmingmeetups.utils.ERROR_TIMEOUT
-import com.example.programmingmeetups.utils.CACHE_TIMEOUT
-import com.example.programmingmeetups.utils.ERROR_UNKNOWN
-import com.example.programmingmeetups.utils.NETWORK_TIMEOUT
+import com.example.programmingmeetups.framework.utils.ERROR_TIMEOUT
+import com.example.programmingmeetups.framework.utils.CACHE_TIMEOUT
+import com.example.programmingmeetups.framework.utils.ERROR_UNKNOWN
+import com.example.programmingmeetups.framework.utils.NETWORK_TIMEOUT
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext

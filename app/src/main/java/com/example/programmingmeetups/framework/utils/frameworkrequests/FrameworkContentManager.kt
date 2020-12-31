@@ -1,4 +1,4 @@
-package com.example.programmingmeetups.utils.frameworkrequests
+package com.example.programmingmeetups.framework.utils.frameworkrequests
 
 import android.app.Activity
 import android.content.Context

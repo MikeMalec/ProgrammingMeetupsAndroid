@@ -6,7 +6,7 @@ import com.example.programmingmeetups.business.data.network.auth.FakeAuthReposit
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
-import com.example.programmingmeetups.utils.ERROR_UNKNOWN
+import com.example.programmingmeetups.framework.utils.ERROR_UNKNOWN
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.test.runBlockingTest

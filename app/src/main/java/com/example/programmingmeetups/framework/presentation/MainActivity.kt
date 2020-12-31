@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -16,8 +15,8 @@ import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.ActivityMainBinding
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModel
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModelFactory
-import com.example.programmingmeetups.utils.AUTH_FACTORY_IMPL
-import com.example.programmingmeetups.utils.extensions.view.*
+import com.example.programmingmeetups.framework.utils.AUTH_FACTORY_IMPL
+import com.example.programmingmeetups.framework.utils.extensions.view.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject

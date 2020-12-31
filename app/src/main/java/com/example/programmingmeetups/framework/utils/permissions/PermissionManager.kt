@@ -1,11 +1,11 @@
-package com.example.programmingmeetups.utils.permissions
+package com.example.programmingmeetups.framework.utils.permissions
 
 import android.Manifest
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.example.programmingmeetups.utils.LOCATION_RATIONALE
-import com.example.programmingmeetups.utils.LOCATION_REQUEST
-import com.example.programmingmeetups.utils.STORAGE_REQUEST
+import com.example.programmingmeetups.framework.utils.LOCATION_RATIONALE
+import com.example.programmingmeetups.framework.utils.LOCATION_REQUEST
+import com.example.programmingmeetups.framework.utils.STORAGE_REQUEST
 import dagger.hilt.android.qualifiers.ApplicationContext
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject

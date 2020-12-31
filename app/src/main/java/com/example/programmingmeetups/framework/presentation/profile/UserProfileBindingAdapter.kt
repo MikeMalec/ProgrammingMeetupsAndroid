@@ -1,11 +1,10 @@
 package com.example.programmingmeetups.framework.presentation.profile
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.business.domain.model.User
-import com.example.programmingmeetups.utils.IMAGES_URL
+import com.example.programmingmeetups.framework.utils.IMAGES_URL
 import com.google.android.material.textfield.TextInputEditText
 
 class UserProfileBindingAdapter {

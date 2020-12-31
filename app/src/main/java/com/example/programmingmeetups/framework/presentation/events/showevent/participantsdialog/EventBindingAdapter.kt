@@ -1,7 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.events.showevent.participantsdialog
 
 import android.view.LayoutInflater
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,7 +10,7 @@ import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.DateManager
 import com.example.programmingmeetups.framework.presentation.events.showevent.EventViewModel
-import com.example.programmingmeetups.utils.IMAGES_URL
+import com.example.programmingmeetups.framework.utils.IMAGES_URL
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 

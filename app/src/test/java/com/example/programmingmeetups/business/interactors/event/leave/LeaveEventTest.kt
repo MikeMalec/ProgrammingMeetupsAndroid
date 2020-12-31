@@ -7,9 +7,7 @@ import com.example.programmingmeetups.business.data.network.event.FakeEventNetwo
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.business.domain.util.Resource
-import com.example.programmingmeetups.business.interactors.event.join.JoinEvent
-import com.example.programmingmeetups.utils.ERROR_UNKNOWN
-import com.google.common.truth.Truth
+import com.example.programmingmeetups.framework.utils.ERROR_UNKNOWN
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector

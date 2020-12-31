@@ -1,7 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.events.showevent
 
 import android.os.Bundle
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,20 +10,16 @@ import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.di.AppModule
-import com.example.programmingmeetups.framework.datasource.network.auth.data.request.AndroidFakeRequestBodyFactoryImpl
-import com.example.programmingmeetups.framework.datasource.preferences.AndroidFakePreferencesRepositoryImpl
 import com.example.programmingmeetups.framework.presentation.common.AndroidCustomFragmentFactory
 import com.example.programmingmeetups.getOrAwaitValue
 import com.example.programmingmeetups.launchFragmentInHiltContainer
-import com.example.programmingmeetups.utils.EDIT_EVENT
-import com.example.programmingmeetups.utils.JOIN_EVENT
-import com.example.programmingmeetups.utils.LEAVE_EVENT
+import com.example.programmingmeetups.framework.utils.EDIT_EVENT
+import com.example.programmingmeetups.framework.utils.JOIN_EVENT
+import com.example.programmingmeetups.framework.utils.LEAVE_EVENT
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import com.google.common.truth.Truth.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule

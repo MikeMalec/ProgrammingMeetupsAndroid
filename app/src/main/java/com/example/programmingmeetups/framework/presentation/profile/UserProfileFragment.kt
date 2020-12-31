@@ -1,24 +1,20 @@
 package com.example.programmingmeetups.framework.presentation.profile
 
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.R
-import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.domain.util.Resource.*
 import com.example.programmingmeetups.databinding.UserProfileFragmentBinding
 import com.example.programmingmeetups.framework.presentation.events.common.BaseFragment
-import com.example.programmingmeetups.utils.PROFILE_SUCCESSFULLY_UPDATED
-import com.example.programmingmeetups.utils.extensions.view.hide
-import com.example.programmingmeetups.utils.extensions.view.show
-import com.example.programmingmeetups.utils.frameworkrequests.FrameworkContentManager
+import com.example.programmingmeetups.framework.utils.PROFILE_SUCCESSFULLY_UPDATED
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
+import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

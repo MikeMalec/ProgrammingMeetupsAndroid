@@ -1,7 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.programmingmeetups.business.domain.util.Event
@@ -12,9 +11,8 @@ import com.example.programmingmeetups.di.RequestBodyFactoryImplementation
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
 import com.example.programmingmeetups.framework.datasource.network.auth.data.response.AuthResponse
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
-import com.example.programmingmeetups.utils.IO_DISPATCHER
-import com.example.programmingmeetups.utils.PREFERENCES_IMPLEMENTATION
-import com.example.programmingmeetups.utils.REQUEST_BODY_FACTORY_IMPL
+import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
+import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

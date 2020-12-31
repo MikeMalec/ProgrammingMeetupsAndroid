@@ -1,8 +1,7 @@
-package com.example.programmingmeetups.utils.localization
+package com.example.programmingmeetups.framework.utils.localization
 
 import android.location.Geocoder
 import java.lang.Exception
-import javax.inject.Inject
 
 class LocalizationDispatcher(val geocoder: Geocoder) :
     LocalizationDispatcherInterface {

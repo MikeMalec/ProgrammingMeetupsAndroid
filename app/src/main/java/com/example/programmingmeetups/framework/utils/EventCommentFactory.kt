@@ -1,4 +1,4 @@
-package com.example.programmingmeetups.utils
+package com.example.programmingmeetups.framework.utils
 
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventCommentDto
