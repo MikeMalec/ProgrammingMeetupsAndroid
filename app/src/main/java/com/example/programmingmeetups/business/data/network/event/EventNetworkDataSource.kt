@@ -47,5 +47,10 @@ interface EventNetworkDataSource {
     suspend fun getEventUsers(token: String, eventId: String, page: Int): UsersResponse
     suspend fun getAmountOfEventUsers(token: String, eventId: String): UsersAmountResponse
 
-    suspend fun getUserEvents(token: String): List<ProgrammingEvent>
+    suspend fun getOwnEvents(token: String): List<ProgrammingEvent>
+    suspend fun getUserEvents(
+        token: String,
+        userId: String,
+        page: Int
+    ): UserEventsPaginationResponse
 }

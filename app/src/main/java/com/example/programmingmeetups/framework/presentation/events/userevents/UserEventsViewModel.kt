@@ -1,24 +1,19 @@
 package com.example.programmingmeetups.framework.presentation.events.userevents
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
-import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
-import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
+import com.example.programmingmeetups.business.interactors.event.user.GetOwnEvents
 import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
-import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
 class UserEventsViewModel @ViewModelInject constructor(
-    val getUserEvents: GetUserEvents,
+    val getOwnEvents: GetOwnEvents,
     @Named(IO_DISPATCHER) private var dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _userEvents: MutableLiveData<List<ProgrammingEvent>> = MutableLiveData()
@@ -29,7 +24,7 @@ class UserEventsViewModel @ViewModelInject constructor(
 
     fun fetchEvents() {
         viewModelScope.launch(dispatcher) {
-            val events = getUserEvents.getUserEvents(lastHappensAt)
+            val events = getOwnEvents.getOwnEvents(lastHappensAt)
             if (events.isNotEmpty()) {
                 lastHappensAt = events[events.size - 1].happensAt!!
             }

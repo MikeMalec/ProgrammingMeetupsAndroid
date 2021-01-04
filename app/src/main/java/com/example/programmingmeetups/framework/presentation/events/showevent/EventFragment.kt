@@ -15,8 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.databinding.EventFragmentBinding
 import com.example.programmingmeetups.framework.presentation.UIController
+import com.example.programmingmeetups.framework.presentation.events.common.BaseFragment
 import com.example.programmingmeetups.framework.presentation.events.showevent.participantsdialog.ParticipantsDialog
 import com.example.programmingmeetups.framework.utils.*
 import com.example.programmingmeetups.framework.utils.extensions.view.hide
@@ -28,7 +30,7 @@ import java.lang.Exception
 
 @AndroidEntryPoint
 class EventFragment(var eventViewModel: EventViewModel? = null) :
-    Fragment(R.layout.event_fragment) {
+    BaseFragment(R.layout.event_fragment) {
 
     private var binding: EventFragmentBinding? = null
 
@@ -38,8 +40,6 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         get() = args.event
 
     private lateinit var menu: Menu
-
-    private lateinit var uiController: UIController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -192,7 +192,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     }
 
     private fun showParticipantsDialog() {
-        ParticipantsDialog(eventViewModel!!).show(
+        ParticipantsDialog(eventViewModel!!,::navigateToUserProfile).show(
             requireFragmentManager(),
             PARTICIPANTS_DIALOG
         )
@@ -213,21 +213,10 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         }
     }
 
-    private fun runUiControllerAction(action: () -> Unit) {
-        if (::uiController.isInitialized) action()
-    }
-
-    private fun setUIController() {
-        try {
-            uiController = activity as UIController
-        } catch (e: Exception) {
-            e.printStackTrace()
+    private fun navigateToUserProfile(user: User) {
+        EventFragmentDirections.actionEventFragmentToEventUserProfileFragment(user).run {
+            findNavController().navigate(this)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        setUIController()
     }
 
     override fun onDestroy() {

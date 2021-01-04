@@ -92,7 +92,14 @@ interface EventApi {
     ): UsersAmountResponse
 
     @GET("users/events")
-    suspend fun getUserEvents(
+    suspend fun getOwnEvents(
         @Header("Authorization") token: String
     ): List<ProgrammingEventDto>
+
+    @GET("users/{id}/events")
+    suspend fun getUserEvents(
+        @Header("Authorization") token: String,
+        @Path("id") userId: String,
+        @Query("page") page: Int
+    ): UserEventsResponse
 }

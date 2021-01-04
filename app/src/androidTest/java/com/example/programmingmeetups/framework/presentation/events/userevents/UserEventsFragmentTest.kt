@@ -59,7 +59,7 @@ class UserEventsFragmentTest {
             viewModel = userEventsViewModel
         }
         fakeCacheDataSource =
-            viewModel!!.getUserEvents.eventCacheDataSource as AndroidFakeEventCacheDataSourceImpl
+            viewModel!!.getOwnEvents.eventCacheDataSource as AndroidFakeEventCacheDataSourceImpl
         fakePreferencesRepository =
             viewModel!!.preferencesRepository as AndroidFakePreferencesRepositoryImpl
         fakePreferencesRepository.userInfo = user
@@ -92,7 +92,7 @@ class UserEventsFragmentTest {
                 Navigation.setViewNavController(requireView(), navigationController)
             }
             fakeCacheDataSource =
-                viewModel!!.getUserEvents.eventCacheDataSource as AndroidFakeEventCacheDataSourceImpl
+                viewModel!!.getOwnEvents.eventCacheDataSource as AndroidFakeEventCacheDataSourceImpl
             fakePreferencesRepository =
                 viewModel!!.preferencesRepository as AndroidFakePreferencesRepositoryImpl
             fakePreferencesRepository.userInfo = user

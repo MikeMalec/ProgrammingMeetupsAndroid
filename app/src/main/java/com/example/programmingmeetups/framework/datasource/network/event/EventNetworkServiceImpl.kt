@@ -108,7 +108,18 @@ class EventNetworkServiceImpl(
         return eventApi.getAmountOfEventUsers(token, eventId)
     }
 
-    override suspend fun getUserEvents(token: String): List<ProgrammingEvent> {
-        return eventApi.getUserEvents(token).map { networkMapper.mapFromEntity(it) }
+    override suspend fun getOwnEvents(token: String): List<ProgrammingEvent> {
+        return eventApi.getOwnEvents(token).map { networkMapper.mapFromEntity(it) }
+    }
+
+    override suspend fun getUserEvents(
+        token: String,
+        userId: String,
+        page: Int
+    ): UserEventsPaginationResponse {
+        val response = eventApi.getUserEvents(token, userId, page)
+        val pages = response.pages
+        val events = response.events.map { networkMapper.mapFromEntity(it) }
+        return UserEventsPaginationResponse(pages, events)
     }
 }

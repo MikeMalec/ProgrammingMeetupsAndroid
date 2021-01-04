@@ -5,7 +5,7 @@ import com.example.programmingmeetups.MainCoroutineRule
 import com.example.programmingmeetups.business.data.cache.event.FakeEventCacheDataSource
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.model.User
-import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
+import com.example.programmingmeetups.business.interactors.event.user.GetOwnEvents
 import com.example.programmingmeetups.framework.datasource.preferences.FakePreferencesRepositoryImpl
 import com.example.programmingmeetups.getOrAwaitValueTest
 import kotlinx.coroutines.test.runBlockingTest
@@ -22,14 +22,14 @@ class UserEventsViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var fakeEventCacheDataSource: FakeEventCacheDataSource
-    private lateinit var getUserEvents: GetUserEvents
+    private lateinit var getOwnEvents: GetOwnEvents
     private lateinit var userEventsViewModel: UserEventsViewModel
     private lateinit var preferencesRepositoryImpl: FakePreferencesRepositoryImpl
 
     @Before
     fun setup() {
         fakeEventCacheDataSource = FakeEventCacheDataSource()
-        getUserEvents = GetUserEvents(fakeEventCacheDataSource)
+        getOwnEvents = GetOwnEvents(fakeEventCacheDataSource)
         preferencesRepositoryImpl = FakePreferencesRepositoryImpl()
     }
 
@@ -54,7 +54,7 @@ class UserEventsViewModelTest {
         preferencesRepositoryImpl.userInfo = user
         userEventsViewModel = UserEventsViewModel(
             preferencesRepositoryImpl,
-            getUserEvents,
+            getOwnEvents,
             mainCoroutineRule.dispatcher
         )
         val userEvents = userEventsViewModel.userEvents.getOrAwaitValueTest()

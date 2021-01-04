@@ -67,6 +67,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_eventFragment_to_eventUserProfileFragment"
+            app:destination="@id/eventUserProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventCommentsFragment"
@@ -83,5 +86,27 @@
         <argument
             android:name="event"
             app:argType="com.example.programmingmeetups.business.domain.model.ProgrammingEvent" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventUserProfileFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.users.EventUserProfileFragment"
+        android:label="{user}" >
+        <argument
+            android:name="user"
+            app:argType="com.example.programmingmeetups.business.domain.model.User" />
+        <action
+            android:id="@+id/action_eventUserProfileFragment_to_eventUserEventsFragment"
+            app:destination="@id/eventUserEventsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventUserEventsFragment"
+        android:name="com.example.programmingmeetups.framework.presentation.events.users.EventUserEventsFragment"
+        android:label="{user}" >
+        <argument
+            android:name="user"
+            app:argType="com.example.programmingmeetups.business.domain.model.User" />
+        <action
+            android:id="@+id/action_eventUserEventsFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
     </fragment>
 </navigation>

@@ -11,10 +11,9 @@ import com.example.programmingmeetups.business.interactors.event.getamountofeven
 import com.example.programmingmeetups.business.interactors.event.isParticipant.IsParticipant
 import com.example.programmingmeetups.business.interactors.event.join.JoinEvent
 import com.example.programmingmeetups.business.interactors.event.leave.LeaveEvent
-import com.example.programmingmeetups.framework.datasource.network.event.EventUserPaginator
-import com.example.programmingmeetups.framework.datasource.network.event.UserPaginator
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.utils.*
+import com.example.programmingmeetups.framework.utils.pagination.PaginatorInterface
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -26,10 +25,11 @@ class EventViewModel @ViewModelInject constructor(
     val joinEvent: JoinEvent,
     val leaveEvent: LeaveEvent,
     val getAmountOfEventUsers: GetAmountOfEventUsers,
-    val eventUserPaginator: EventUserPaginator,
+    @Named(EVENT_USER_PAGINATOR)
+    val eventUserPaginator: PaginatorInterface<User>,
     @Named(IO_DISPATCHER)
     var dispatcher: CoroutineDispatcher
-) : ViewModel(), UserPaginator by eventUserPaginator {
+) : ViewModel(), PaginatorInterface<User> by eventUserPaginator {
     var user: User? = null
     var token: String? = null
 
@@ -37,6 +37,8 @@ class EventViewModel @ViewModelInject constructor(
         setUser()
         setToken()
     }
+
+    val eventUsers = eventUserPaginator.items
 
     private val _responseError: MutableLiveData<Event<String>> = MutableLiveData()
     val responseError = _responseError

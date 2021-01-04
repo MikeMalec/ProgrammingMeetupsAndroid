@@ -9,7 +9,7 @@ import com.example.programmingmeetups.business.data.cache.event.EventCacheDataSo
 import com.example.programmingmeetups.business.data.cache.event.EventCacheDataSourceImpl
 import com.example.programmingmeetups.business.data.network.event.EventNetworkDataSource
 import com.example.programmingmeetups.business.interactors.event.map.SynchronizeProgrammingEvents
-import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
+import com.example.programmingmeetups.business.interactors.event.user.GetOwnEvents
 import com.example.programmingmeetups.framework.datasource.cache.event.EventDaoService
 import com.example.programmingmeetups.framework.datasource.cache.event.EventDaoServiceImpl
 import com.example.programmingmeetups.framework.datasource.cache.event.database.EventDao
@@ -91,8 +91,8 @@ object CacheModule {
 
     @Singleton
     @Provides
-    fun provideGetUserEvents(@EventCacheDataSourceImplementation eventCacheDataSource: EventCacheDataSource): GetUserEvents {
-        return GetUserEvents(eventCacheDataSource)
+    fun provideGetUserEvents(@EventCacheDataSourceImplementation eventCacheDataSource: EventCacheDataSource): GetOwnEvents {
+        return GetOwnEvents(eventCacheDataSource)
     }
 }
 

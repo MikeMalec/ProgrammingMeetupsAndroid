@@ -7,7 +7,6 @@ import com.example.programmingmeetups.framework.datasource.network.event.model.*
 import com.google.android.gms.maps.model.LatLng
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Response
 
 class EventNetworkDataSourceImpl(private val eventNetworkService: EventNetworkService) :
     EventNetworkDataSource {
@@ -82,8 +81,12 @@ class EventNetworkDataSourceImpl(private val eventNetworkService: EventNetworkSe
         return eventNetworkService.getAmountOfEventUsers(token, eventId)
     }
 
-    override suspend fun getUserEvents(token: String): List<ProgrammingEvent> {
-        return eventNetworkService.getUserEvents(token)
+    override suspend fun getOwnEvents(token: String): List<ProgrammingEvent> {
+        return eventNetworkService.getOwnEvents(token)
+    }
+
+    override suspend fun getUserEvents(token: String, userId: String, page: Int): UserEventsPaginationResponse {
+        return eventNetworkService.getUserEvents(token,userId,page)
     }
 
     override suspend fun updateEvent(

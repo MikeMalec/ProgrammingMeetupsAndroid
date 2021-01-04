@@ -12,7 +12,7 @@ import com.example.programmingmeetups.business.interactors.event.getcomments.Get
 import com.example.programmingmeetups.business.interactors.event.join.JoinEvent
 import com.example.programmingmeetups.business.interactors.event.leave.LeaveEvent
 import com.example.programmingmeetups.business.interactors.event.update.UpdateEvent
-import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
+import com.example.programmingmeetups.business.interactors.event.user.GetOwnEvents
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.AndroidFakeRequestBodyFactoryImpl
 import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManagerInterface
 import com.example.programmingmeetups.framework.datasource.network.event.utils.EventValidator
@@ -70,7 +70,7 @@ class AndroidCustomFragmentFactory @Inject constructor(
             UserEventsFragment::class.java.name -> UserEventsFragment(
                 UserEventsViewModel(
                     AndroidFakePreferencesRepositoryImpl(),
-                    GetUserEvents(AndroidFakeEventCacheDataSourceImpl()),
+                    GetOwnEvents(AndroidFakeEventCacheDataSourceImpl()),
                     Dispatchers.Main
                 )
             )

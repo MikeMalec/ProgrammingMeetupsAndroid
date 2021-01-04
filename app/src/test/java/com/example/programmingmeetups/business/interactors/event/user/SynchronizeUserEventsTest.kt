@@ -19,13 +19,13 @@ class SynchronizeUserEventsTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     lateinit var fakeEventCacheDataSource: FakeEventCacheDataSource
-    lateinit var getUserEvents: GetUserEvents
+    lateinit var getOwnEvents: GetOwnEvents
 
     @Before
     fun setup() {
         fakeEventCacheDataSource = FakeEventCacheDataSource()
-        getUserEvents =
-            GetUserEvents(fakeEventCacheDataSource)
+        getOwnEvents =
+            GetOwnEvents(fakeEventCacheDataSource)
     }
 
     @Test
@@ -59,7 +59,7 @@ class SynchronizeUserEventsTest {
             )
         )
         fakeEventCacheDataSource.events.add(programmingEvent)
-        val userEvents = getUserEvents.getUserEvents("1")
+        val userEvents = getOwnEvents.getOwnEvents("1")
         assertThat(userEvents[0]).isEqualTo(programmingEvent)
     }
 
@@ -94,7 +94,7 @@ class SynchronizeUserEventsTest {
             )
         )
         fakeEventCacheDataSource.events.add(programmingEvent)
-        val userEvents = getUserEvents.getUserEvents("4")
+        val userEvents = getOwnEvents.getOwnEvents("4")
         assertThat(userEvents).isEmpty()
     }
 }

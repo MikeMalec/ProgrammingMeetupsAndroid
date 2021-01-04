@@ -14,7 +14,7 @@ class SynchronizeUserEvents @Inject constructor(
     @EventNetworkDataSourceImplementation val eventNetworkDataSource: EventNetworkDataSource
 ) {
     suspend fun synchronizeUserEvents(token: String, dispatcher: CoroutineDispatcher) {
-        val response = safeApiCall(dispatcher) { eventNetworkDataSource.getUserEvents(token) }
+        val response = safeApiCall(dispatcher) { eventNetworkDataSource.getOwnEvents(token) }
         if (response is Resource.Success) {
             response.data?.also {
                 val apiEvents = it

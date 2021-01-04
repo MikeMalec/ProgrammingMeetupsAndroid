@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="event"
-            type="com.example.programmingmeetups.business.domain.model.ProgrammingEvent" />
-    </data>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/userEventCard"
-        event="@{event}"
-        setOnClickListener="@{ivEventImage}"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:elevation="5dp"
-        android:focusable="true"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="3dp"
-        app:cardMaxElevation="5dp"
-        app:strokeColor="@color/primary"
-        app:strokeWidth="2dp">
+<com.google.android.material.card.MaterialCardView android:id="@+id/userEventCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:elevation="5dp"
+    android:focusable="true"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp"
+    app:cardMaxElevation="5dp"
+    app:strokeColor="@color/primary"
+    app:strokeWidth="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -46,19 +34,17 @@
 
                 <ImageView
                     android:id="@+id/ivEventImage"
-                    setEventItemImage="@{event}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="false"
                     android:focusable="false"
                     android:scaleType="centerCrop"
                     android:transitionName="@{event.id + event.createdAt}"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    />
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tvEventAddress"
-                setEventItemAddress="@{event}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -74,7 +60,6 @@
 
             <TextView
                 android:id="@+id/tvEventDate"
-                setEventItemDate="@{event}"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:clickable="false"
@@ -90,4 +75,3 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvEventAddress" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-</layout>

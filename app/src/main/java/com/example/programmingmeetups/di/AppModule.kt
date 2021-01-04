@@ -7,9 +7,15 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
+import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.business.interactors.auth.AuthInteractors
+import com.example.programmingmeetups.business.interactors.event.geteventusers.GetEventUsers
+import com.example.programmingmeetups.business.interactors.event.user.GetUserEvents
 import com.example.programmingmeetups.framework.datasource.network.auth.data.request.RequestBodyFactoryInterface
 import com.example.programmingmeetups.framework.datasource.network.auth.utils.AuthValidator
+import com.example.programmingmeetups.framework.datasource.network.event.EventUserPaginator
+import com.example.programmingmeetups.framework.datasource.network.event.UserEventPaginator
 import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManager
 import com.example.programmingmeetups.framework.datasource.network.event.sockets.EventCommentSocketManagerInterface
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
@@ -20,6 +26,7 @@ import com.example.programmingmeetups.framework.presentation.map.LocationManager
 import com.example.programmingmeetups.framework.utils.*
 import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcher
 import com.example.programmingmeetups.framework.utils.localization.LocalizationDispatcherInterface
+import com.example.programmingmeetups.framework.utils.pagination.PaginatorInterface
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.gson.Gson
 import dagger.Module
@@ -113,5 +120,23 @@ object AppModule {
     @Provides
     fun provideEventCommentSocketManager(gson: Gson): EventCommentSocketManagerInterface {
         return EventCommentSocketManager(gson)
+    }
+
+    @Named(EVENT_USER_PAGINATOR)
+    @Provides
+    fun provideEventUserPaginator(
+        getEventUsers: GetEventUsers,
+        @Named(IO_DISPATCHER) dispatcher: CoroutineDispatcher
+    ): PaginatorInterface<User> {
+        return EventUserPaginator(getEventUsers, dispatcher)
+    }
+
+    @Named(USER_EVENTS_PAGINATOR)
+    @Provides
+    fun provideUserEventPaginator(
+        getEventUsers: GetUserEvents,
+        @Named(IO_DISPATCHER) dispatcher: CoroutineDispatcher
+    ): PaginatorInterface<ProgrammingEvent> {
+        return UserEventPaginator(getEventUsers, dispatcher)
     }
 }

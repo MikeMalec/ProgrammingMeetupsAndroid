@@ -14,10 +14,16 @@ import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.databinding.ParticipantsDialogBinding
 import com.example.programmingmeetups.framework.presentation.events.showevent.EventViewModel
 
-class ParticipantsDialog(private val eventViewModel: EventViewModel) : AppCompatDialogFragment() {
+class ParticipantsDialog(
+    private val eventViewModel: EventViewModel,
+    showUserCallback: (user: User) -> Unit
+) : AppCompatDialogFragment() {
 
     private lateinit var binding: ParticipantsDialogBinding
-    private val participantsAdapter = ParticipantsAdapter()
+    private val participantsAdapter = ParticipantsAdapter { user ->
+        showUserCallback(user)
+        dismiss()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
