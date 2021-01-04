@@ -9,19 +9,19 @@ class EventCacheDataSourceImpl(private val eventDaoService: EventDaoService) :
         eventDaoService.saveProgrammingEvent(programmingEvent)
     }
 
-    override suspend fun getEvents(): List<ProgrammingEvent> {
-        return eventDaoService.getEvents()
+    override suspend fun getEvents(happensAt:Long): List<ProgrammingEvent> {
+        return eventDaoService.getEvents(happensAt)
     }
 
     override suspend fun deleteProgrammingEvent(programmingEvent: ProgrammingEvent) {
         eventDaoService.deleteProgrammingEvent(programmingEvent)
     }
 
-    override suspend fun getUserEvents(userId: String): List<ProgrammingEvent> {
-        return eventDaoService.getUserEvents(userId)
-    }
-
     override suspend fun updateEvent(programmingEvent: ProgrammingEvent) {
         eventDaoService.updateEvent(programmingEvent)
+    }
+
+    override suspend fun getAllEvents(): List<ProgrammingEvent> {
+        return eventDaoService.getAllEvents()
     }
 }

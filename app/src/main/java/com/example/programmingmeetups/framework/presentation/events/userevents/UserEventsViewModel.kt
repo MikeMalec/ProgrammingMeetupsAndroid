@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.events.userevents
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,24 +18,29 @@ import kotlinx.coroutines.launch
 import javax.inject.Named
 
 class UserEventsViewModel @ViewModelInject constructor(
-    @Named(PREFERENCES_IMPLEMENTATION) val preferencesRepository: PreferencesRepository,
     val getUserEvents: GetUserEvents,
     @Named(IO_DISPATCHER) private var dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _userEvents: MutableLiveData<List<ProgrammingEvent>> = MutableLiveData()
     val userEvents: LiveData<List<ProgrammingEvent>> = _userEvents
 
-    init {
-        setEvents()
+    private val fetchedEvents = mutableListOf<ProgrammingEvent>()
+    private var lastHappensAt = 0L
+
+    fun fetchEvents() {
+        viewModelScope.launch(dispatcher) {
+            val events = getUserEvents.getUserEvents(lastHappensAt)
+            if (events.isNotEmpty()) {
+                lastHappensAt = events[events.size - 1].happensAt!!
+            }
+            fetchedEvents.addAll(events)
+            _userEvents.postValue(fetchedEvents)
+        }
     }
 
-    fun setEvents() {
-        viewModelScope.launch(dispatcher) {
-            preferencesRepository.getUserInfo().map { user ->
-                user?.id
-            }.collect { userId ->
-                userId?.also { _userEvents.postValue(getUserEvents.getUserEvents(userId)) }
-            }
-        }
+    fun reset() {
+        lastHappensAt = 0
+        fetchedEvents.clear()
+        _userEvents.value = fetchedEvents
     }
 }

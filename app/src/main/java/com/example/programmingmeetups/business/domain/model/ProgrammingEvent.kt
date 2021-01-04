@@ -15,6 +15,5 @@ data class ProgrammingEvent(
     var address: String? = null,
     var happensAt: Long? = null,
     var description: String? = null,
-    var participants: List<User>? = mutableListOf(),
     var createdAt: String? = null
 ) : Parcelable

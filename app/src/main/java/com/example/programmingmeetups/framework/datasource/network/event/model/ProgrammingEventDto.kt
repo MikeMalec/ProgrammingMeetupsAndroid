@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ProgrammingEventDto(
-    val id: String,
+    val _id: String,
     val tags: MutableList<String>,
     val image: String,
     val icon: String,
@@ -16,6 +16,5 @@ data class ProgrammingEventDto(
     val address: String,
     val happensAt: Long,
     val description: String,
-    val participants: List<User>,
     val createdAt: String
 ) : Parcelable

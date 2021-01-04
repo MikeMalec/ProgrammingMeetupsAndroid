@@ -4,7 +4,7 @@ import com.example.programmingmeetups.business.data.cache.event.EventCacheDataSo
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 
 class GetUserEvents(val eventCacheDataSource: EventCacheDataSource) {
-    suspend fun getUserEvents(userId: String): List<ProgrammingEvent> {
-        return eventCacheDataSource.getUserEvents(userId)
+    suspend fun getUserEvents(happensAt: Long): List<ProgrammingEvent> {
+        return eventCacheDataSource.getEvents(happensAt)
     }
 }

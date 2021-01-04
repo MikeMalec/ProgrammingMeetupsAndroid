@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@SuppressWarnings("unused")
 class SynchronizeProgrammingEvents(
     private val eventCacheDataSource: EventCacheDataSource,
     private val eventNetworkDataSource: EventNetworkDataSource
@@ -21,7 +22,7 @@ class SynchronizeProgrammingEvents(
         token: String,
         dispatcher: CoroutineDispatcher
     ): Flow<List<ProgrammingEvent>> = flow {
-        val cachedEvents = eventCacheDataSource.getEvents()
+        val cachedEvents = eventCacheDataSource.getEvents(1L)
         emit(cachedEvents)
         val eventsFromApi = safeApiCall(dispatcher) { eventNetworkDataSource.fetchEvents(token) }
         if (eventsFromApi is Success) {
@@ -34,7 +35,7 @@ class SynchronizeProgrammingEvents(
                 }
                 if (exists == null) eventCacheDataSource.deleteProgrammingEvent(cachedEvent)
             }
-            emit(eventCacheDataSource.getEvents())
+            emit(eventCacheDataSource.getEvents(1L))
         }
     }
 }

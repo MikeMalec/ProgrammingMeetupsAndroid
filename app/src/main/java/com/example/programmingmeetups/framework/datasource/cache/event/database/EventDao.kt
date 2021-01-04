@@ -11,12 +11,15 @@ interface EventDao {
     @Update
     suspend fun updateProgrammingEvent(programmingEventCacheEntity: ProgrammingEventCacheEntity)
 
-    @Query("SELECT * FROM programming_events_table WHERE programmingEventId = :id")
+    @Query("SELECT * FROM programming_events_table WHERE id = :id")
     suspend fun getEventById(id: String): ProgrammingEventCacheEntity
 
     @Delete
     suspend fun deleteProgrammingEvent(programmingEventCacheEntity: ProgrammingEventCacheEntity)
 
+    @Query("SELECT * FROM programming_events_table WHERE happensAt > :happensAt ORDER BY happensAt LIMIT 20")
+    fun getEvents(happensAt: Long): List<ProgrammingEventCacheEntity>
+
     @Query("SELECT * FROM programming_events_table")
-    fun getProgrammingEvents(): List<ProgrammingEventCacheEntity>
+    fun getAllEvents(): List<ProgrammingEventCacheEntity>
 }

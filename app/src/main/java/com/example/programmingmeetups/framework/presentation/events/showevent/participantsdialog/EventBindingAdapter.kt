@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.DateManager
-import com.example.programmingmeetups.framework.presentation.events.showevent.EventViewModel
+import com.example.programmingmeetups.framework.presentation.events.showevent.EventAction
 import com.example.programmingmeetups.framework.utils.IMAGES_URL
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 
@@ -84,16 +87,18 @@ class EventBindingAdapter {
             }
         }
 
-        @BindingAdapter("setMainBtn", "setEventViewModel")
+        @BindingAdapter("setMainBtn")
         @JvmStatic
         fun setMainBtn(
             button: MaterialButton,
-            event: ProgrammingEvent?,
-            eventViewModel: EventViewModel
+            eventActionButtonState: EventAction?
         ) {
-            event.also {
-                event?.organizer
-                button.text = eventViewModel.getUserEventRelation()
+            when(eventActionButtonState) {
+                null -> button.hide()
+                else -> {
+                    button.show()
+                    button.text = eventActionButtonState.toString()
+                }
             }
         }
     }

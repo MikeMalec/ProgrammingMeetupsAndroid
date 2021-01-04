@@ -2,7 +2,7 @@ package com.example.programmingmeetups.business.interactors.event
 
 import com.example.programmingmeetups.business.interactors.event.create.CreateEventTest
 import com.example.programmingmeetups.business.interactors.event.map.SynchronizeProgrammingEventsTest
-import com.example.programmingmeetups.business.interactors.event.user.GetUserEventsTest
+import com.example.programmingmeetups.business.interactors.event.user.SynchronizeUserEventsTest
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
@@ -12,6 +12,6 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     CreateEventTest::class,
     SynchronizeProgrammingEventsTest::class,
-    GetUserEventsTest::class
+    SynchronizeUserEventsTest::class
 )
 class EventTests

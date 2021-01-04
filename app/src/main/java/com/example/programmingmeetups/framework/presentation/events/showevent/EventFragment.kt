@@ -3,6 +3,7 @@ package com.example.programmingmeetups.framework.presentation.events.showevent
 import android.content.Context
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -53,6 +54,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
             showParticipantsDialog()
         }
         observeEvent()
+        observeAmountOfParticipants()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -100,10 +102,12 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
 
     private fun setMainButtonClick() {
         binding!!.btnEventAction.setOnClickListener {
-            when (eventViewModel!!.getUserEventRelation()) {
-                EDIT_EVENT -> navigateToEditFragment()
-                LEAVE_EVENT -> eventViewModel!!.leaveEvent()
-                JOIN_EVENT -> eventViewModel!!.joinEvent()
+            when (eventViewModel!!.eventActionButtonState.value) {
+                is EventAction.EditEvent -> navigateToEditFragment()
+                is EventAction.LeaveEvent -> eventViewModel!!.leaveEvent()
+                is EventAction.JoinEvent -> eventViewModel!!.joinEvent()
+                else -> {
+                }
             }
         }
     }
@@ -114,8 +118,15 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
                 hideLoading()
                 runMenuAction {
                     setEditIcon()
-                    setAmountOfParticipants(it.participants!!.size)
                 }
+            })
+        }
+    }
+
+    private fun observeAmountOfParticipants() {
+        lifecycleScope.launchWhenStarted {
+            eventViewModel?.amountOfParticipants?.observe(viewLifecycleOwner, Observer {
+                setAmountOfParticipants(it)
             })
         }
     }
@@ -125,6 +136,8 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
             eventViewModel ?: ViewModelProvider(this).get(EventViewModel::class.java)
         lifecycleScope.launchWhenStarted {
             eventViewModel!!.setEvent(programmingEvent)
+            eventViewModel!!.fetchAmountOfParticipants()
+            eventViewModel!!.checkIfUserIsParticipant()
         }
     }
 
@@ -179,12 +192,10 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     }
 
     private fun showParticipantsDialog() {
-        eventViewModel!!.event.value?.participants?.also {
-            ParticipantsDialog(it).show(
-                requireFragmentManager(),
-                PARTICIPANTS_DIALOG
-            )
-        }
+        ParticipantsDialog(eventViewModel!!).show(
+            requireFragmentManager(),
+            PARTICIPANTS_DIALOG
+        )
     }
 
     private fun setAmountOfParticipants(amount: Int) {
@@ -196,7 +207,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
             tv.text = amount.toString()
         } else if (amount > 99) {
             cv.show()
-            tv.text = "$amount+"
+            tv.text = "99+"
         } else {
             cv.hide()
         }

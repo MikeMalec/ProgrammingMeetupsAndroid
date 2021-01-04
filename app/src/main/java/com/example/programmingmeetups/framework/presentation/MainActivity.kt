@@ -1,8 +1,8 @@
 package com.example.programmingmeetups.framework.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.ActivityMainBinding
+import com.example.programmingmeetups.framework.datasource.network.event.service.EventSynchronizationService
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModel
 import com.example.programmingmeetups.framework.presentation.auth.AuthViewModelFactory
 import com.example.programmingmeetups.framework.utils.AUTH_FACTORY_IMPL
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private var initialSetup = true
     private fun observeToken() {
         lifecycleScope.launchWhenStarted {
+            startSynchronizationService()
             authViewModel.token.observe(this@MainActivity, Observer {
                 if (initialSetup) {
                     when (it!!.length > 11) {
@@ -75,6 +77,12 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 }
                 initialSetup = false
             })
+        }
+    }
+
+    private fun startSynchronizationService() {
+        Intent(this, EventSynchronizationService::class.java).also {
+            startService(it)
         }
     }
 

@@ -44,8 +44,6 @@ class MapViewModel @ViewModelInject constructor(
 
     private val uniqueEvents = mutableSetOf<ProgrammingEvent>()
 
-    var fetchEventsJob: Job? = null
-
     init {
         setToken()
     }
@@ -57,19 +55,22 @@ class MapViewModel @ViewModelInject constructor(
     }
 
     fun fetchEvents(position: LatLng, radius: Double) {
-        Log.d("XXX", "fetchEvents")
-        fetchEventsJob?.cancel()
-        fetchEventsJob = viewModelScope.launch(dispatcher) {
-            Log.d("XXX", "ACTUALLY FETCH")
+        viewModelScope.launch(dispatcher) {
             val response = fetchEvents.fetchEvents(token, position, radius, dispatcher)
-            Log.d("XXX","RESPONSE = $response")
             if (response is Resource.Success) {
                 response.data?.also {
-                    uniqueEvents.addAll(it)
-                    _events.postValue(uniqueEvents.toList())
+                    dispatchEvents(it)
                 }
             }
         }
+    }
+
+    private fun dispatchEvents(events: List<ProgrammingEvent>) {
+        val newEvents = events.filter { new ->
+            uniqueEvents.firstOrNull { old -> old.id == new.id } == null
+        }
+        uniqueEvents.addAll(newEvents)
+        _events.postValue(newEvents)
     }
 
     override fun onCleared() {
@@ -79,5 +80,6 @@ class MapViewModel @ViewModelInject constructor(
 
     fun stop() {
         locationManager.stop()
+        uniqueEvents.clear()
     }
 }

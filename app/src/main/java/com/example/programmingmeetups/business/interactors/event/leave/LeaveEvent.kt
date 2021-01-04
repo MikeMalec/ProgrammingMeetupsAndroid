@@ -27,7 +27,7 @@ class LeaveEvent @Inject constructor(
         val response = safeApiCall(dispatcher) { eventNetworkDataSource.leaveEvent(eventId, token) }
         if (response is Success) {
             response.data?.let {
-                eventCacheDataSource.updateEvent(it)
+                eventCacheDataSource.deleteProgrammingEvent(it)
             }
         }
         emit(response)

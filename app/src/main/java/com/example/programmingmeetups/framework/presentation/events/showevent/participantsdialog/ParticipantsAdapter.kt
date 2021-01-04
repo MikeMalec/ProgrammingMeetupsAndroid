@@ -2,11 +2,13 @@ package com.example.programmingmeetups.framework.presentation.events.showevent.p
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.databinding.ParticipantLayoutBinding
 
-class ParticipantsAdapter(private val participants: List<User>) :
+class ParticipantsAdapter() :
     RecyclerView.Adapter<ParticipantsAdapter.ParticipantViewHolder>() {
     class ParticipantViewHolder(val binding: ParticipantLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,15 +26,34 @@ class ParticipantsAdapter(private val participants: List<User>) :
         }
     }
 
+    private val differCallback = object : DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, differCallback)
+
+    fun submitList(users: List<User>) {
+        differ.submitList(users)
+        notifyDataSetChanged()
+    }
+
+    fun getUsers() = differ.currentList
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantViewHolder {
         return ParticipantViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ParticipantViewHolder, position: Int) {
-        participants[position].also { holder.bind(it) }
+        getUsers()[position].also { holder.bind(it) }
     }
 
     override fun getItemCount(): Int {
-        return participants.size
+        return getUsers().size
     }
 }

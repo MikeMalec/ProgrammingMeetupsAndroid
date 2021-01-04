@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class EventNetworkMapper @Inject constructor() {
     fun mapFromEntity(programmingEventDto: ProgrammingEventDto): ProgrammingEvent {
         return ProgrammingEvent(
-            id = programmingEventDto.id,
+            id = programmingEventDto._id,
             tags = programmingEventDto.tags,
             image = programmingEventDto.image,
             icon = programmingEventDto.icon,
@@ -19,14 +19,13 @@ class EventNetworkMapper @Inject constructor() {
             address = programmingEventDto.address,
             happensAt = programmingEventDto.happensAt,
             description = programmingEventDto.description,
-            participants = programmingEventDto.participants,
             createdAt = programmingEventDto.createdAt
         )
     }
 
     fun mapToEntity(event: ProgrammingEvent): ProgrammingEventDto {
         return ProgrammingEventDto(
-            id = event.id!!,
+            _id = event.id!!,
             tags = event.tags!!,
             image = event.image!!,
             icon = event.icon!!,
@@ -36,7 +35,6 @@ class EventNetworkMapper @Inject constructor() {
             address = event.address!!,
             happensAt = event.happensAt!!,
             description = event.description!!,
-            participants = event.participants!!,
             createdAt = event.createdAt!!
         )
     }

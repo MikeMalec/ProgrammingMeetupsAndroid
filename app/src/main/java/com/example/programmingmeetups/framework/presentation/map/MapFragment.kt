@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.map_fragment.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -38,7 +39,6 @@ import javax.inject.Named
 class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.map_fragment),
     EasyPermissions.PermissionCallbacks, GoogleMap.OnMapClickListener,
     GoogleMap.OnCameraIdleListener,
-    GoogleMap.OnCameraMoveListener,
     GoogleMap.OnMarkerClickListener {
 
     @Inject
@@ -82,7 +82,6 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
             setPosition()
             map!!.setOnMapClickListener(this)
             map!!.setOnMarkerClickListener(this)
-            map!!.setOnCameraMoveListener(this)
             map!!.setOnCameraIdleListener(this)
             observeEvents()
         }
@@ -99,7 +98,6 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     private val markers = mutableMapOf<Marker, ProgrammingEvent>()
 
     private fun showMarkers(events: List<ProgrammingEvent>) {
-        map?.clear()
         lifecycleScope.launch(IO) {
             events.forEach { event ->
                 val position = LatLng(event.latitude!!, event.longitude!!)
@@ -117,9 +115,6 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
                     }
                 }
             }
-            withContext(Main) {
-                userPosition?.also { setUserPosition(it) }
-            }
         }
     }
 
@@ -128,7 +123,10 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     }
 
     private fun showMap() {
-        binding.mapView.show()
+        lifecycleScope.launch{
+            delay(200)
+            binding.mapView.show()
+        }
     }
 
     override fun onMapClick(latLng: LatLng?) {
@@ -140,51 +138,36 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
         }
     }
 
-    override fun onCameraMove() {
-        fetchEvents()
-    }
-
     override fun onCameraIdle() {
         fetchEvents()
     }
 
     private fun fetchEvents() {
-        val positionAndRadius = calculateRadius()
-        if (positionAndRadius != null) {
-            mapViewModel?.fetchEvents(positionAndRadius.first, positionAndRadius.second)
+        if (canCalculate) {
+            val positionAndRadius = calculateRadius()
+            if (positionAndRadius != null) {
+                mapViewModel?.fetchEvents(positionAndRadius.first, positionAndRadius.second)
+            }
         }
     }
 
+    private var canCalculate = false
     private fun calculateRadius(): Pair<LatLng, Double>? {
         if (map != null) {
             val position = map!!.cameraPosition.target
             val visibleRegion = map!!.projection.visibleRegion
-            val distanceWidth = FloatArray(1)
-            val distanceHeight = FloatArray(1)
-            val farRight = visibleRegion.farRight
+            val distance = FloatArray(1)
             val farLeft = visibleRegion.farLeft
-            val nearLeft = visibleRegion.nearLeft
+            val nearRight = visibleRegion.nearRight
             Location.distanceBetween(
                 farLeft.latitude,
                 farLeft.longitude,
-                nearLeft.latitude,
-                nearLeft.longitude,
-                distanceHeight
+                nearRight.latitude,
+                nearRight.longitude,
+                distance
             )
-            Location.distanceBetween(
-                farLeft.latitude,
-                farLeft.longitude,
-                farRight.latitude,
-                farRight.longitude,
-                distanceHeight
-            )
-            val radius = Math.sqrt(
-                (Math.pow(
-                    distanceHeight[0].toDouble(),
-                    2.0
-                )) + Math.pow(distanceWidth[0].toDouble(), 2.0)
-            ) / 2
-            return Pair(position, radius)
+            val dst = distance[0].toDouble() / 2
+            return Pair(position, dst)
         }
         return null
     }
@@ -204,21 +187,54 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     private var userPosition: LatLng? = null
     private var positionSet = false
     private fun setPosition() {
-        mapViewModel!!.position.observe(viewLifecycleOwner, Observer { latLng ->
-            if (!positionSet) {
-                positionSet = true
-                moveCameraToSpecificPosition(latLng)
-                userPosition = latLng
-            }
-        })
+        lifecycleScope.launchWhenStarted {
+            mapViewModel!!.position.observe(viewLifecycleOwner, Observer { latLng ->
+                if (!positionSet) {
+                    moveCameraToSpecificPosition(latLng)
+                    positionSet = true
+                    setUserPosition(latLng)
+                    userPosition = latLng
+                    firstCalculate()
+                }
+            })
+        }
     }
 
+    private fun firstCalculate() {
+        lifecycleScope.launch {
+            delay(1000)
+            canCalculate = true
+            fetchEvents()
+        }
+    }
+
+    private var canSaveCameraPosition = true
     private fun moveCameraToSpecificPosition(position: LatLng) {
         showMap()
+        canSaveCameraPosition = false
         if (mapViewModel!!.cameraPosition != null) {
-            map?.animateCamera(CameraUpdateFactory.newCameraPosition(mapViewModel?.cameraPosition))
+            map?.animateCamera(
+                CameraUpdateFactory.newCameraPosition(mapViewModel?.cameraPosition),
+                500,
+                object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        canSaveCameraPosition = true
+                    }
+
+                    override fun onCancel() {}
+
+                })
         } else {
-            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(position, MAP_ZOOM))
+            map?.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(position, MAP_ZOOM),
+                500,
+                object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        canSaveCameraPosition = true
+                    }
+
+                    override fun onCancel() {}
+                })
         }
     }
 
@@ -241,9 +257,12 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     override fun onStop() {
         super.onStop()
         mapView.onStop()
-        map?.also {
-            mapViewModel?.cameraPosition = it.cameraPosition
+        if (canSaveCameraPosition) {
+            map?.also {
+                mapViewModel?.cameraPosition = it.cameraPosition
+            }
         }
+        canSaveCameraPosition = true
         mapViewModel?.stop()
     }
 

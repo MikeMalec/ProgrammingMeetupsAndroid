@@ -12,8 +12,7 @@ class EventCacheMapper @Inject constructor() {
     fun mapToEntity(programmingEvent: ProgrammingEvent): ProgrammingEventCacheEntity {
         return ProgrammingEventCacheEntity(
             programmingEvent.id!!,
-            programmingEvent.organizer!!.id,
-            programmingEvent.id!!,
+            programmingEvent.happensAt!!,
             programmingEvent
         )
     }

@@ -1,15 +1,12 @@
 package com.example.programmingmeetups.framework.datasource.network.event
 
-import android.util.Log
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.framework.datasource.network.common.response.GenericResponse
 import com.example.programmingmeetups.framework.datasource.network.event.mappers.EventNetworkMapper
-import com.example.programmingmeetups.framework.datasource.network.event.model.EventCommentResponse
-import com.example.programmingmeetups.framework.datasource.network.event.model.ProgrammingEventDto
+import com.example.programmingmeetups.framework.datasource.network.event.model.*
 import com.google.android.gms.maps.model.LatLng
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Response
 
 class EventNetworkServiceImpl(
     private val eventApi: EventApi,
@@ -94,5 +91,24 @@ class EventNetworkServiceImpl(
         page: Int
     ): EventCommentResponse {
         return eventApi.getEventComments(token, eventId, page)
+    }
+
+    override suspend fun isParticipant(token: String, eventId: String): IsParticipantResponse {
+        return eventApi.isParticipant(token, eventId)
+    }
+
+    override suspend fun getEventUsers(token: String, eventId: String, page: Int): UsersResponse {
+        return eventApi.getEventUsers(token, eventId, page)
+    }
+
+    override suspend fun getAmountOfEventUsers(
+        token: String,
+        eventId: String
+    ): UsersAmountResponse {
+        return eventApi.getAmountOfEventUsers(token, eventId)
+    }
+
+    override suspend fun getUserEvents(token: String): List<ProgrammingEvent> {
+        return eventApi.getUserEvents(token).map { networkMapper.mapFromEntity(it) }
     }
 }

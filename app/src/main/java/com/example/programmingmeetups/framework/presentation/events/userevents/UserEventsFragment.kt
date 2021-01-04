@@ -9,8 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.UserEventsFragmentBinding
+import com.example.programmingmeetups.framework.utils.recyclerview.RecyclerViewPaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +35,7 @@ class UserEventsFragment(var userEventsViewModel: UserEventsViewModel? = null) :
 
     override fun onStart() {
         super.onStart()
-        userEventsViewModel!!.setEvents()
+        userEventsViewModel?.fetchEvents()
     }
 
     private fun setViewModel() {
@@ -50,6 +52,7 @@ class UserEventsFragment(var userEventsViewModel: UserEventsViewModel? = null) :
         binding.rvUserEvents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = userEventAdapter
+            addOnScrollListener(RecyclerViewPaginationScrollListener(userEventAdapter) { userEventsViewModel?.fetchEvents() })
         }
     }
 
@@ -59,5 +62,10 @@ class UserEventsFragment(var userEventsViewModel: UserEventsViewModel? = null) :
                 userEventAdapter.submitEvents(it)
             })
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        userEventsViewModel?.reset()
     }
 }

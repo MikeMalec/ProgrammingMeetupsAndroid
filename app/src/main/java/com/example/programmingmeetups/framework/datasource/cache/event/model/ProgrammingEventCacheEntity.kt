@@ -12,7 +12,6 @@ import kotlinx.android.parcel.Parcelize
 data class ProgrammingEventCacheEntity(
     @PrimaryKey(autoGenerate = false)
     var id: String,
-    var organizerId: String,
-    var programmingEventId: String,
+    var happensAt: Long,
     var programmingEvent: ProgrammingEvent
 ) : Parcelable

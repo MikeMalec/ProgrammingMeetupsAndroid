@@ -44,6 +44,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${mapsApiKey}" />
+
+        <service android:name=".framework.datasource.network.event.service.EventSynchronizationService" />
     </application>
 
 </manifest>

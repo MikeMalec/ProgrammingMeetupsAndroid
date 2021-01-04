@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.business.interactors.event.join
 
+import android.util.Log
 import com.example.programmingmeetups.business.data.cache.event.EventCacheDataSource
 import com.example.programmingmeetups.business.data.network.event.EventNetworkDataSource
 import com.example.programmingmeetups.business.data.util.safeApiCall
@@ -27,7 +28,7 @@ class JoinEvent @Inject constructor(
         val response = safeApiCall(dispatcher) { eventNetworkDataSource.joinEvent(eventId, token) }
         if (response is Success) {
             response.data?.let {
-                eventCacheDataSource.updateEvent(it)
+                eventCacheDataSource.saveProgrammingEvent(it)
             }
         }
         emit(response)

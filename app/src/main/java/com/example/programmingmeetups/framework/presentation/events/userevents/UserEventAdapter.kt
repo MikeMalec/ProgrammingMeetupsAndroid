@@ -66,5 +66,6 @@ class UserEventAdapter @Inject constructor() :
 
     fun submitEvents(events: List<ProgrammingEvent>) {
         differ.submitList(events)
+        notifyDataSetChanged()
     }
 }

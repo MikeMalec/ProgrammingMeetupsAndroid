@@ -11,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 import com.google.common.truth.Truth.*
 
-class GetUserEventsTest {
+class SynchronizeUserEventsTest {
     @get:Rule
     var taskExecutorRule = InstantTaskExecutorRule()
 
