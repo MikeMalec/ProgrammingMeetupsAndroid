@@ -1,5 +1,6 @@
 This app lets users create programming events. After event creation, it is displayed on the map. Other users can join the event and its conversation.
 ProgrammingMeetupsApi is a repository that contains backend code for this app written in node js express.
+This project contains unit tests and ui tests.
 
 Below few screenshots from the app
 
