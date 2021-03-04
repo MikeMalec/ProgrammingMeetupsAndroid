@@ -29,4 +29,5 @@
     <string name="update">UPDATE</string>
     <string name="your_description">Your Description</string>
     <string name="organizer">Organizer</string>
+    <string name="you_did_not_join_any_events_yet">You did not join any events yet!</string>
 </resources>

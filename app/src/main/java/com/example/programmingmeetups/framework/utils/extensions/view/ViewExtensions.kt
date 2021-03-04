@@ -39,6 +39,10 @@ fun View.hide() {
     visibility = View.INVISIBLE
 }
 
+fun View.gone() {
+    visibility = View.GONE
+}
+
 fun MapView.hide() {
     visibility = View.INVISIBLE
 }

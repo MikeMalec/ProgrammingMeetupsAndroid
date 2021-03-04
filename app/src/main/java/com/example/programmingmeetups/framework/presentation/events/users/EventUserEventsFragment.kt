@@ -14,6 +14,9 @@ import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.databinding.EventUserEventsFragmentBinding
 import com.example.programmingmeetups.framework.presentation.events.common.BaseFragment
 import com.example.programmingmeetups.framework.presentation.events.userevents.UserEventAdapter
+import com.example.programmingmeetups.framework.utils.extensions.view.gone
+import com.example.programmingmeetups.framework.utils.extensions.view.hide
+import com.example.programmingmeetups.framework.utils.extensions.view.show
 import com.example.programmingmeetups.framework.utils.recyclerview.RecyclerViewPaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,8 +35,9 @@ class EventUserEventsFragment(var eventUserViewModel: EventUserViewModel? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBinding(view)
         setViewModel()
+        setBinding(view)
+        setShimmer()
         setRv()
         observeEvents()
         fetchEvents()
@@ -46,6 +50,24 @@ class EventUserEventsFragment(var eventUserViewModel: EventUserViewModel? = null
     private fun setViewModel() {
         eventUserViewModel =
             eventUserViewModel ?: ViewModelProvider(this).get(EventUserViewModel::class.java)
+    }
+
+    private fun setShimmer() {
+        if (eventUserViewModel!!.didShimmer) {
+            hideShimmer()
+        } else {
+            showShimmer()
+            eventUserViewModel!!.didShimmer = true
+        }
+    }
+
+    private fun showShimmer() {
+        binding.shimmer.startShimmer()
+    }
+
+    private fun hideShimmer() {
+        binding.shimmer.stopShimmer()
+        binding.shimmer.gone()
     }
 
     private fun setRv() {
@@ -73,9 +95,27 @@ class EventUserEventsFragment(var eventUserViewModel: EventUserViewModel? = null
     private fun observeEvents() {
         lifecycleScope.launchWhenStarted {
             eventUserViewModel!!.events.observe(viewLifecycleOwner, Observer {
+                hideShimmer()
+                dispatchAmountOfEvents(it.size)
                 userEventAdapter.submitEvents(it)
             })
         }
+    }
+
+    private fun dispatchAmountOfEvents(amount: Int) {
+        when (amount) {
+            0 -> showNoEvents()
+            1 -> hideNoEvents()
+        }
+    }
+
+    private fun showNoEvents() {
+        binding.tvUserNoEvents.text = "${user.getName()} did not join any events yet!"
+        binding.tvUserNoEvents.show()
+    }
+
+    private fun hideNoEvents() {
+        binding.tvUserNoEvents.hide()
     }
 
     private fun fetchEvents() {

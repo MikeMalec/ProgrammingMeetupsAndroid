@@ -94,11 +94,15 @@ class UpdateEventViewModel @ViewModelInject constructor(
     var imageUri: Uri? = null
     override fun setImage(uri: Uri) {
         imageUri = uri
+        programmingEvent.image = imageUri.toString()
+        setEvent()
     }
 
     var iconUri: Uri? = null
     override fun setIcon(uri: Uri) {
         iconUri = uri
+        programmingEvent.icon = iconUri.toString()
+        setEvent()
     }
 
     fun attemptToUpdateEvent() {

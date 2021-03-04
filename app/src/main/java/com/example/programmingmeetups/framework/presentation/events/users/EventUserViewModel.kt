@@ -20,4 +20,5 @@ class EventUserViewModel @ViewModelInject constructor(
 ) : ViewModelWithToken(preferencesRepository),
     PaginatorInterface<ProgrammingEvent> by userEventPaginator {
     val events = userEventPaginator.items
+    var didShimmer = false
 }

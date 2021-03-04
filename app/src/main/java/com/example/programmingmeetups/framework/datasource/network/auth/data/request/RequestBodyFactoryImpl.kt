@@ -21,7 +21,7 @@ class RequestBodyFactoryImpl(private val fileManager: FileManager) :
         } else {
             fileName = "Icon${file.name}"
         }
-        val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
         return MultipartBody.Part.createFormData("image", fileName, requestBody)
     }
 }

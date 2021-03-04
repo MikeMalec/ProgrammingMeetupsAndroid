@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.databinding.EventCommentsBinding
+import com.example.programmingmeetups.framework.utils.extensions.view.gone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
@@ -38,6 +39,7 @@ class EventCommentsFragment(var eventCommentsViewModel: EventCommentsViewModel? 
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
         binding = EventCommentsBinding.bind(view)
+        showShimmer()
         setRv()
         setSendClick()
         observeComments()
@@ -49,6 +51,15 @@ class EventCommentsFragment(var eventCommentsViewModel: EventCommentsViewModel? 
         )
         viewModel.connectSocket(event.id!!)
         viewModel.fetchComments(event.id!!)
+    }
+
+    private fun showShimmer() {
+        binding.shimmer.startShimmer()
+    }
+
+    private fun hideShimmer() {
+        binding.shimmer.stopShimmer()
+        binding.shimmer.gone()
     }
 
     private fun setRv() {
@@ -88,6 +99,7 @@ class EventCommentsFragment(var eventCommentsViewModel: EventCommentsViewModel? 
         lifecycleScope.launchWhenStarted {
             delay(300)
             viewModel.comments.observe(viewLifecycleOwner, Observer {
+                hideShimmer()
                 eventCommentAdapter.submitComments(it)
             })
         }

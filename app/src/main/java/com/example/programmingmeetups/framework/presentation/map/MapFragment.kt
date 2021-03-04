@@ -16,6 +16,7 @@ import com.example.programmingmeetups.databinding.MapFragmentBinding
 import com.example.programmingmeetups.framework.utils.IMAGES_URL
 import com.example.programmingmeetups.framework.utils.MAP_ZOOM
 import com.example.programmingmeetups.framework.utils.MARKER_GLIDE
+import com.example.programmingmeetups.framework.utils.extensions.view.gone
 import com.example.programmingmeetups.framework.utils.extensions.view.hide
 import com.example.programmingmeetups.framework.utils.extensions.view.show
 import com.example.programmingmeetups.framework.utils.permissions.PermissionManager
@@ -24,11 +25,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.map_fragment.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.lang.Exception
@@ -48,6 +47,9 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     @Inject
     lateinit var requestManager: RequestManager
 
+    private val viewModel: MapViewModel
+        get() = mapViewModel!!
+
     private lateinit var binding: MapFragmentBinding
 
     private var map: GoogleMap? = null
@@ -56,19 +58,24 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
         setViewModel()
+        checkPermissions()
         setBinding(view)
         setMap()
+        setUserPositionButton()
     }
 
     private fun setViewModel() {
         mapViewModel =
             mapViewModel ?: ViewModelProvider(requireActivity()).get(MapViewModel::class.java)
+    }
+
+    private fun checkPermissions() {
         permissionManager.requestLocationPermissions(this)
         requestPosition()
     }
 
     private fun requestPosition() {
-        mapViewModel!!.requestPosition()
+        viewModel.requestPosition()
     }
 
     private fun setBinding(view: View) {
@@ -87,43 +94,79 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
         }
     }
 
+    private fun setUserPositionButton() {
+        binding.ivUserPosition.setOnClickListener {
+            if (viewModel.lastPosition != null) {
+                map?.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(viewModel.lastPosition, MAP_ZOOM)
+                )
+            }
+        }
+    }
+
+    private var dispatchJob: Job? = null
     private fun observeEvents() {
         lifecycleScope.launchWhenStarted {
-            mapViewModel!!.events.observe(viewLifecycleOwner, Observer {
-                showMarkers(it)
+            viewModel.events.observe(viewLifecycleOwner, Observer {
+                dispatchEvents(it)
             })
         }
     }
 
-    private val markers = mutableMapOf<Marker, ProgrammingEvent>()
-
-    private fun showMarkers(events: List<ProgrammingEvent>) {
-        lifecycleScope.launch(IO) {
-            events.forEach { event ->
-                val position = LatLng(event.latitude!!, event.longitude!!)
-                val marker = MarkerOptions().position(position)
-                try {
-                    val icon: Bitmap = requestManager.asBitmap().load("$IMAGES_URL${event.icon}")
-                        .into(100, 100).get()
-                    marker.icon(BitmapDescriptorFactory.fromBitmap(icon))
-                } catch (e: Exception) {
-
-                }
-                withContext(Main) {
-                    map?.addMarker(marker)?.also { marker ->
-                        markers[marker] = event
+    private fun dispatchEvents(events: List<Pair<Boolean, ProgrammingEvent>>) {
+        lifecycleScope.launch {
+            dispatchJob?.join()
+            dispatchJob = lifecycleScope.launch(IO) {
+                events.forEach {
+                    val toAdd = it.first
+                    val event = it.second
+                    when (toAdd) {
+                        // new marker
+                        true -> addMarker(event)
+                        // to delete
+                        false -> removeMarker(event)
                     }
                 }
             }
         }
     }
 
+    private val markers = mutableMapOf<Marker, ProgrammingEvent>()
+
+    private suspend fun addMarker(event: ProgrammingEvent) {
+        val position = LatLng(event.latitude!!, event.longitude!!)
+        val marker = MarkerOptions().position(position)
+        try {
+            val icon: Bitmap = requestManager.asBitmap().load("$IMAGES_URL${event.icon}")
+                .into(100, 100).get()
+            marker.icon(BitmapDescriptorFactory.fromBitmap(icon))
+        } catch (e: Exception) {
+
+        }
+        withContext(Main) {
+            map?.addMarker(marker)?.also { marker ->
+                markers[marker] = event
+            }
+        }
+    }
+
+    private suspend fun removeMarker(event: ProgrammingEvent) {
+        val toRemove = markers.filterValues { it.id == event.id }.keys
+        toRemove.forEach {
+            withContext(Main) {
+                markers.remove(it)
+                it.remove()
+            }
+        }
+    }
+
     private fun hideMap() {
         binding.mapView.hide()
+        binding.mapView.gone()
     }
 
     private fun showMap() {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             delay(200)
             binding.mapView.show()
         }
@@ -188,8 +231,9 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     private var positionSet = false
     private fun setPosition() {
         lifecycleScope.launchWhenStarted {
-            mapViewModel!!.position.observe(viewLifecycleOwner, Observer { latLng ->
+            viewModel.position.observe(viewLifecycleOwner, Observer { latLng ->
                 if (!positionSet) {
+                    viewModel.lastPosition = latLng
                     moveCameraToSpecificPosition(latLng)
                     positionSet = true
                     setUserPosition(latLng)
@@ -212,13 +256,14 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
     private fun moveCameraToSpecificPosition(position: LatLng) {
         showMap()
         canSaveCameraPosition = false
-        if (mapViewModel!!.cameraPosition != null) {
+        if (viewModel.cameraPosition != null) {
             map?.animateCamera(
-                CameraUpdateFactory.newCameraPosition(mapViewModel?.cameraPosition),
+                CameraUpdateFactory.newCameraPosition(viewModel.cameraPosition),
                 500,
                 object : GoogleMap.CancelableCallback {
                     override fun onFinish() {
                         canSaveCameraPosition = true
+                        showUserPositionButton()
                     }
 
                     override fun onCancel() {}
@@ -231,6 +276,7 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
                 object : GoogleMap.CancelableCallback {
                     override fun onFinish() {
                         canSaveCameraPosition = true
+                        showUserPositionButton()
                     }
 
                     override fun onCancel() {}
@@ -259,11 +305,11 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
         mapView.onStop()
         if (canSaveCameraPosition) {
             map?.also {
-                mapViewModel?.cameraPosition = it.cameraPosition
+                viewModel.cameraPosition = it.cameraPosition
             }
         }
         canSaveCameraPosition = true
-        mapViewModel?.stop()
+        viewModel.stop()
     }
 
     override fun onPause() {
@@ -286,6 +332,14 @@ class MapFragment(var mapViewModel: MapViewModel? = null) : Fragment(R.layout.ma
         mapView?.run {
             onSaveInstanceState(outState)
         }
+    }
+
+    private fun showUserPositionButton() {
+        binding.ivUserPosition.show()
+    }
+
+    private fun hideUserPositionButton() {
+        binding.ivUserPosition.hide()
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {

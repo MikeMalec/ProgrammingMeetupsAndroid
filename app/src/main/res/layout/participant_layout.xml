@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/clParticipantLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clParticipantLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -18,22 +18,13 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView3"
-        app:layout_constraintTop_toTopOf="@+id/cardView3" />
+        app:layout_constraintStart_toEndOf="@+id/ivUserImage"
+        app:layout_constraintTop_toTopOf="@+id/ivUserImage" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivUserImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:cardCornerRadius="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/ivUserImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

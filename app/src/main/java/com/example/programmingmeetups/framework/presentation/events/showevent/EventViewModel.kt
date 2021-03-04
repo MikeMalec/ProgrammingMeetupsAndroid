@@ -30,6 +30,9 @@ class EventViewModel @ViewModelInject constructor(
     @Named(IO_DISPATCHER)
     var dispatcher: CoroutineDispatcher
 ) : ViewModel(), PaginatorInterface<User> by eventUserPaginator {
+
+    var didShimmer = false
+
     var user: User? = null
     var token: String? = null
 

@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.programmingmeetups.business.domain.model.ProgrammingEvent
 import com.example.programmingmeetups.business.domain.util.Resource
 import com.example.programmingmeetups.business.interactors.event.map.FetchEvents
-import com.example.programmingmeetups.business.interactors.event.map.SynchronizeProgrammingEvents
 import com.example.programmingmeetups.framework.datasource.preferences.PreferencesRepository
 import com.example.programmingmeetups.framework.utils.IO_DISPATCHER
 import com.example.programmingmeetups.framework.utils.LOCATION_MANAGER_IMPL
@@ -17,7 +16,6 @@ import com.example.programmingmeetups.framework.utils.PREFERENCES_IMPLEMENTATION
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Named
@@ -34,15 +32,17 @@ class MapViewModel @ViewModelInject constructor(
 
     val position = locationManager.position
 
+    var lastPosition: LatLng? = null
+
     fun requestPosition() = locationManager.getLocation()
 
     private lateinit var token: String
 
-    private val _events: MutableLiveData<List<ProgrammingEvent>> = MutableLiveData()
+    private val _events: MutableLiveData<List<Pair<Boolean, ProgrammingEvent>>> = MutableLiveData()
 
-    val events: LiveData<List<ProgrammingEvent>> = _events
+    val events: LiveData<List<Pair<Boolean, ProgrammingEvent>>> = _events
 
-    private val uniqueEvents = mutableSetOf<ProgrammingEvent>()
+    private var fetchedEvents = mutableListOf<ProgrammingEvent>()
 
     init {
         setToken()
@@ -67,10 +67,19 @@ class MapViewModel @ViewModelInject constructor(
 
     private fun dispatchEvents(events: List<ProgrammingEvent>) {
         val newEvents = events.filter { new ->
-            uniqueEvents.firstOrNull { old -> old.id == new.id } == null
+            fetchedEvents.firstOrNull { old -> old.id == new.id } == null
         }
-        uniqueEvents.addAll(newEvents)
-        _events.postValue(newEvents)
+        fetchedEvents.addAll(newEvents)
+        _events.postValue(newEvents.map { Pair(true, it) })
+        checkEventsSizeAndRemoveExcess()
+    }
+
+    private fun checkEventsSizeAndRemoveExcess() {
+        if (fetchedEvents.size > 300) {
+            val toRemove = fetchedEvents.subList(0, 100)
+            _events.postValue(toRemove.map { Pair(false, it) })
+            fetchedEvents = fetchedEvents.subList(100, fetchedEvents.size)
+        }
     }
 
     override fun onCleared() {
@@ -80,6 +89,6 @@ class MapViewModel @ViewModelInject constructor(
 
     fun stop() {
         locationManager.stop()
-        uniqueEvents.clear()
+        fetchedEvents.clear()
     }
 }

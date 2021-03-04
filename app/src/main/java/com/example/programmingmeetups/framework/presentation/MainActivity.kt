@@ -3,6 +3,7 @@ package com.example.programmingmeetups.framework.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -67,12 +68,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private var initialSetup = true
     private fun observeToken() {
         lifecycleScope.launchWhenStarted {
-            startSynchronizationService()
             authViewModel.token.observe(this@MainActivity, Observer {
                 if (initialSetup) {
                     when (it!!.length > 11) {
                         false -> setGraphAndNavigation(false)
-                        true -> setGraphAndNavigation(true)
+                        true -> {
+                            startSynchronizationService()
+                            setGraphAndNavigation(true)
+                        }
                     }
                 }
                 initialSetup = false

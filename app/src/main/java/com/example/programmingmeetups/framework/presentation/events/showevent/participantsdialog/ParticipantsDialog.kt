@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.programmingmeetups.business.domain.model.User
 import com.example.programmingmeetups.databinding.ParticipantsDialogBinding
 import com.example.programmingmeetups.framework.presentation.events.showevent.EventViewModel
+import com.example.programmingmeetups.framework.utils.extensions.view.gone
+import kotlinx.coroutines.delay
 
 class ParticipantsDialog(
     private val eventViewModel: EventViewModel,
@@ -36,9 +38,19 @@ class ParticipantsDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showShimmer()
         setRv()
         checkUsers()
         observeUsers()
+    }
+
+    private fun showShimmer() {
+        binding.shimmer.startShimmer()
+    }
+
+    private fun hideShimmer() {
+        binding.shimmer.stopShimmer()
+        binding.shimmer.gone()
     }
 
     private fun checkUsers() {
@@ -53,6 +65,7 @@ class ParticipantsDialog(
     private fun observeUsers() {
         lifecycleScope.launchWhenStarted {
             eventViewModel.eventUsers.observe(viewLifecycleOwner, Observer {
+                hideShimmer()
                 participantsAdapter.submitList(it)
             })
         }

@@ -11,10 +11,11 @@
     <application
         android:name=".framework.presentation.BaseApplication"
         android:allowBackup="true"
-        android:hardwareAccelerated="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launch
+        er_round"
         android:supportsRtl="true"
         android:theme="@style/SplashScreenStyle"
         android:usesCleartextTraffic="true">
@@ -44,6 +45,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${mapsApiKey}" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <service android:name=".framework.datasource.network.event.service.EventSynchronizationService" />
     </application>

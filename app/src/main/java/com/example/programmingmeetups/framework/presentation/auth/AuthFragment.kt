@@ -9,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.programmingmeetups.R
 import com.example.programmingmeetups.databinding.AuthFragmentBinding
 import com.example.programmingmeetups.framework.utils.STORAGE_REQUEST
+import com.example.programmingmeetups.framework.utils.extensions.view.gone
+import com.example.programmingmeetups.framework.utils.extensions.view.show
 import com.example.programmingmeetups.framework.utils.frameworkrequests.FrameworkContentManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -95,7 +97,20 @@ class AuthFragment(
     override fun onTabUnselected(tab: TabLayout.Tab?) {}
     override fun onTabReselected(tab: TabLayout.Tab?) {}
 
+    private fun showLoading() {
+        binding.pbAuth.show()
+    }
+
+    private fun hideLayout() {
+        binding.apply {
+            authTabLayout.gone()
+            authViewPager.gone()
+        }
+    }
+
     private fun navigateToMapFragment() {
+        hideLayout()
+        showLoading()
         AuthFragmentDirections.actionAuthFragmentToMapFragment().run {
             findNavController().navigate(this)
         }

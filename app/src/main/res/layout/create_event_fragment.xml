@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -35,6 +35,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/maven_pro"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -64,6 +65,7 @@
                     setEventDescription="@{createEventViewModel.event}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/actor"
                     android:hint="@string/write_here_description_of_your_event_try_to_include_as_much_usefull_inforamtiosn_as_you_can" />
             </LinearLayout>
         </ScrollView>
@@ -81,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/maven_pro"
             android:text="TAGS:"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -136,6 +139,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:focusable="false"
+                android:fontFamily="@font/maven_pro"
                 android:text="@string/event_icon"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -165,6 +169,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginBottom="2dp"
                 android:focusable="false"
+                android:fontFamily="@font/maven_pro"
                 android:text="@string/attached_event_icon"
                 android:textSize="12sp"
                 android:visibility="invisible"
@@ -190,6 +195,7 @@
                 android:layout_marginStart="4dp"
                 android:clickable="false"
                 android:focusable="false"
+                android:fontFamily="@font/maven_pro"
                 android:text="Event image"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -221,6 +227,7 @@
                 android:layout_marginBottom="2dp"
                 android:clickable="false"
                 android:focusable="false"
+                android:fontFamily="@font/maven_pro"
                 android:text="@string/attached_event_image"
                 android:textSize="12sp"
                 android:visibility="invisible"
@@ -277,6 +284,7 @@
                 android:layout_marginStart="4dp"
                 android:clickable="false"
                 android:focusable="false"
+                android:fontFamily="@font/maven_pro"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"

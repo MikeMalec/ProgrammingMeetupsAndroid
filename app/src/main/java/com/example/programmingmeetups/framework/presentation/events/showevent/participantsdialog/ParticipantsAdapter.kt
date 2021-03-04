@@ -50,6 +50,9 @@ class ParticipantsAdapter(val callback: (user: User) -> Unit) :
             clParticipantLayout.setOnClickListener { callback(user) }
             tvUserName.text = user.getName()
             Glide.with(ivUserImage).load(user.getImageUrl()).into(ivUserImage)
+            ivUserImage.backgroundTintList = null
+            ivUserImage.backgroundTintMode = null
+            ivUserImage.background = null
         }
     }
 

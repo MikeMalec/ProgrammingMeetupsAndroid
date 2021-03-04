@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,7 @@ import com.example.programmingmeetups.framework.presentation.UIController
 import com.example.programmingmeetups.framework.presentation.events.common.BaseFragment
 import com.example.programmingmeetups.framework.presentation.events.showevent.participantsdialog.ParticipantsDialog
 import com.example.programmingmeetups.framework.utils.*
+import com.example.programmingmeetups.framework.utils.extensions.view.gone
 import com.example.programmingmeetups.framework.utils.extensions.view.hide
 import com.example.programmingmeetups.framework.utils.extensions.view.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +46,6 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        setSharedViewsAnimation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,27 +78,49 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         }
     }
 
-    private fun setSharedViewsAnimation() {
-        val moveAnimation = TransitionInflater.from(requireContext()).inflateTransition(
-            android.R.transition.move
-        )
-        moveAnimation.duration = 300
-        sharedElementEnterTransition = moveAnimation
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setViewModel()
-        setBinding(view)
+        binding = EventFragmentBinding.inflate(inflater, container, false)
+        setShimmer()
+        setBinding()
         observeResponseError()
         observeLoading()
         setMainButtonClick()
+        return binding!!.root
     }
 
-    private fun setBinding(view: View) {
-        binding = EventFragmentBinding.bind(view)
+    private fun setBinding() {
         binding!!.lifecycleOwner = this
         binding!!.eventViewModel = eventViewModel!!
+    }
+
+    private fun showShimmer() {
+        binding!!.eventShimmer.startShimmer()
+    }
+
+    private fun hideShimmer() {
+        binding!!.apply {
+            eventShimmer.stopShimmer()
+            eventShimmer.gone()
+            clEventFragment.show()
+        }
+    }
+
+    private fun setShimmer() {
+        if (eventViewModel!!.didShimmer) {
+            hideShimmer()
+        } else {
+            eventViewModel!!.didShimmer = true
+            showShimmer()
+            lifecycleScope.launchWhenStarted {
+                delay(600)
+                hideShimmer()
+            }
+        }
     }
 
     private fun setMainButtonClick() {
@@ -192,7 +215,7 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
     }
 
     private fun showParticipantsDialog() {
-        ParticipantsDialog(eventViewModel!!,::navigateToUserProfile).show(
+        ParticipantsDialog(eventViewModel!!, ::navigateToUserProfile).show(
             requireFragmentManager(),
             PARTICIPANTS_DIALOG
         )
@@ -217,6 +240,11 @@ class EventFragment(var eventViewModel: EventViewModel? = null) :
         EventFragmentDirections.actionEventFragmentToEventUserProfileFragment(user).run {
             findNavController().navigate(this)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding?.eventShimmer?.startShimmer()
     }
 
     override fun onDestroy() {

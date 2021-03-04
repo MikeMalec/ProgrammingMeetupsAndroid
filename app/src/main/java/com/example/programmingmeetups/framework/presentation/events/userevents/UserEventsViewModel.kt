@@ -1,5 +1,6 @@
 package com.example.programmingmeetups.framework.presentation.events.userevents
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,14 +23,21 @@ class UserEventsViewModel @ViewModelInject constructor(
     private val fetchedEvents = mutableListOf<ProgrammingEvent>()
     private var lastHappensAt = 0L
 
+    var didShimmer = false
+
+    var fetching = false
     fun fetchEvents() {
-        viewModelScope.launch(dispatcher) {
-            val events = getOwnEvents.getOwnEvents(lastHappensAt)
-            if (events.isNotEmpty()) {
-                lastHappensAt = events[events.size - 1].happensAt!!
+        if (!fetching) {
+            fetching = true
+            viewModelScope.launch(dispatcher) {
+                val events = getOwnEvents.getOwnEvents(lastHappensAt)
+                if (events.isNotEmpty()) {
+                    lastHappensAt = events[events.size - 1].happensAt!!
+                }
+                fetchedEvents.addAll(events)
+                _userEvents.postValue(fetchedEvents)
+                fetching = false
             }
-            fetchedEvents.addAll(events)
-            _userEvents.postValue(fetchedEvents)
         }
     }
 
